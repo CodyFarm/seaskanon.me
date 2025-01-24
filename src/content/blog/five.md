@@ -1,6 +1,7 @@
 ---
 title: 'First post'
-description: 'Lorem ipsum dolor sit amet'
+description: 'Foto de <a href="https://unsplash.com/es/@adrigeo_?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">adrianna geo</a> en <a href="https://unsplash.com/es/fotos/una-pintura-en-el-techo-de-un-edificio-1rBg5YSi00c?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+      '
 icon: '1'
 pubDate: 'Jul 08 2022'
 heroImage: "/src/assets/adriana.jpg"

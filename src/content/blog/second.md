@@ -1,7 +1,7 @@
 ---
-title: 'First post'
+title: 'Fourth post'
 description: 'Lorem ipsum dolor sit amet'
-icon: '1'
+icon: '3'
 pubDate: 'Jul 08 2022'
 heroImage: "/src/assets/euro.jpg"
 
