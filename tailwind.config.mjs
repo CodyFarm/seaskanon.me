@@ -5,6 +5,7 @@ export default {
   theme: {
     extend: {
       boxShadow: {
+        card1: "2px 2px #000000",
         card: "4px 4px #000000",
         hover: "10px 10px #000000",
         pblue: "7px 7px #96C7F2",
@@ -13,6 +14,7 @@ export default {
         pblueHover: "10px 10px #96C7F2",
         pgreenHover: "10px 10px #ADF296",
         ppinkHover: "10px 10px #F396E5",
+        pyellow: "7px 7px #F2CF96",
       },
       colors: {
         pblue: "#96C7F2",
@@ -42,10 +44,11 @@ export default {
         "12/12": "100%",
       },
       margin:{
-        "30":"7rem",
+        "30":"7.3rem",
       },
       borderWidth: {
         1: "1px",
+        3: "3px",
       },
       borderColor: {
         black: "#000",

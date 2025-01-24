@@ -1,11 +1,9 @@
 ---
-title: 'Second post'
-description: '
-        Foto de <a href="https://unsplash.com/es/fotos/flores-rojas-azules-y-blancas-5TK1F5VfdIk">Europeana</a> en <a class="text-pgreen font-bold" href="https://unsplash.com/es/fotos/flores-rojas-azules-y-blancas-5TK1F5VfdIk">Unsplash</a>
-'
-icon: "3"
-pubDate: 'Jul 15 2022'
-heroImage: '/euro.jpg'
+title: 'First post'
+description: 'Lorem ipsum dolor sit amet'
+icon: '1'
+pubDate: 'Jul 08 2022'
+heroImage: '/blog-placeholder-3.jpg'
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
