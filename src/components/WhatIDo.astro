@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 const posts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
-import FormattedDate from "../../components/FormattedDate.astro";
+import FormattedDate from "@/components/FormattedDate.astro";
 import { Icon } from "astro-icon/components";
 
 const bgClasses = [
