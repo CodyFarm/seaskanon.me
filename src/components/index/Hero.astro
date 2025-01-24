@@ -1,5 +1,9 @@
 ---
 import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/*.{jpeg,jpg,png,gif}"
+);
 ---
 
 <section class="py-20 flex">
@@ -41,9 +45,10 @@ import { Icon } from "astro-icon/components";
           <p>Joaquín Sorolla</p>
         </div>
         <div class="h-80 w-60 overflow-hidden relative -mt-30 rounded-2xl">
-          <img
+          <Image
             class="object-bottom absolute bottom-0 group-hover:scale-105 transition"
-            src="./assets/hero.png"
+            src={images["/src/assets/hero.png"]()}
+            alt="Sorolla, photo wiki"
           />
         </div>
       </div></a
