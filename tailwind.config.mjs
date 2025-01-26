@@ -23,9 +23,9 @@ export default {
         pyellow: "#F2CF96",
         ppurlple: "#9D859A",
         pblack: "#4E6273",
-        white:{
-          DEFAULT:"#F2F2F2",
-        }
+        white: {
+          DEFAULT: "#F2F2F2",
+        },
       },
       fontFamily: {
         mono: ["Alexandria", "monospace"],
@@ -46,8 +46,8 @@ export default {
         "10/12": "91.666667%",
         "12/12": "100%",
       },
-      margin:{
-        "30":"7.3rem",
+      margin: {
+        30: "7.3rem",
       },
       borderWidth: {
         1: "1px",
@@ -60,5 +60,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
