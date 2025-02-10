@@ -3,6 +3,7 @@
 Welcome to my personal portfolio demo repository! This project is a demonstration of what a personal portfolio could look like. It showcases various aspects of web development, including my work, skills, and projects.
 
 You can view the deployed project at the following URL: [https://astounding-bienenstitch-9b7a58.netlify.app/](https://astounding-bienenstitch-9b7a58.netlify.app/)
+Astro web templates: https://astro.build/themes/details/sorollaportfolio/
 
 ## 📂 Project Structure
 
