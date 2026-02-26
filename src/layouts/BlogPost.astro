@@ -58,7 +58,11 @@ const getRandomClass = () => {
           </div>
           <Picture 
             fetchpriority="high"
-          loading="eager" src={images[heroImage]()}  alt={title} class="h-96 w-full object-cover"   format="webp"
+            loading="eager" src={images[heroImage]()}  
+            alt={title} 
+            class="h-96 w-full object-cover"   
+            quality={80}
+            format="webp"
             sizes="(max-width: 901px) 100vw, 1000px"
             widths={[480, 700, 901]}/>
         </div>
