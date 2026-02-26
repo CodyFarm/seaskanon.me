@@ -5,7 +5,7 @@
 Welcome to my personal portfolio demo repository! This project is a demonstration of what a personal portfolio could look like. It showcases various aspects of web development, including my work, skills, and projects.
 
 - You can view the deployed project at the following URL: [https://sorolla.netlify.app/](https://sorolla.netlify.app/)
-- Astro web templates: https://astro.build/themes/details/sorollaportfolio/
+- Astro web templates: <https://astro.build/themes/details/sorollaportfolio/>
 
 ## 📂 Project Structure
 
@@ -17,12 +17,11 @@ Welcome to my personal portfolio demo repository! This project is a demonstratio
 - **tailwind.config.mjs**: Configuration file for Tailwind CSS.
 - **tsconfig.json**: TypeScript configuration file.
 
-
 ### 🧭 /src structure
 
 The `/src` directory contains the main source code for the project. Below is an overview of its structure:
 
-```
+```bash
 src
 ├── assets
 │   ├── adriana.webp
@@ -85,7 +84,6 @@ src
 
 This structure helps in organizing the project files and makes it easier to maintain and scale the project.
 
-
 ## 🚀 Getting Started
 
 To run this project locally:
@@ -100,13 +98,13 @@ To run this project locally:
 2. **Install dependencies:**
 
    ```bash
-   bun install
+   pnpm install
    ```
 
 3. **Start the development server:**
 
    ```bash
-   bun dev
+   pnpm run dev
    ```
 
    The application will be available at `http://localhost:4321`.
