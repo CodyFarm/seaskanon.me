@@ -34,7 +34,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --no-strict-peer-dependencies
+        run: pnpm install --no-strict-peer-dependencies --minimum-release-age=0
 
       - name: Build Astro
         run: pnpm astro build
