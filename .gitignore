@@ -27,6 +27,6 @@ package-lock.json
 .netlify/
 
 bun.lock
-pnpm-lock.yaml
+# pnpm-lock.yaml
 .wrangler
 desktop.ini
