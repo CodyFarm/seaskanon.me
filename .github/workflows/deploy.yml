@@ -18,6 +18,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      pnpm_config_minimum_release_age: "0"
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,8 +38,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --no-strict-peer-dependencies
-        env:
-          pnpm_config_minimum_release_age: "0"
 
       - name: Build Astro
         run: pnpm astro build
