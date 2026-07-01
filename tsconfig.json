@@ -22,6 +22,12 @@
       ],
       "@/data/*": [
         "src/data/*"
+      ],
+      "@/lib/*": [
+        "src/lib/*"
+      ],
+      "@/consts": [
+        "src/consts.ts"
       ]
     },
     "strictNullChecks": true
