@@ -1,0 +1,70 @@
+<section class="rounded-3xl border-[3px] border-black bg-white p-5 shadow-card">
+  <label for="writing-search" class="block text-xl font-bold text-black">Search Writing</label>
+  <p class="mt-1 text-sm text-pblack">Search articles only. Knowledge will stay separate for Quartz.</p>
+  <input
+    id="writing-search"
+    type="search"
+    placeholder="Try Astro, project, math..."
+    class="mt-4 w-full rounded-2xl border-[3px] border-black bg-pyellow px-4 py-3 text-black outline-none transition focus:-translate-y-0.5 focus:shadow-card"
+  />
+  <div id="writing-search-results" class="mt-4 hidden flex-col gap-3" aria-live="polite"></div>
+</section>
+
+<script>
+  type SearchItem = {
+    title: string;
+    description: string;
+    url: string;
+    category: string;
+    tags: string[];
+    text: string;
+  };
+
+  const input = document.querySelector<HTMLInputElement>("#writing-search");
+  const results = document.querySelector<HTMLDivElement>("#writing-search-results");
+  let index: SearchItem[] | undefined;
+
+  async function loadIndex() {
+    if (index) return index;
+    const response = await fetch("/writing/search.json");
+    index = await response.json();
+    return index;
+  }
+
+  function render(items: SearchItem[], query: string) {
+    if (!results) return;
+
+    if (!query) {
+      results.classList.add("hidden");
+      results.innerHTML = "";
+      return;
+    }
+
+    results.classList.remove("hidden");
+
+    if (items.length === 0) {
+      results.innerHTML = `<p class="rounded-2xl border-2 border-black bg-ppink p-3 text-sm shadow-card1">No writing matched “${query}”.</p>`;
+      return;
+    }
+
+    results.innerHTML = items
+      .slice(0, 6)
+      .map((item) => `
+        <a href="${item.url}" class="block rounded-2xl border-2 border-black bg-pblue p-3 shadow-card1 transition hover:-translate-y-0.5 hover:shadow-card">
+          <span class="font-bold text-black">${item.title}</span>
+          <span class="mt-1 block text-sm text-pblack">${item.description}</span>
+        </a>
+      `)
+      .join("");
+  }
+
+  input?.addEventListener("input", async () => {
+    const query = input.value.trim().toLocaleLowerCase();
+    const data = await loadIndex();
+    const matches = query
+      ? data.filter((item) => `${item.title} ${item.description} ${item.category} ${item.tags.join(" ")} ${item.text}`.toLocaleLowerCase().includes(query))
+      : [];
+
+    render(matches, query);
+  });
+</script>

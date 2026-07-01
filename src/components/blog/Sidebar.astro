@@ -1,0 +1,32 @@
+---
+import AuthorCard from "./AuthorCard.astro";
+import StatisticsCard from "./StatisticsCard.astro";
+import CategoryList from "./CategoryList.astro";
+import TagList from "./TagList.astro";
+import SeriesCard from "./SeriesCard.astro";
+import type { TaxonomyCount } from "@/lib/writing";
+
+interface Props {
+  stats: {
+    totalPosts: number;
+    totalCategories: number;
+    totalTags: number;
+    totalWords: number;
+  };
+  categories: TaxonomyCount[];
+  tags: TaxonomyCount[];
+  series: TaxonomyCount[];
+  activeCategory?: string;
+  activeTag?: string;
+}
+
+const { stats, categories, tags, series, activeCategory = "", activeTag = "" } = Astro.props;
+---
+
+<aside class="flex flex-col gap-5 lg:sticky lg:top-6 lg:self-start">
+  <AuthorCard />
+  <StatisticsCard stats={stats} />
+  <SeriesCard series={series} />
+  <CategoryList categories={categories} activeSlug={activeCategory} />
+  <TagList tags={tags} activeSlug={activeTag} />
+</aside>

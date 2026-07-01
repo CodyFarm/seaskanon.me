@@ -1,0 +1,64 @@
+---
+import BaseHead from "@/components/BaseHead.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import ArticleCard from "@/components/blog/ArticleCard.astro";
+import Sidebar from "@/components/blog/Sidebar.astro";
+import SearchBox from "@/components/blog/SearchBox.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
+import {
+  getCategoryCounts,
+  getPublishedWriting,
+  getSeriesCounts,
+  getTagCounts,
+  getWritingStats,
+} from "@/lib/writing";
+
+const posts = await getPublishedWriting();
+const stats = getWritingStats(posts);
+const categories = getCategoryCounts(posts);
+const tags = getTagCounts(posts);
+const series = getSeriesCounts(posts);
+const colors = ["blue", "green", "pink", "yellow"] as const;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`Writing | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main class="container mx-auto px-4 py-12 md:px-10 md:py-20">
+      <section class="mx-auto mb-10 max-w-5xl rounded-3xl border-[3px] border-black bg-pyellow p-8 shadow-card">
+        <p class="font-semibold text-pblack">Writing</p>
+        <h1 class="mt-2 text-5xl font-black leading-tight md:text-7xl">
+          Notes, logs, and essays for a growing digital garden.
+        </h1>
+        <p class="mt-5 max-w-3xl text-lg leading-8 text-black">
+          按时间记录学习、开发、阅读、项目复盘与旅行文化随笔。这里借鉴 Fuwari 的信息架构，但保持 Sorolla 的卡片、粗边框和手账感。
+        </p>
+      </section>
+
+      <div class="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[320px_1fr]">
+        <Sidebar stats={stats} categories={categories} tags={tags} series={series} />
+        <section class="flex flex-col gap-6">
+          <SearchBox />
+          {posts.length > 0 ? (
+            <div class="grid gap-6 md:grid-cols-2">
+              {posts.map((post, index) => (
+                <ArticleCard post={post} color={colors[index % colors.length]} />
+              ))}
+            </div>
+          ) : (
+            <div class="rounded-3xl border-[3px] border-black bg-ppink p-8 shadow-card">
+              <h2 class="text-2xl font-bold">No writing yet</h2>
+              <p class="mt-2 text-pblack">Published articles will appear here.</p>
+            </div>
+          )}
+        </section>
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>

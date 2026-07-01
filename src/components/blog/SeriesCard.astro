@@ -1,0 +1,25 @@
+---
+import type { TaxonomyCount } from "@/lib/writing";
+
+interface Props {
+  series: TaxonomyCount[];
+}
+
+const { series } = Astro.props;
+---
+
+<section class="rounded-3xl border-[3px] border-black bg-pyellow p-5 shadow-card">
+  <h2 class="text-xl font-bold">Series</h2>
+  {series.length > 0 ? (
+    <ul class="mt-4 flex flex-col gap-2">
+      {series.map((item) => (
+        <li class="flex items-center justify-between rounded-xl border-2 border-black bg-white px-3 py-2 text-sm font-semibold shadow-card1">
+          <span>{item.name}</span>
+          <span class="rounded-full border border-black bg-pblue px-2 py-0.5 text-xs">{item.count}</span>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p class="mt-4 text-sm text-pblack">Series will grow with longer notes and rebuild logs.</p>
+  )}
+</section>

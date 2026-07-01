@@ -1,0 +1,32 @@
+---
+import { formatNumber } from "@/lib/writing";
+
+interface Props {
+  stats: {
+    totalPosts: number;
+    totalCategories: number;
+    totalTags: number;
+    totalWords: number;
+  };
+}
+
+const { stats } = Astro.props;
+const items = [
+  ["Posts", stats.totalPosts],
+  ["Categories", stats.totalCategories],
+  ["Tags", stats.totalTags],
+  ["Words", stats.totalWords],
+];
+---
+
+<section class="rounded-3xl border-[3px] border-black bg-white p-5 shadow-card">
+  <h2 class="text-xl font-bold">Statistics</h2>
+  <dl class="mt-4 grid grid-cols-2 gap-3">
+    {items.map(([label, value]) => (
+      <div class="rounded-2xl border-2 border-black bg-pyellow p-3 shadow-card1">
+        <dt class="text-xs font-semibold uppercase tracking-wide text-pblack">{label}</dt>
+        <dd class="text-2xl font-black text-black">{formatNumber(value as number)}</dd>
+      </div>
+    ))}
+  </dl>
+</section>
