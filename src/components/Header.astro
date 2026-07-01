@@ -1,6 +1,14 @@
 ---
 import Link from "./HeaderLink.astro";
 import { Icon } from "astro-icon/components";
+
+const links = [
+  { href: "/", text: "Home", style: "primary" },
+  { href: "/writing", text: "Writing", style: "secondary" },
+  { href: "/projects", text: "Projects", style: "tertiary" },
+  { href: "/knowledge", text: "Knowledge", style: "primary" },
+  { href: "/about", text: "About", style: "secondary" },
+] as const;
 ---
 
 <!--
@@ -15,15 +23,15 @@ import { Icon } from "astro-icon/components";
     <a class="flex items-center gap-2" href="/" aria-label="Home">
       <p class="font-kablamo text-ppink text-4xl md:text-5xl">S</p>
       <p class="pt-2 md:text-lg font-semibold flex">
-        <span class="hidden md:block">Joaquín</span> Sorolla
+        <span class="hidden md:block">seas</span>Kanon
       </p>
     </a>
 
     <!-- Desktop Navigation -->
-    <ul class="items-center md:gap-8 text-nowrap hidden md:flex">
-      <li><Link href="/" text="Home" style="primary" /></li>
-      <li><Link href="/about" text="What I do" style="secondary" /></li>
-      <li><Link href="/blog" text="My work" style="tertiary" /></li>
+    <ul class="items-center md:gap-4 text-nowrap hidden md:flex">
+      {links.map((link) => (
+        <li><Link href={link.href} text={link.text} style={link.style} /></li>
+      ))}
     </ul>
 
     <!-- Mobile Navigation (CSS-only hamburger menu) -->
@@ -38,6 +46,7 @@ import { Icon } from "astro-icon/components";
       <label
         for="menu-toggle"
         class="relative cursor-pointer"
+        aria-label="Open menu"
       >
         <Icon
           name="menu"
@@ -57,9 +66,9 @@ import { Icon } from "astro-icon/components";
         <ul
           class="flex flex-col items-center justify-center h-full gap-8 text-nowrap"
         >
-          <li><Link href="/" text="Home" style="primary" /></li>
-          <li><Link href="/about" text="What I do" style="secondary" /></li>
-          <li><Link href="/blog" text="My work" style="tertiary" /></li>
+          {links.map((link) => (
+            <li><Link href={link.href} text={link.text} style={link.style} /></li>
+          ))}
         </ul>
       </div>
     </div>

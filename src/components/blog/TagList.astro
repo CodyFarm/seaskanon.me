@@ -1,0 +1,34 @@
+---
+import type { TaxonomyCount } from "@/lib/writing";
+
+interface Props {
+  tags: TaxonomyCount[];
+  activeSlug?: string;
+}
+
+const { tags, activeSlug = "" } = Astro.props;
+---
+
+<section class="rounded-3xl border-[3px] border-black bg-ppink p-5 shadow-card">
+  <h2 class="text-xl font-bold">Tags</h2>
+  {tags.length > 0 ? (
+    <ul class="mt-4 flex flex-wrap gap-2">
+      {tags.map((tag) => (
+        <li>
+          <a
+            href={`/writing/tags/${tag.slug}/`}
+            class:list={[
+              "inline-flex items-center gap-2 rounded-full border-2 border-black px-3 py-1 text-sm font-semibold shadow-card1 transition hover:-translate-y-0.5 hover:shadow-card",
+              tag.slug === activeSlug ? "bg-pyellow" : "bg-white",
+            ]}
+          >
+            <span>#{tag.name}</span>
+            <span class="text-xs text-pblack">{tag.count}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p class="mt-4 text-sm text-pblack">No tags yet.</p>
+  )}
+</section>
