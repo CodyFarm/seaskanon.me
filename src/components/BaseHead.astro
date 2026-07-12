@@ -55,3 +55,257 @@ const { title, description, image = "/screenshot.webp" } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<!-- Global Audio Manager — persists playback & state across page navigation -->
+<script is:inline>
+(function () {
+  if (window.__music) return;
+  var STORAGE_KEY = 'seaskanon-music';
+  var THROTTLE_MS = 400;
+  var playlist = [];
+  var audio = new Audio();
+  audio.preload = 'metadata';
+  audio.volume = 0.8;
+  var state = { index: 0, shuffle: false, playing: false, currentTime: 0, duration: 0 };
+  var initialLoadDone = false;
+  var listeners = { statechange: [], timeupdate: [] };
+  var lastTimeWrite = 0;
+  var audioCtx, gainNode, source, fadeTimeout;
+  var FADE_DUR = 0.25;
+
+  function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+
+  function ensureAudioGraph() {
+    if (audioCtx) return;
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    audioCtx = new AC();
+    source = audioCtx.createMediaElementSource(audio);
+    gainNode = audioCtx.createGain();
+    gainNode.gain.value = 1;
+    source.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+  }
+
+  function resumeContext() {
+    if (audioCtx && audioCtx.state === 'suspended') return audioCtx.resume();
+    return Promise.resolve();
+  }
+
+  function cancelFades() {
+    if (fadeTimeout) { clearTimeout(fadeTimeout); fadeTimeout = null; }
+    if (audioCtx && gainNode) gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+  }
+
+  function setGain(value) {
+    if (!audioCtx || !gainNode) return;
+    var now = audioCtx.currentTime;
+    gainNode.gain.cancelScheduledValues(now);
+    gainNode.gain.setValueAtTime(value, now);
+  }
+
+  function fadeIn() {
+    ensureAudioGraph();
+    resumeContext();
+    cancelFades();
+    if (!gainNode) return;
+    var now = audioCtx.currentTime;
+    gainNode.gain.setValueAtTime(0.0001, now);
+    gainNode.gain.linearRampToValueAtTime(1, now + FADE_DUR);
+  }
+
+  function fadeOutAndPause() {
+    ensureAudioGraph();
+    resumeContext();
+    cancelFades();
+    if (!gainNode) { audio.pause(); return; }
+    var now = audioCtx.currentTime;
+    gainNode.gain.setValueAtTime(Math.max(gainNode.gain.value, 0.0001), now);
+    gainNode.gain.linearRampToValueAtTime(0.0001, now + FADE_DUR);
+    fadeTimeout = setTimeout(function () {
+      audio.pause();
+      fadeTimeout = null;
+    }, FADE_DUR * 1000);
+  }
+
+  try {
+    var saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (saved && typeof saved === 'object') {
+      if (typeof saved.index === 'number') state.index = saved.index;
+      if (typeof saved.shuffle === 'boolean') state.shuffle = saved.shuffle;
+      if (typeof saved.playing === 'boolean') state.playing = saved.playing;
+      if (typeof saved.currentTime === 'number') state.currentTime = saved.currentTime;
+    }
+  } catch (e) {}
+
+  function save() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        index: state.index,
+        shuffle: state.shuffle,
+        playing: state.playing,
+        currentTime: state.currentTime,
+      }));
+    } catch (e) {}
+  }
+
+  function emit(name, data) {
+    var cbs = listeners[name] || [];
+    for (var i = 0; i < cbs.length; i++) cbs[i](data);
+  }
+
+  function loadIndex(idx, opts) {
+    opts = opts || {};
+    if (!playlist.length) return;
+    idx = clamp(Math.floor(idx), 0, playlist.length - 1);
+    state.index = idx;
+    var track = playlist[idx];
+
+    if (opts.keepSrc && track.src === audio.src && audio.src) {
+      state.duration = audio.duration || state.duration || 0;
+      save(); emit('statechange', state);
+      return;
+    }
+
+    audio.src = track.src;
+    audio.load();
+
+    var seekTo = typeof opts.seekTo === 'number' ? opts.seekTo : 0;
+    var autoPlay = !!opts.autoPlay;
+
+    if (seekTo > 0 || autoPlay) {
+      var once = function () {
+        audio.removeEventListener('loadedmetadata', once);
+        if (seekTo > 0) {
+          try { audio.currentTime = seekTo; } catch (e) {}
+        }
+        if (autoPlay) { fadeIn(); audio.play().catch(function () { setGain(1); }); }
+      };
+      audio.addEventListener('loadedmetadata', once);
+    }
+
+    save(); emit('statechange', state);
+  }
+
+  audio.addEventListener('loadedmetadata', function () {
+    state.duration = audio.duration || 0;
+    emit('statechange', state);
+  });
+
+  audio.addEventListener('timeupdate', function () {
+    state.currentTime = audio.currentTime || 0;
+    emit('timeupdate', state);
+    var now = Date.now();
+    if (now - lastTimeWrite > THROTTLE_MS) { lastTimeWrite = now; save(); }
+  });
+
+  audio.addEventListener('ended', function () {
+    if (state.shuffle && playlist.length > 1) {
+      var next;
+      do { next = Math.floor(Math.random() * playlist.length); } while (next === state.index && playlist.length > 1);
+      loadIndex(next, { autoPlay: true });
+    } else {
+      var ni = state.index + 1;
+      if (ni >= playlist.length) ni = 0;
+      loadIndex(ni, { autoPlay: true });
+    }
+  });
+
+  audio.addEventListener('play', function () { state.playing = true; save(); emit('statechange', state); });
+  audio.addEventListener('pause', function () { state.playing = false; save(); emit('statechange', state); });
+
+  function samePlaylist(a, b) {
+    if (a.length !== b.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (a[i].src !== b[i].src || a[i].title !== b[i].title) return false;
+    }
+    return true;
+  }
+
+  window.__music = {
+    init: function (tracks) {
+      var hadPlaylist = playlist.length > 0;
+      var isSame = hadPlaylist && samePlaylist(playlist, tracks);
+      playlist = tracks;
+      if (!initialLoadDone) {
+        initialLoadDone = true;
+        var idx = clamp(state.index, 0, playlist.length - 1);
+        loadIndex(idx, { seekTo: state.currentTime, autoPlay: state.playing });
+      } else if (!isSame) {
+        var idx = clamp(state.index, 0, playlist.length - 1);
+        loadIndex(idx, { seekTo: state.currentTime, autoPlay: state.playing });
+      } else {
+        emit('statechange', state);
+      }
+    },
+    getState: function () { return state; },
+    getPlaylist: function () { return playlist; },
+    play: function () {
+      if (!audio.src || audio.src === window.location.href) {
+        loadIndex(state.index, { seekTo: state.currentTime, autoPlay: true });
+      } else {
+        fadeIn();
+        audio.play().catch(function () { setGain(1); });
+      }
+    },
+    pause: function () { fadeOutAndPause(); },
+    toggle: function () {
+      if (state.playing) fadeOutAndPause();
+      else {
+        if (!audio.src || audio.src === window.location.href) {
+          loadIndex(state.index, { seekTo: state.currentTime, autoPlay: true });
+        } else {
+          fadeIn();
+          audio.play().catch(function () { setGain(1); });
+        }
+      }
+    },
+    next: function () {
+      if (state.shuffle && playlist.length > 1) {
+        var next;
+        do { next = Math.floor(Math.random() * playlist.length); } while (next === state.index && playlist.length > 1);
+        loadIndex(next, { autoPlay: true });
+      } else {
+        var ni = state.index + 1;
+        if (ni >= playlist.length) ni = 0;
+        loadIndex(ni, { autoPlay: true });
+      }
+    },
+    prev: function () {
+      var pi = state.index - 1;
+      if (pi < 0) pi = playlist.length - 1;
+      loadIndex(pi, { autoPlay: true });
+    },
+    skipTo: function (index) {
+      if (index >= 0 && index < playlist.length) {
+        loadIndex(index, { autoPlay: true });
+      }
+    },
+    toggleShuffle: function () { state.shuffle = !state.shuffle; save(); emit('statechange', state); },
+    on: function (name, cb) { if (listeners[name]) listeners[name].push(cb); },
+    off: function (name, cb) { if (!listeners[name]) return; listeners[name] = listeners[name].filter(function (f) { return f !== cb; }); },
+    seek: function (t) {
+      if (audio.duration) {
+        audio.currentTime = clamp(t, 0, audio.duration);
+      }
+    },
+  };
+
+  // Global spacebar shortcut: play/pause when user is not typing or focused on a control.
+  if (!window.__musicSpacebarBound) {
+    window.__musicSpacebarBound = true;
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== ' ' && e.code !== 'Space') return;
+      var el = document.activeElement;
+      if (el && el !== document.body) {
+        var tag = el.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable) return;
+        if (tag === 'BUTTON' || tag === 'A' || el.getAttribute('role') === 'button') return;
+      }
+      if (!playlist.length) return;
+      e.preventDefault();
+      window.__music.toggle();
+    });
+  }
+})();
+</script>

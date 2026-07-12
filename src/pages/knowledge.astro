@@ -3,6 +3,7 @@ import BaseHead from "@/components/BaseHead.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import { SITE_TITLE } from "@/consts";
+import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
 
 const areas = ["Computer Graphics", "Mathematical Modeling", "Operations Research", "AI", "Software Engineering", "Reading Notes"];
 ---
@@ -17,7 +18,7 @@ const areas = ["Computer Graphics", "Mathematical Modeling", "Operations Researc
     <main class="container mx-auto px-4 py-12 md:px-10 md:py-20">
       <section class="mx-auto max-w-5xl rounded-3xl border-[3px] border-black bg-pblue p-8 shadow-card">
         <p class="font-semibold text-pblack">Knowledge</p>
-        <h1 class="mt-2 text-5xl font-black leading-tight md:text-7xl">A future Quartz knowledge network.</h1>
+        <h1 class="mt-2 text-5xl font-black leading-tight md:text-7xl">A future Quarto knowledge network.</h1>
         <p class="mt-5 max-w-3xl text-lg leading-8 text-black">
           Knowledge will become an independent note system for linked concepts, reading notes, and long-term study. It stays separate from Writing, including search and taxonomy.
         </p>
@@ -38,5 +39,6 @@ const areas = ["Computer Graphics", "Mathematical Modeling", "Operations Researc
       </section>
     </main>
     <Footer />
+    <CapsulePlayer />
   </body>
 </html>

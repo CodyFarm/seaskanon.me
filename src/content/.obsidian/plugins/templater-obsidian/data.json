@@ -1,0 +1,32 @@
+{
+  "command_timeout": 5,
+  "templates_folder": "010-templater",
+  "templates_pairs": [
+    [
+      "",
+      ""
+    ]
+  ],
+  "trigger_on_file_creation": true,
+  "auto_jump_to_cursor": true,
+  "enable_system_commands": true,
+  "shell_path": "",
+  "user_scripts_folder": "",
+  "enable_folder_templates": true,
+  "folder_templates": [
+    {
+      "folder": "",
+      "template": ""
+    }
+  ],
+  "syntax_highlighting": true,
+  "syntax_highlighting_mobile": true,
+  "enabled_templates_hotkeys": [
+    "010-templater/圣经模板/圣经学习笔记模板.md",
+    ""
+  ],
+  "startup_templates": [
+    "010-templater/圣经模板/圣经学习笔记模板.md",
+    ""
+  ]
+}

@@ -5,7 +5,8 @@
     id="writing-search"
     type="search"
     placeholder="Try Astro, project, math..."
-    class="mt-4 w-full rounded-2xl border-[3px] border-black bg-pyellow px-4 py-3 text-black outline-none transition focus:-translate-y-0.5 focus:shadow-card"
+    class="mt-4 w-full rounded-2xl border-[3px] border-black px-4 py-3 text-black outline-none focus:-translate-y-0.5 focus:shadow-card"
+    style="background-color: var(--search-bg, #F2F2F2); transition: background-color 2s ease;"
   />
   <div id="writing-search-results" class="mt-4 hidden flex-col gap-3" aria-live="polite"></div>
 </section>
@@ -23,6 +24,107 @@
   const input = document.querySelector<HTMLInputElement>("#writing-search");
   const results = document.querySelector<HTMLDivElement>("#writing-search-results");
   let index: SearchItem[] | undefined;
+
+  // ---- color-pick on hover (1s dwell) → pastel-lightness map → apply to search box ----
+  let mouseX = 0;
+  let mouseY = 0;
+  let hoverTimer: ReturnType<typeof setTimeout> | null = null;
+  let lastColorChange = 0;
+  const DWELL_MS = 1000;
+  const COOLDOWN_MS = 3000;
+
+  // RGB ↔ HSL conversions
+  function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    const L = (max + min) / 2;
+
+    if (max === min) return [0, 0, L];
+
+    const d = max - min;
+    const S = L > 0.5 ? d / (2 - max - min) : d / (max + min);
+    let H = 0;
+    switch (max) {
+      case r: H = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+      case g: H = ((b - r) / d + 2) / 6; break;
+      case b: H = ((r - g) / d + 4) / 6; break;
+    }
+    return [H, S, L];
+  }
+
+  function hslToRgb(h: number, s: number, l: number): [number, number, number] {
+    if (s === 0) {
+      const v = Math.round(l * 255);
+      return [v, v, v];
+    }
+    const hue2rgb = (p: number, q: number, t: number): number => {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1 / 6) return p + (q - p) * 6 * t;
+      if (t < 1 / 2) return q;
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+      return p;
+    };
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    return [
+      Math.round(hue2rgb(p, q, h + 1 / 3) * 255),
+      Math.round(hue2rgb(p, q, h) * 255),
+      Math.round(hue2rgb(p, q, h - 1 / 3) * 255),
+    ];
+  }
+
+  // Gamma-based lightness lift: dark → pastel-light, already-light → nearly unchanged
+  // L' = L_min + (1 - L_min) × L^γ   (γ < 1 lifts darks, γ ≈ 1 keeps lights)
+  function toPastelLightness(L: number): number {
+    const L_MIN = 0.55;
+    const GAMMA = 0.45;
+    return L_MIN + (1 - L_MIN) * Math.pow(L, GAMMA);
+  }
+
+  function isTransparent(color: string): boolean {
+    return !color || color === "transparent" || /rgba?\(\s*0[\s,]+0[\s,]+0[\s,]*0\s*\)/.test(color);
+  }
+
+  function tryApplyColor(): void {
+    const now = Date.now();
+    if (now - lastColorChange < COOLDOWN_MS) return;
+
+    let el = document.elementFromPoint(mouseX, mouseY);
+    if (!el) return;
+
+    // walk up DOM tree to find the first ancestor with a real background color
+    while (el) {
+      const bg = getComputedStyle(el).backgroundColor;
+      if (!isTransparent(bg)) {
+        const match = bg.match(/rgba?\((\d+)[,\s]+(\d+)[,\s]+(\d+)/);
+        if (match) {
+          const r = parseInt(match[1]);
+          const g = parseInt(match[2]);
+          const b = parseInt(match[3]);
+          const [h, s, l] = rgbToHsl(r, g, b);
+          const L_new = toPastelLightness(l);
+          const satFactor = 0.4 + 0.6 * Math.pow(l, 0.3);
+          const S_new = Math.min(1, s * satFactor);
+          const [rr, gg, bb] = hslToRgb(h, S_new, L_new);
+
+          document.documentElement.style.setProperty("--search-bg", `rgb(${rr}, ${gg}, ${bb})`);
+          lastColorChange = now;
+        }
+        return;
+      }
+      el = el.parentElement;
+    }
+  }
+
+  document.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+    if (hoverTimer) clearTimeout(hoverTimer);
+    hoverTimer = setTimeout(tryApplyColor, DWELL_MS);
+  });
 
   async function loadIndex() {
     if (index) return index;

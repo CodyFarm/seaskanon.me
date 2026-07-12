@@ -1,0 +1,120 @@
+---
+interface Props {
+  totalPages: number;
+}
+
+const { totalPages } = Astro.props;
+const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+---
+
+{
+  totalPages > 1 && (
+    <nav
+      class="pagination mt-8 flex flex-wrap items-center justify-center gap-3"
+      data-total-pages={totalPages}
+      aria-label="Pagination"
+    >
+      <button
+        type="button"
+        class="pagination-prev rounded-full border border-black bg-white px-4 py-2 text-sm font-semibold text-black shadow-card1 transition hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-card disabled:cursor-not-allowed disabled:opacity-50"
+        aria-label="Previous page"
+      >
+        Previous
+      </button>
+
+      <div class="flex flex-wrap items-center justify-center gap-2">
+        {pages.map((page) => (
+          <button
+            type="button"
+            class="pagination-page rounded-full border border-black bg-yellow px-4 py-2 text-sm font-semibold text-black shadow-card1 transition hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-card"
+            data-page={page}
+            aria-label={`Page ${page}`}
+          >
+            {page}
+          </button>
+        ))}
+      </div>
+
+      <button
+        type="button"
+        class="pagination-next rounded-full border border-black bg-white px-4 py-2 text-sm font-semibold text-black shadow-card1 transition hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-card disabled:cursor-not-allowed disabled:opacity-50"
+        aria-label="Next page"
+      >
+        Next
+      </button>
+
+      <span class="pagination-info w-full text-center text-sm text-pblack" />
+    </nav>
+  )
+}
+
+<script is:inline>
+  (function () {
+    const nav = document.querySelector(".pagination");
+    if (!nav) return;
+
+    const totalPages = Number(nav.dataset.totalPages) || 1;
+    const groups = Array.from(document.querySelectorAll(".page-group"));
+    const prevBtn = nav.querySelector(".pagination-prev");
+    const nextBtn = nav.querySelector(".pagination-next");
+    const pageBtns = Array.from(nav.querySelectorAll(".pagination-page"));
+    const info = nav.querySelector(".pagination-info");
+
+    if (!groups.length) return;
+
+    function readPage() {
+      const params = new URLSearchParams(window.location.search);
+      const p = parseInt(params.get("page") || "1", 10);
+      return Number.isNaN(p) ? 1 : Math.max(1, Math.min(p, totalPages));
+    }
+
+    function showPage(page) {
+      groups.forEach(function (g) {
+        const gp = Number(g.dataset.page);
+        g.classList.toggle("hidden", gp !== page);
+      });
+
+      pageBtns.forEach(function (b) {
+        const bp = Number(b.dataset.page);
+        const active = bp === page;
+        b.classList.toggle("bg-pblack", active);
+        b.classList.toggle("text-white", active);
+        b.setAttribute("aria-current", active ? "page" : "false");
+      });
+
+      prevBtn.disabled = page === 1;
+      nextBtn.disabled = page === totalPages;
+
+      if (info) {
+        info.textContent = "Page " + page + " of " + totalPages;
+      }
+
+      const url = new URL(window.location.href);
+      if (page === 1) {
+        url.searchParams.delete("page");
+      } else {
+        url.searchParams.set("page", String(page));
+      }
+      window.history.replaceState({}, "", url);
+    }
+
+    prevBtn.addEventListener("click", function () {
+      const p = readPage();
+      if (p > 1) showPage(p - 1);
+    });
+
+    nextBtn.addEventListener("click", function () {
+      const p = readPage();
+      if (p < totalPages) showPage(p + 1);
+    });
+
+    pageBtns.forEach(function (b) {
+      b.addEventListener("click", function () {
+        const p = Number(b.dataset.page);
+        showPage(p);
+      });
+    });
+
+    showPage(readPage());
+  })();
+</script>

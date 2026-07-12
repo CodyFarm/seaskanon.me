@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "title": "Canon In D",
+    "file": "Canon In D.mp3",
+    "cover": "Canon In D.jpg",
+    "artist": "seasKanon"
+  },
+  {
+    "id": 3,
+    "title": "Christmas Canon",
+    "file": "Christmas Canon .mp3",
+    "cover": "Christmas Canon  .jpg",
+    "artist": "seasKanon"
+  },
+  {
+    "id": 4,
+    "title": "Christmas Canon Rock",
+    "file": "Christmas Canon Rock .mp3",
+    "cover": "Christmas Canon Rock .jpg",
+    "artist": "seasKanon"
+  },
+  {
+    "id": 2,
+    "title": "Variations on the Kanon",
+    "file": "Variations on the Kanon .mp3",
+    "cover": "Variations on the Kanon.jpg",
+    "artist": "seasKanon"
+  }
+]

@@ -1,0 +1,251 @@
+---
+export interface Props {
+  /** Which side the sidebar is on: "left" (list pages) or "right" (post detail) */
+  side?: "left" | "right";
+}
+
+const { side = "left" } = Astro.props;
+const isLeft = side === "left";
+---
+
+<button
+  id="sidebar-toggle-btn"
+  class="sidebar-toggle-btn"
+  data-side={side}
+  aria-label={isLeft ? "收起侧边栏" : "展开侧边栏"}
+  title={isLeft ? "收起侧边栏" : "展开侧边栏"}
+>
+  <svg
+    class="sidebar-toggle-icon"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <polyline points="12,5 7,10 12,15" />
+    <polyline points="17,5 12,10 17,15" />
+  </svg>
+  <span class="sidebar-toggle-tooltip">{isLeft ? "收起侧边栏" : "展开侧边栏"}</span>
+</button>
+
+<style>
+  .sidebar-toggle-btn {
+    position: absolute;
+    top: 7rem;
+    z-index: 50;
+    width: 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(242 242 242 / 0.92);
+    border: 2.5px solid #000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 3px 3px 0 #000;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #4E6273;
+    outline: none;
+  }
+
+  /* ── Left sidebar: button on right edge ── */
+  .sidebar-toggle-btn[data-side="left"] {
+    right: -4px;
+    border-radius: 8px 0 0 8px;
+    border-right: none;
+  }
+
+  /* ── Right sidebar: button on left edge ── */
+  .sidebar-toggle-btn[data-side="right"] {
+    left: -4px;
+    border-radius: 0 8px 8px 0;
+    border-left: none;
+  }
+
+  /* ── Icon ── */
+  .sidebar-toggle-icon {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+  }
+
+  /* Right sidebar: arrow points right (for collapsing to the right) */
+  .sidebar-toggle-btn[data-side="right"] .sidebar-toggle-icon {
+    transform: rotate(180deg);
+  }
+
+  /* ── Tooltip ── */
+  .sidebar-toggle-tooltip {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #F2F2F2;
+    background: #4E6273;
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    border: 1.5px solid #000;
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.15);
+  }
+
+  .sidebar-toggle-btn[data-side="left"] .sidebar-toggle-tooltip {
+    left: calc(100% + 8px);
+    transform: translateY(-50%) translateX(-4px);
+  }
+
+  .sidebar-toggle-btn[data-side="right"] .sidebar-toggle-tooltip {
+    right: calc(100% + 8px);
+    transform: translateY(-50%) translateX(4px);
+  }
+
+  .sidebar-toggle-btn:hover .sidebar-toggle-tooltip {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  /* ── Hover glow ── */
+  .sidebar-toggle-btn:hover {
+    background: #fff;
+    color: #000;
+    box-shadow:
+      0 0 22px 4px rgb(243 150 229 / 0.6),
+      0 0 44px 8px rgb(243 150 229 / 0.3),
+      4px 4px 0 #000;
+  }
+
+  .sidebar-toggle-btn:active {
+    box-shadow: 1px 1px 0 #000;
+    transform: translate(2px, 2px);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     COLLAPSED STATE — button needs to be BIG and VISIBLE
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* Arrow reverses when collapsed (pointing "out" = expand direction) */
+  .sidebar-collapsed .sidebar-toggle-icon {
+    transform: rotate(180deg);
+  }
+  .sidebar-collapsed .sidebar-toggle-btn[data-side="right"] .sidebar-toggle-icon {
+    transform: rotate(0deg);
+  }
+
+  /* Left sidebar collapsed: button protrudes INTO content area from the left */
+  .sidebar-collapsed .sidebar-toggle-btn[data-side="left"] {
+    right: auto;
+    left: calc(100% - 4px);
+    border-radius: 0 8px 8px 0;
+    border-right: 2.5px solid #000;
+    border-left: none;
+    width: 36px;
+    height: 72px;
+    background: rgb(255 255 255 / 0.95);
+    box-shadow:
+      0 0 16px 3px rgb(243 150 229 / 0.45),
+      3px 3px 0 #000;
+  }
+
+  .sidebar-collapsed .sidebar-toggle-btn[data-side="left"]:hover {
+    box-shadow:
+      0 0 26px 6px rgb(243 150 229 / 0.65),
+      0 0 50px 10px rgb(243 150 229 / 0.35),
+      4px 4px 0 #000;
+    background: #fff;
+  }
+
+  /* Right sidebar collapsed: button protrudes INTO content area from the right */
+  .sidebar-collapsed .sidebar-toggle-btn[data-side="right"] {
+    left: auto;
+    right: calc(100% - 4px);
+    border-radius: 8px 0 0 8px;
+    border-left: 2.5px solid #000;
+    border-right: none;
+    width: 36px;
+    height: 72px;
+    background: rgb(255 255 255 / 0.95);
+    box-shadow:
+      0 0 16px 3px rgb(243 150 229 / 0.45),
+      -3px 3px 0 #000;
+  }
+
+  .sidebar-collapsed .sidebar-toggle-btn[data-side="right"]:hover {
+    box-shadow:
+      0 0 26px 6px rgb(243 150 229 / 0.65),
+      0 0 50px 10px rgb(243 150 229 / 0.35),
+      -4px 4px 0 #000;
+    background: #fff;
+  }
+
+  /* Reposition tooltips in collapsed state */
+  .sidebar-collapsed .sidebar-toggle-btn[data-side="left"] .sidebar-toggle-tooltip {
+    left: calc(100% + 8px);
+    right: auto;
+  }
+
+  .sidebar-collapsed .sidebar-toggle-btn[data-side="right"] .sidebar-toggle-tooltip {
+    right: calc(100% + 8px);
+    left: auto;
+  }
+</style>
+
+<script>
+  function initSidebarToggle() {
+    const btn = document.getElementById('sidebar-toggle-btn');
+    if (!btn) return;
+
+    const side = btn.dataset.side || 'left';
+    const grid = btn.closest('.sidebar-grid') as HTMLElement | null;
+    const tooltip = btn.querySelector('.sidebar-toggle-tooltip') as HTMLElement | null;
+    if (!grid) return;
+
+    const STORAGE_KEY = `sidebar-collapsed-${side}`;
+    const TOOLTIP_COLLAPSE = '收起侧边栏';
+    const TOOLTIP_EXPAND = '展开侧边栏';
+
+    // Restore state from localStorage. The right sidebar (article pages) defaults
+    // to collapsed; the left sidebar (listing pages) defaults to expanded.
+    const saved = localStorage.getItem(STORAGE_KEY);
+    let collapsed = side === 'right' ? saved !== 'false' : saved === 'true';
+
+    function applyState() {
+      if (collapsed) {
+        grid.classList.add('sidebar-collapsed');
+        btn.setAttribute('aria-label', TOOLTIP_EXPAND);
+        btn.setAttribute('title', TOOLTIP_EXPAND);
+        if (tooltip) tooltip.textContent = TOOLTIP_EXPAND;
+      } else {
+        grid.classList.remove('sidebar-collapsed');
+        btn.setAttribute('aria-label', TOOLTIP_COLLAPSE);
+        btn.setAttribute('title', TOOLTIP_COLLAPSE);
+        if (tooltip) tooltip.textContent = TOOLTIP_COLLAPSE;
+      }
+
+      // Re-enable transitions once the initial state is applied so the first
+      // paint doesn't animate from the server-rendered default.
+      document.documentElement.classList.remove('sidebar-no-transition');
+    }
+
+    applyState();
+
+    btn.addEventListener('click', () => {
+      collapsed = !collapsed;
+      localStorage.setItem(STORAGE_KEY, collapsed ? 'true' : 'false');
+      applyState();
+    });
+  }
+
+  // Run on load
+  initSidebarToggle();
+
+  // Re-run on Astro page transitions
+  document.addEventListener('astro:page-load', initSidebarToggle);
+</script>

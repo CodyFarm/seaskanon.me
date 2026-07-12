@@ -1,9 +1,10 @@
 ---
-import AuthorCard from "./AuthorCard.astro";
+import MusicPlayer from "./MusicPlayer.astro";
 import StatisticsCard from "./StatisticsCard.astro";
 import CategoryList from "./CategoryList.astro";
 import TagList from "./TagList.astro";
 import SeriesCard from "./SeriesCard.astro";
+import SidebarToggle from "./SidebarToggle.astro";
 import type { TaxonomyCount } from "@/lib/writing";
 
 interface Props {
@@ -18,15 +19,28 @@ interface Props {
   series: TaxonomyCount[];
   activeCategory?: string;
   activeTag?: string;
+  activeSeries?: string;
+  showToggle?: boolean;
 }
 
-const { stats, categories, tags, series, activeCategory = "", activeTag = "" } = Astro.props;
+const { stats, categories, tags, series, activeCategory = "", activeTag = "", activeSeries = "", showToggle = true } = Astro.props;
 ---
 
-<aside class="flex flex-col gap-5 lg:sticky lg:top-6 lg:self-start">
-  <AuthorCard />
-  <StatisticsCard stats={stats} />
-  <SeriesCard series={series} />
-  <CategoryList categories={categories} activeSlug={activeCategory} />
-  <TagList tags={tags} activeSlug={activeTag} />
+<aside id="sidebar" class="sidebar-panel relative flex flex-col gap-5">
+  {showToggle && <SidebarToggle side="left" />}
+
+  <div class="sidebar-inner flex flex-col gap-5">
+    <!-- Top section: scrolls away naturally -->
+    <div id="sidebar-top" class="flex flex-col gap-5">
+      <MusicPlayer />
+      <StatisticsCard stats={stats} />
+    </div>
+
+    <!-- Bottom section: sticky -->
+    <div id="sidebar-sticky" class="transition-all duration-700 flex flex-col gap-5 top-6 sticky">
+      <SeriesCard series={series} activeSlug={activeSeries} />
+      <CategoryList categories={categories} activeSlug={activeCategory} />
+      <TagList tags={tags} activeSlug={activeTag} />
+    </div>
+  </div>
 </aside>

@@ -11,5 +11,5 @@ export async function getStaticPaths() {
 export const prerender = true;
 
 const { slug } = Astro.params;
-return Astro.redirect(`/writing/${slug}/`, 308);
+return Astro.redirect(encodeURI(`/writing/${slug}/`), 308);
 ---

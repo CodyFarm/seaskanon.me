@@ -1,113 +1,337 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import "katex/dist/katex.min.css";
 import BaseHead from "@/components/BaseHead.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import FormattedDate from "@/components/FormattedDate.astro";
-import ArticleCard from "@/components/blog/ArticleCard.astro";
-import { Picture } from "astro:assets";
-import type { ImageMetadata } from "astro";
+import PostHeroImage from "@/components/blog/PostHeroImage.astro";
+import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
+import PostSeriesAside from "@/components/blog/PostSeriesAside.astro";
+import PostCategoriesAside from "@/components/blog/PostCategoriesAside.astro";
+import PostTagsAside from "@/components/blog/PostTagsAside.astro";
+import SidebarToggle from "@/components/blog/SidebarToggle.astro";
 import {
-  getPostCover,
   getReadingTime,
-  getPublishedWriting,
+  getFirstLetterColor,
+  slugifyTaxonomy,
+  type TaxonomyCount,
   type WritingPost,
 } from "@/lib/writing";
 
-type Props = CollectionEntry<"blog">["data"] & {
+type Props = {
   post: WritingPost;
-  relatedPosts?: WritingPost[];
+  relatedPosts: WritingPost[];
+  allCategories: TaxonomyCount[];
+  allTags: TaxonomyCount[];
+  seriesPosts: WritingPost[];
 };
 
-const { post, relatedPosts = [] } = Astro.props;
-const { title, description, pubDate, updatedDate, category, tags, series } = post.data;
-const cover = getPostCover(post);
+const {
+  post,
+  relatedPosts = [],
+  allCategories = [],
+  allTags = [],
+  seriesPosts = [],
+} = Astro.props;
+const { title, description, pubDate, updatedDate, category, categories, tags, series, firstLetterColor } =
+  post.data;
+const effectiveCategory = category || categories;
+const firstLetter = getFirstLetterColor(firstLetterColor);
 const readingTime = getReadingTime(post);
-const images = import.meta.glob<{ default: ImageMetadata }>("/src/assets/*.{webp,jpeg,jpg,png,gif}");
-const imageLoader = cover ? images[cover] : undefined;
-const colors = ["green", "pink", "yellow", "blue"] as const;
+
+// ── Active slugs for sidebar highlighting ──────────────────────────
+const activeCategorySlug = effectiveCategory ? slugifyTaxonomy(effectiveCategory) : "";
+const activeTagSlugs = tags.map((t) => slugifyTaxonomy(t));
+
+// ── Related posts: score by tag overlap, fill to 3 ──────────────────
+function getRelatedPosts(
+  current: WritingPost,
+  candidates: WritingPost[],
+  count = 3,
+): WritingPost[] {
+  const currentTags = new Set(current.data.tags.map((t) => t.toLowerCase()));
+  const scored = candidates.map((p) => {
+    const overlap = p.data.tags.filter((t) =>
+      currentTags.has(t.toLowerCase()),
+    ).length;
+    return { post: p, overlap };
+  });
+  scored.sort(
+    (a, b) =>
+      b.overlap - a.overlap ||
+      b.post.data.pubDate.valueOf() - a.post.data.pubDate.valueOf(),
+  );
+
+  const result: WritingPost[] = [];
+  const used = new Set<string>();
+
+  for (const { post, overlap } of scored) {
+    if (result.length >= count) break;
+    if (overlap > 0 && !used.has(post.id)) {
+      result.push(post);
+      used.add(post.id);
+    }
+  }
+
+  for (const { post } of scored) {
+    if (result.length >= count) break;
+    if (!used.has(post.id)) {
+      result.push(post);
+      used.add(post.id);
+    }
+  }
+
+  return result;
+}
+
+const related = getRelatedPosts(post, relatedPosts, 3);
 ---
 
-<html lang="en">
+<html lang="en" class="sidebar-no-transition">
   <head>
     <BaseHead title={title} description={description} />
   </head>
   <body>
     <Header />
-    <main class="container mx-auto px-4 py-10 md:px-10 md:py-16">
-      <article class="mx-auto max-w-5xl">
-        <header class="rounded-3xl border-[3px] border-black bg-white p-5 shadow-card md:p-8">
-          <div class="overflow-hidden rounded-3xl border-[3px] border-black bg-pblue">
-            {imageLoader ? (
-              <Picture
-                src={imageLoader()}
-                alt={title}
-                class="h-72 w-full object-cover md:h-96"
-                format="webp"
-                widths={[480, 720, 1000, 1280]}
-                sizes="(max-width: 768px) 100vw, 1000px"
-                quality={82}
-              />
-            ) : (
-              <div class="flex h-72 items-center justify-center bg-pblue md:h-96">
-                <span class="font-kablamo text-9xl text-pblack">{title.charAt(0)}</span>
-              </div>
-            )}
+    <main>
+      <!-- ════════════════════════════════════════════════════════════════
+           Full-bleed cover — sticky so it stays put while the content
+           sheet scrolls up over it like a drawer pulling out.
+           ════════════════════════════════════════════════════════════════ -->
+      <div class="sticky top-0 z-0 h-[75vh] w-full overflow-hidden md:h-[85vh]">
+        <PostHeroImage
+          post={post}
+          alt={title}
+          class="h-full w-full object-cover"
+          widths={[480, 720, 1000, 1280, 1920]}
+          sizes="100vw"
+          quality={82}
+        >
+          <div class="flex h-full items-center justify-center bg-pblue">
+            <span class="font-kablamo text-9xl text-pblack">
+              {title.charAt(0)}
+            </span>
+          </div>
+        </PostHeroImage>
+        <!-- Subtle bottom fade so the white sheet pops -->
+        <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/25"></div>
+      </div>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           Content sheet — overlaps the cover via negative margin,
+           rounded top corners, page-background colour.
+           ════════════════════════════════════════════════════════════════ -->
+      <div class="relative z-10 -mt-14 rounded-t-3xl bg-[#f2f2f2] px-4 pt-10 md:-mt-20 md:px-10 md:pt-14">
+        <article class="mx-auto max-w-5xl">
+          <!-- ── Separator: meta sits on top of a thin dark rule ── -->
+          <div class="mb-10 md:mb-12">
+            <div class="mb-3 flex flex-wrap items-center gap-2 text-sm font-medium tracking-wide text-neutral-400">
+              <FormattedDate date={pubDate} />
+              <span aria-hidden="true" class="text-neutral-300">·</span>
+              <span>{readingTime.text}</span>
+              <span aria-hidden="true" class="text-neutral-300">·</span>
+              <span>{readingTime.words.toLocaleString()} words</span>
+              {updatedDate && (
+                <>
+                  <span aria-hidden="true" class="text-neutral-300">·</span>
+                  <span>Updated <FormattedDate date={updatedDate} /></span>
+                </>
+              )}
+            </div>
+            <hr class="border-t-2 border-neutral-900" />
           </div>
 
-          <div class="mt-6 flex flex-wrap items-center gap-2 text-sm font-semibold text-pblack">
-            <FormattedDate date={pubDate} />
-            <span aria-hidden="true">•</span>
-            <span>{readingTime.text}</span>
-            <span aria-hidden="true">•</span>
-            <span>{readingTime.words.toLocaleString()} words</span>
-            {updatedDate && (
-              <>
-                <span aria-hidden="true">•</span>
-                <span>Updated <FormattedDate date={updatedDate} /></span>
-              </>
-            )}
-          </div>
-
-          <h1 class="mt-4 text-5xl font-black leading-tight text-black md:text-7xl">
-            <span class="font-kablamo text-ppink">{title.charAt(0)}</span>{title.slice(1)}
+          <!-- ── Title ── -->
+          <h1 class="text-5xl font-black leading-tight text-black md:text-7xl">
+            <span class={`font-kablamo ${firstLetter.className}`} style={`color: ${firstLetter.style}`}>{title.charAt(0)}</span>{
+              title.slice(1)
+            }
           </h1>
-          <p class="mt-4 max-w-3xl text-lg leading-8 text-pblack" set:html={description} />
+          <p
+            class="mt-4 max-w-3xl text-lg leading-8 text-neutral-500"
+            set:html={description}
+          />
 
+          <!-- ── Tag pills ── -->
           <div class="mt-6 flex flex-wrap gap-2">
-            {category && <a href={`/writing/categories/${category.toLocaleLowerCase().replace(/\s+/g, "-")}/`} class="rounded-full border-2 border-black bg-pyellow px-3 py-1 text-sm font-bold shadow-card1">{category}</a>}
-            {series && <span class="rounded-full border-2 border-black bg-pblue px-3 py-1 text-sm font-bold shadow-card1">Series: {series}</span>}
+            {effectiveCategory && (
+              <a
+                href={`/writing/categories/${effectiveCategory.toLocaleLowerCase().replace(/\s+/g, "-")}/`}
+                class="rounded-full border border-neutral-300 bg-neutral-50 px-3 py-1 text-sm font-semibold text-neutral-500 transition-all duration-200 hover:border-ppink hover:text-ppink"
+              >
+                {effectiveCategory}
+              </a>
+            )}
+            {series && (
+              <span class="rounded-full border border-neutral-300 bg-neutral-50 px-3 py-1 text-sm font-semibold text-neutral-500">
+                Series: {series}
+              </span>
+            )}
             {tags.map((tag) => (
-              <a href={`/writing/tags/${tag.toLocaleLowerCase().replace(/\s+/g, "-")}/`} class="rounded-full border-2 border-black bg-pgreen px-3 py-1 text-sm font-bold shadow-card1">#{tag}</a>
+              <a
+                href={`/writing/tags/${tag.toLocaleLowerCase().replace(/\s+/g, "-")}/`}
+                class="rounded-full border border-neutral-300 bg-neutral-50 px-3 py-1 text-sm font-semibold text-neutral-500 transition-all duration-200 hover:border-pgreen hover:text-pgreen"
+              >
+                #{tag}
+              </a>
             ))}
           </div>
-        </header>
 
-        <div class="mt-10 grid gap-8 lg:grid-cols-[1fr_280px]">
-          <div class="prose prose-lg max-w-none rounded-3xl border-[3px] border-black bg-white p-6 shadow-card md:p-10">
-            <slot />
-          </div>
+          <!-- ── Magazine rule before body (plain, no diamond) ── -->
+          <hr class="my-12 border-t border-neutral-300" />
 
-          <aside class="flex flex-col gap-5 lg:sticky lg:top-6 lg:self-start">
-            <div class="rounded-3xl border-[3px] border-black bg-pyellow p-5 shadow-card">
-              <p class="text-sm font-semibold uppercase tracking-wide text-pblack">Written by</p>
-              <h2 class="mt-2 text-2xl font-bold">seasKanon</h2>
-              <p class="mt-2 text-sm leading-6 text-pblack">Notes from a long-running garden of mathematics, code, culture, and projects.</p>
+          <!-- ── Content grid: prose + sidebar ── -->
+          <div class="grid gap-10 sidebar-grid sidebar-grid--right sidebar-collapsed">
+            <!-- Prose — clean, no card -->
+            <div class="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-black prose-a:text-ppink prose-a:no-underline hover:prose-a:underline prose-blockquote:border-l-2 prose-blockquote:border-ppink prose-blockquote:font-normal prose-blockquote:not-italic prose-blockquote:text-neutral-600 prose-img:rounded-xl">
+              <slot />
             </div>
-            {relatedPosts.length > 0 && (
-              <div class="rounded-3xl border-[3px] border-black bg-ppink p-5 shadow-card">
-                <h2 class="text-xl font-bold">Related</h2>
-                <div class="mt-4 flex flex-col gap-4">
-                  {relatedPosts.slice(0, 3).map((related, index) => (
-                    <ArticleCard post={related} color={colors[index % colors.length]} />
-                  ))}
+
+            <!-- ═══════════ Sidebar (Fuwari-style) ═══════════ -->
+            <aside id="sidebar" class="sidebar-panel relative flex flex-col gap-5">
+                <!-- Sidebar toggle button (right sidebar) -->
+                <SidebarToggle side="right" />
+
+                <div class="sidebar-inner flex flex-col gap-5">
+                  <!-- ── Top section: scrolls away naturally (like Fuwari Profile) ── -->
+                  <div id="sidebar-top" class="flex flex-col gap-5">
+                <div class="rounded-3xl border-[3px] border-black bg-[#F0FFFF] p-6 shadow-card">
+                  <span class="inline-block rounded-lg border-2 border-black bg-[#87CEFF] px-4 py-1.5 text-xl font-bold shadow-card1">
+                    About this post
+                  </span>
+                  <dl class="mt-4 flex flex-col gap-3">
+                    <div class="flex items-center justify-between rounded-xl border-2 border-black bg-white px-3 py-2 text-sm font-semibold shadow-card1">
+                      <dt class="text-pblack">Published</dt>
+                      <dd><FormattedDate date={pubDate} /></dd>
+                    </div>
+                    <div class="flex items-center justify-between rounded-xl border-2 border-black bg-white px-3 py-2 text-sm font-semibold shadow-card1">
+                      <dt class="text-pblack">Reading time</dt>
+                      <dd>{readingTime.text}</dd>
+                    </div>
+                    <div class="flex items-center justify-between rounded-xl border-2 border-black bg-white px-3 py-2 text-sm font-semibold shadow-card1">
+                      <dt class="text-pblack">Words</dt>
+                      <dd>{readingTime.words.toLocaleString()}</dd>
+                    </div>
+                  </dl>
                 </div>
               </div>
-            )}
-          </aside>
-        </div>
-      </article>
+
+              <!-- ── Bottom section: sticky (like Fuwari #sidebar-sticky) ── -->
+              <div id="sidebar-sticky" class="transition-all duration-700 flex flex-col gap-5 top-6 sticky lg:top-24">
+                <!-- ── Series timeline ── -->
+                {seriesPosts.length > 0 && (
+                  <PostSeriesAside
+                    seriesName={series!}
+                    seriesPosts={seriesPosts}
+                    currentPostId={post.id}
+                  />
+                )}
+
+                <!-- ── Categories ── -->
+                <PostCategoriesAside
+                  categories={allCategories}
+                  activeSlug={activeCategorySlug}
+                />
+
+                <!-- ── Tags ── -->
+                <PostTagsAside
+                  tags={allTags}
+                  activeSlugs={activeTagSlugs}
+                />
+
+                <!-- ── Related ── -->
+                {
+                  related.length > 0 && (
+                    <div class="rounded-3xl border-[3px] border-black bg-[#F8F8FF] p-6 shadow-card">
+                      <span class="inline-block rounded-lg border-2 border-black bg-[#DCDCDC] px-4 py-1.5 text-lg font-black text-black shadow-card1">
+                        Related
+                      </span>
+                      <div class="mt-4 flex flex-col gap-2.5">
+                        {related.map((p) => (
+                          <a
+                            href={`/writing/${p.id}/`}
+                            class="group flex items-center gap-3 rounded-xl border border-neutral-200 bg-neutral-50/50 p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-ppink hover:bg-white hover:shadow-md"
+                          >
+                            <span
+                              class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg text-sm font-black text-white shadow-sm"
+                              style={`background-color: ${getFirstLetterColor(p.data.firstLetterColor).style}`}
+                            >
+                              {p.data.title.charAt(0).toUpperCase()}
+                            </span>
+                            <div class="min-w-0 flex-1">
+                              <p class="truncate text-sm font-semibold text-neutral-700 transition-colors duration-200 group-hover:text-ppink">
+                                {p.data.title}
+                              </p>
+                              <p class="mt-0.5 text-xs text-neutral-400">
+                                <FormattedDate date={p.data.pubDate} />
+                              </p>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )
+                }
+              </div>
+              </div>
+            </aside>
+          </div>
+          </div>
+        </article>
+      </div>
     </main>
     <Footer />
+    <CapsulePlayer />
+
+    <style>
+      #sidebar-sticky.scrolled-past-top {
+        transform: translateY(-200px);
+      }
+
+      /* Disable sidebar animations during initial state restoration so the
+         default-collapsed sidebar doesn't flash/animate on every refresh. */
+      .sidebar-no-transition .sidebar-grid,
+      .sidebar-no-transition .sidebar-inner,
+      .sidebar-no-transition .sidebar-toggle-icon,
+      .sidebar-no-transition .sidebar-toggle-btn {
+        transition: none !important;
+      }
+    </style>
+
+    <script>
+      const sidebarTop = document.getElementById('sidebar-top');
+      const sidebarSticky = document.getElementById('sidebar-sticky');
+
+      if (sidebarTop && sidebarSticky) {
+        const top = sidebarTop;
+        const sticky = sidebarSticky;
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+
+        function updateStickyOffset() {
+          const scrollY = window.scrollY;
+          const isScrollingDown = scrollY > lastScrollY;
+          const topIsGone = top.getBoundingClientRect().bottom <= 0;
+
+          if (isScrollingDown && topIsGone) {
+            sticky.classList.add('scrolled-past-top');
+          } else {
+            sticky.classList.remove('scrolled-past-top');
+          }
+
+          lastScrollY = scrollY;
+          ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            window.requestAnimationFrame(updateStickyOffset);
+            ticking = true;
+          }
+        }, { passive: true });
+
+        updateStickyOffset();
+      }
+    </script>
   </body>
 </html>

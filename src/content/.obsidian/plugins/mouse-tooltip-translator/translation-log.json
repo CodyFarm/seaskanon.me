@@ -1,0 +1,2209 @@
+{
+  "version": 1,
+  "entries": {
+    "v2|google|auto|zh-CN|comparisions": {
+      "sourceText": "comparisions",
+      "targetText": "比较",
+      "sourceLang": "te",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779954590646,
+      "lastSeen": 1779954590646
+    },
+    "v2|google|auto|zh-CN|multiple": {
+      "sourceText": "multiple",
+      "targetText": "多种的",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "形容词",
+          "terms": [
+            "多种",
+            "众多",
+            "众"
+          ]
+        },
+        {
+          "pos": "名词",
+          "terms": [
+            "倍数"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1779954592469,
+      "lastSeen": 1779954592469
+    },
+    "v2|google|auto|zh-CN|1": {
+      "sourceText": "1",
+      "targetText": "1",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 2,
+      "firstSeen": 1779954603964,
+      "lastSeen": 1780131654493
+    },
+    "v2|google|auto|zh-CN|0": {
+      "sourceText": "0",
+      "targetText": "0",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779954605161,
+      "lastSeen": 1779954605161
+    },
+    "v2|google|auto|zh-CN|枢轴量服从N": {
+      "sourceText": "枢轴量服从N",
+      "targetText": "枢轴量服从N",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779954607027,
+      "lastSeen": 1779954607027
+    },
+    "v2|google|auto|zh-CN|当alpha": {
+      "sourceText": "当alpha",
+      "targetText": "当alpha",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779954607509,
+      "lastSeen": 1779954607509
+    },
+    "v2|google|auto|zh-CN|至少犯type": {
+      "sourceText": "至少犯type",
+      "targetText": "至少犯type",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779954610880,
+      "lastSeen": 1779954610880
+    },
+    "v2|google|auto|zh-CN|error": {
+      "sourceText": "error",
+      "targetText": "错误",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "名词",
+          "terms": [
+            "错误",
+            "误差",
+            "差错"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1779954618120,
+      "lastSeen": 1779954618120
+    },
+    "v2|google|auto|zh-CN|那么了解你掌握因果推断的知识并不会为你获得职位晋升的机会提供更多信息": {
+      "sourceText": "那么了解你掌握因果推断的知识并不会为你获得职位晋升的机会提供更多信息",
+      "targetText": "那么了解你掌握因果推断的知识并不会为你获得职位晋升的机会提供更多信息",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779954988371,
+      "lastSeen": 1779954988371
+    },
+    "v2|google|auto|zh-CN|color": {
+      "sourceText": "color",
+      "targetText": "颜色",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "名词",
+          "terms": [
+            "颜色",
+            "彩色",
+            "色"
+          ]
+        },
+        {
+          "pos": "动词",
+          "terms": [
+            "绘画",
+            "绘",
+            "脸红"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1779955001147,
+      "lastSeen": 1779955001147
+    },
+    "v2|google|auto|zh-CN|这里我们可以说": {
+      "sourceText": "这里我们可以说",
+      "targetText": "这里我们可以说",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779955005058,
+      "lastSeen": 1779955005058
+    },
+    "v2|google|auto|zh-CN|职位晋升依赖于因果知识": {
+      "sourceText": "职位晋升依赖于因果知识",
+      "targetText": "职位晋升依赖于因果知识",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779955010614,
+      "lastSeen": 1779955010614
+    },
+    "v2|google|auto|zh-CN|是一个被条件化的变量": {
+      "sourceText": "是一个被条件化的变量",
+      "targetText": "是一个被条件化的变量",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 2,
+      "firstSeen": 1779955018276,
+      "lastSeen": 1783825544695
+    },
+    "v2|google|auto|zh-CN|同理": {
+      "sourceText": "同理",
+      "targetText": "同理",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779955019843,
+      "lastSeen": 1779955019843
+    },
+    "v2|google|auto|zh-CN|依赖关系被阻断": {
+      "sourceText": "依赖关系被阻断",
+      "targetText": "依赖关系被阻断",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779955050653,
+      "lastSeen": 1779955050653
+    },
+    "v2|google|auto|zh-CN|在这种情况下": {
+      "sourceText": "在这种情况下",
+      "targetText": "在这种情况下",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779955080415,
+      "lastSeen": 1779955080415
+    },
+    "v2|google|auto|zh-CN|时": {
+      "sourceText": "时",
+      "targetText": "时",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779955106847,
+      "lastSeen": 1779955106847
+    },
+    "v2|google|auto|zh-CN|了解你的晋升状况并不能让我进一步获知你掌握因果推断的可能性": {
+      "sourceText": "了解你的晋升状况并不能让我进一步获知你掌握因果推断的可能性",
+      "targetText": "了解你的晋升状况并不能让我进一步获知你掌握因果推断的可能性",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 2,
+      "firstSeen": 1779955109182,
+      "lastSeen": 1783825535435
+    },
+    "v2|google|auto|zh-CN|我们可以通过对共同原因进行条件化来关闭后门路径": {
+      "sourceText": "我们可以通过对共同原因进行条件化来关闭后门路径",
+      "targetText": "我们可以通过对共同原因进行条件化来关闭后门路径",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779955112818,
+      "lastSeen": 1779955112818
+    },
+    "v2|google|auto|zh-CN|知晓你的统计学水平已为我提供了推断你机器学习技能所需的全部信息": {
+      "sourceText": "知晓你的统计学水平已为我提供了推断你机器学习技能所需的全部信息",
+      "targetText": "知晓你的统计学水平已为我提供了推断你机器学习技能所需的全部信息",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779955124200,
+      "lastSeen": 1779955124200
+    },
+    "v2|google|auto|zh-CN|但当我们以该共同原因为条件时": {
+      "sourceText": "但当我们以该共同原因为条件时",
+      "targetText": "但当我们以该共同原因为条件时",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779955142501,
+      "lastSeen": 1779955142501
+    },
+    "v2|google|auto|zh-CN|了解你的因果推断能力不会带来额外信息": {
+      "sourceText": "了解你的因果推断能力不会带来额外信息",
+      "targetText": "了解你的因果推断能力不会带来额外信息",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779955150504,
+      "lastSeen": 1779955150504
+    },
+    "v2|google|auto|zh-CN|额外信息": {
+      "sourceText": "额外信息",
+      "targetText": "额外信息",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779955159378,
+      "lastSeen": 1779955159378
+    },
+    "v2|google|auto|zh-CN|晋升机会越大": {
+      "sourceText": "晋升机会越大",
+      "targetText": "晋升机会越大",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779957860873,
+      "lastSeen": 1779957860873
+    },
+    "v2|google|auto|zh-CN|[[Pasted image 20260528164443.png]]": {
+      "sourceText": "[[Pasted image 20260528164443.png]]",
+      "targetText": "[[粘贴图像20260528164443.png]]",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779957898205,
+      "lastSeen": 1779957898205
+    },
+    "v2|google|auto|zh-CN|偏误的首要重要原因是混杂因素": {
+      "sourceText": "偏误的首要重要原因是混杂因素",
+      "targetText": "偏误的首要重要原因是混杂因素",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779957900198,
+      "lastSeen": 1779957900198
+    },
+    "v2|google|auto|zh-CN|当处理因素与结果存在共同原因时": {
+      "sourceText": "当处理因素与结果存在共同原因时",
+      "targetText": "当处理因素与结果存在共同原因时",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779957953968,
+      "lastSeen": 1779957953968
+    },
+    "v2|google|auto|zh-CN|只要控制那些可观测变量": {
+      "sourceText": "只要控制那些可观测变量",
+      "targetText": "只要控制那些可观测变量",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779957965192,
+      "lastSeen": 1779957965192
+    },
+    "v2|google|auto|zh-CN|它们能中介未测量变量对处理的影响": {
+      "sourceText": "它们能中介未测量变量对处理的影响",
+      "targetText": "它们能中介未测量变量对处理的影响",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779957969873,
+      "lastSeen": 1779957969873
+    },
+    "v2|google|auto|zh-CN|仍可实现条件独立性": {
+      "sourceText": "仍可实现条件独立性",
+      "targetText": "仍可实现条件独立性",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779958015107,
+      "lastSeen": 1779958015107
+    },
+    "v2|google|auto|zh-CN|$(Y_{0},Y_{1}\\perp T|X_{1},X_{2})$": {
+      "sourceText": "$(Y_{0},Y_{1}\\perp T|X_{1},X_{2})$",
+      "targetText": "$(Y_{0},Y_{1}\\perp T|X_{1},X_{2})$",
+      "sourceLang": "es",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779958021926,
+      "lastSeen": 1779958021926
+    },
+    "v2|google|auto|zh-CN|我们无法以其为条件": {
+      "sourceText": "我们无法以其为条件",
+      "targetText": "我们无法以其为条件",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779958030269,
+      "lastSeen": 1779958030269
+    },
+    "v2|google|auto|zh-CN|但由于": {
+      "sourceText": "但由于",
+      "targetText": "但由于",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779958056099,
+      "lastSeen": 1779958056099
+    },
+    "v2|google|auto|zh-CN|X_{2}": {
+      "sourceText": "X_{2}",
+      "targetText": "X_{2}",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779958059463,
+      "lastSeen": 1779958059463
+    },
+    "v2|google|auto|zh-CN|即便无法测量所有共同原因": {
+      "sourceText": "即便无法测量所有共同原因",
+      "targetText": "即便无法测量所有共同原因",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779958111389,
+      "lastSeen": 1779958111389
+    },
+    "v2|google|auto|zh-CN|后门路径": {
+      "sourceText": "后门路径",
+      "targetText": "后门路径",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 2,
+      "firstSeen": 1779958455801,
+      "lastSeen": 1779958456109
+    },
+    "v2|google|auto|zh-CN|很可能统计学也相当扎实": {
+      "sourceText": "很可能统计学也相当扎实",
+      "targetText": "很可能统计学也相当扎实",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779958627831,
+      "lastSeen": 1779958627831
+    },
+    "v2|google|auto|zh-CN|由于教育是随机分配的": {
+      "sourceText": "由于教育是随机分配的",
+      "targetText": "由于教育是随机分配的",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779964600366,
+      "lastSeen": 1779964600366
+    },
+    "v2|google|auto|zh-CN|由于教育是随机": {
+      "sourceText": "由于教育是随机",
+      "targetText": "由于教育是随机",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779964600717,
+      "lastSeen": 1779964600717
+    },
+    "v2|google|auto|zh-CN|偏误项为零": {
+      "sourceText": "偏误项为零",
+      "targetText": "偏误项为零",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779964602673,
+      "lastSeen": 1779964602673
+    },
+    "v2|google|auto|zh-CN|但若我们以投资为条件进行观察": {
+      "sourceText": "但若我们以投资为条件进行观察",
+      "targetText": "但若我们以投资为条件进行观察",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779964612250,
+      "lastSeen": 1779964612250
+    },
+    "v2|google|auto|zh-CN|wages0": {
+      "sourceText": "wages0",
+      "targetText": "工资0",
+      "sourceLang": "nl",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 2,
+      "firstSeen": 1779964636413,
+      "lastSeen": 1779964636628
+    },
+    "v2|google|auto|zh-CN|当我们不控制投资变量时": {
+      "sourceText": "当我们不控制投资变量时",
+      "targetText": "当我们不控制投资变量时",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779964642844,
+      "lastSeen": 1779964642844
+    },
+    "v2|google|auto|zh-CN|假设投资与教育仅取两个值以说明此情形": {
+      "sourceText": "假设投资与教育仅取两个值以说明此情形",
+      "targetText": "假设投资与教育仅取两个值以说明此情形",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779964644676,
+      "lastSeen": 1779964644676
+    },
+    "v2|google|auto|zh-CN|他们要么受过教育": {
+      "sourceText": "他们要么受过教育",
+      "targetText": "他们要么受过教育",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779964675956,
+      "lastSeen": 1779964675956
+    },
+    "v2|google|auto|zh-CN|是相同的": {
+      "sourceText": "是相同的",
+      "targetText": "是相同的",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779964676951,
+      "lastSeen": 1779964676951
+    },
+    "v2|google|auto|zh-CN|那些即使受过教育也不投资的人": {
+      "sourceText": "那些即使受过教育也不投资的人",
+      "targetText": "那些即使受过教育也不投资的人",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779964858334,
+      "lastSeen": 1779964858334
+    },
+    "v2|google|auto|zh-CN|很可能高于受过教育群体若未受教育时的工资": {
+      "sourceText": "很可能高于受过教育群体若未受教育时的工资",
+      "targetText": "很可能高于受过教育群体若未受教育时的工资",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779964858858,
+      "lastSeen": 1779964858858
+    },
+    "v2|google|auto|zh-CN|其工资可能低于未受教育也未投资的群体": {
+      "sourceText": "其工资可能低于未受教育也未投资的群体",
+      "targetText": "其工资可能低于未受教育也未投资的群体",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779964867682,
+      "lastSeen": 1779964867682
+    },
+    "v2|google|auto|zh-CN|。": {
+      "sourceText": "。",
+      "targetText": "。",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779964896946,
+      "lastSeen": 1779964896946
+    },
+    "v2|google|auto|zh-CN|我们很可能同样发现": {
+      "sourceText": "我们很可能同样发现",
+      "targetText": "我们很可能同样发现",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779964967084,
+      "lastSeen": 1779964967084
+    },
+    "v2|google|auto|zh-CN|更高的教育水平与较低的工资相关联": {
+      "sourceText": "更高的教育水平与较低的工资相关联",
+      "targetText": "更高的教育水平与较低的工资相关联",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779965013047,
+      "lastSeen": 1779965013047
+    },
+    "v2|google|auto|zh-CN|但为了确保效果": {
+      "sourceText": "但为了确保效果",
+      "targetText": "但为了确保效果",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779965093743,
+      "lastSeen": 1779965093743
+    },
+    "v2|google|auto|zh-CN|而是因为它关闭了处理作用的一个渠道": {
+      "sourceText": "而是因为它关闭了处理作用的一个渠道",
+      "targetText": "而是因为它关闭了处理作用的一个渠道",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779965100345,
+      "lastSeen": 1779965100345
+    },
+    "v2|google|auto|zh-CN|仅保留了教育对工资的直接影响": {
+      "sourceText": "仅保留了教育对工资的直接影响",
+      "targetText": "仅保留了教育对工资的直接影响",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779965101697,
+      "lastSeen": 1779965101697
+    },
+    "v2|google|auto|zh-CN|1的情况": {
+      "sourceText": "1的情况",
+      "targetText": "1的情况",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 2,
+      "firstSeen": 1779965173017,
+      "lastSeen": 1783825503848
+    },
+    "v2|google|auto|zh-CN|以中介变量为条件会引入负向偏误。这会使教育的影响显得低于实际水平": {
+      "sourceText": "以中介变量为条件会引入负向偏误。这会使教育的影响显得低于实际水平",
+      "targetText": "以中介变量为条件会引入负向偏误。这会使教育的影响显得低于实际水平",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779965445466,
+      "lastSeen": 1779965445466
+    },
+    "v2|google|auto|zh-CN|之所以如此，是因为因果效应本身为正": {
+      "sourceText": "之所以如此，是因为因果效应本身为正",
+      "targetText": "之所以如此，是因为因果效应本身为正",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779965458022,
+      "lastSeen": 1779965458022
+    },
+    "v2|google|auto|zh-CN|我们的发现并非偶然": {
+      "sourceText": "我们的发现并非偶然",
+      "targetText": "我们的发现并非偶然",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779966287641,
+      "lastSeen": 1779966287641
+    },
+    "v2|google|auto|zh-CN|结果表明，我们的发现并非偶": {
+      "sourceText": "结果表明，我们的发现并非偶",
+      "targetText": "结果表明，我们的发现并非偶",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779966294506,
+      "lastSeen": 1779966294506
+    },
+    "v2|google|auto|zh-CN|置信区间是为我们的估计值提供不确定性范围的一种方法": {
+      "sourceText": "置信区间是为我们的估计值提供不确定性范围的一种方法",
+      "targetText": "置信区间是为我们的估计值提供不确定性范围的一种方法",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1779966301962,
+      "lastSeen": 1779966301962
+    },
+    "v2|google|auto|zh-CN|和时间": {
+      "sourceText": "和时间",
+      "targetText": "和时间",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780060526237,
+      "lastSeen": 1780060526237
+    },
+    "v2|google|auto|zh-CN|用“需要实现的功能 + 对外接口（伪代码级别）+ 关键注意点”的方式描述，便于你后续逐个编码。": {
+      "sourceText": "用“需要实现的功能 + 对外接口（伪代码级别）+ 关键注意点”的方式描述，便于你后续逐个编码。",
+      "targetText": "用“需要实现的功能 + 对外接口（伪代码级别）+ 关键注意点”的方式描述，便于你后续逐个编码。",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780131068272,
+      "lastSeen": 1780131068272
+    },
+    "v2|google|auto|zh-CN|下面给你一份": {
+      "sourceText": "下面给你一份",
+      "targetText": "下面给你一份",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780131071138,
+      "lastSeen": 1780131071138
+    },
+    "v2|google|auto|zh-CN|下面给你一份“更完整、可落地”的任务清单与模块职责说明，按你提出的分层（业务层→算法层→网络层→操作层→表现层）来组织，同时补上容易遗漏但后期会踩坑的能力（缓存、约束扩展、可编辑路线、异步/并发、兜底策略、测试）。\n\n我会用“需要实现的功能 + 对外接口（伪代码级别）+ 关键注意点”的方式描述，便于你后续逐个编码。": {
+      "sourceText": "下面给你一份“更完整、可落地”的任务清单与模块职责说明，按你提出的分层（业务层→算法层→网络层→操作层→表现层）来组织，同时补上容易遗漏但后期会踩坑的能力（缓存、约束扩展、可编辑路线、异步/并发、兜底策略、测试）。\n\n我会用“需要实现的功能 + 对外接口（伪代码级别）+ 关键注意点”的方式描述，便于你后续逐个编码。",
+      "targetText": "下面给你一份“更完整、可落地”的任务清单与模块职责说明，按你提出的分层（业务层→算法层→网络层→操作层→表现层）来组织，同时补上容易遗漏但后期会踩坑的能力（缓存、约束扩展、可编辑路线、异步/并发、兜底策略、测试）。\n\n我会用“需要实现的功能 + 对外接口（伪代码级别）+ 关键注意点”的方式描述，便于你后续逐个编码。",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780131071694,
+      "lastSeen": 1780131071694
+    },
+    "v2|google|auto|zh-CN|---": {
+      "sourceText": "---",
+      "targetText": "---",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 2,
+      "firstSeen": 1780131072113,
+      "lastSeen": 1783769936899
+    },
+    "v2|google|auto|zh-CN|（markers、polyline、列表、时间/距离/预计游玩时长": {
+      "sourceText": "（markers、polyline、列表、时间/距离/预计游玩时长",
+      "targetText": "（markers、polyline、列表、时间/距离/预计游玩时长",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780131074660,
+      "lastSeen": 1780131074660
+    },
+    "v2|google|auto|zh-CN|$$": {
+      "sourceText": "$$",
+      "targetText": "$$",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780131178374,
+      "lastSeen": 1780131178374
+    },
+    "v2|google|auto|zh-CN|也接受无法具体识别哪些个体反应更佳的事实": {
+      "sourceText": "也接受无法具体识别哪些个体反应更佳的事实",
+      "targetText": "也接受无法具体识别哪些个体反应更佳的事实",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 2,
+      "firstSeen": 1780131578335,
+      "lastSeen": 1783769970826
+    },
+    "v2|google|auto|zh-CN|验证处理是否有效": {
+      "sourceText": "验证处理是否有效",
+      "targetText": "验证处理是否有效",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780131578856,
+      "lastSeen": 1780131578856
+    },
+    "v2|google|auto|zh-CN|E": {
+      "sourceText": "E",
+      "targetText": "和",
+      "sourceLang": "pt",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780131650692,
+      "lastSeen": 1780131650692
+    },
+    "v2|google|auto|zh-CN|E[Y|T=1]-": {
+      "sourceText": "E[Y|T=1]-",
+      "targetText": "E[Y|T=1]-",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780131651580,
+      "lastSeen": 1780131651580
+    },
+    "v2|google|auto|zh-CN|后者加bias才是ate": {
+      "sourceText": "后者加bias才是ate",
+      "targetText": "后者加bias才是ate",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780131723804,
+      "lastSeen": 1780131723804
+    },
+    "v2|google|auto|zh-CN|后者mbias才是ate": {
+      "sourceText": "后者mbias才是ate",
+      "targetText": "后者mbias才是ate",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780131724132,
+      "lastSeen": 1780131724132
+    },
+    "v2|google|auto|zh-CN|如果前者是一片陈旧单调的白面包片": {
+      "sourceText": "如果前者是一片陈旧单调的白面包片",
+      "targetText": "如果前者是一片陈旧单调的白面包片",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780131782957,
+      "lastSeen": 1780131782957
+    },
+    "v2|google|auto|zh-CN|如果说简单地比较处理组与对照组的均值是饭后的一颗苹果": {
+      "sourceText": "如果说简单地比较处理组与对照组的均值是饭后的一颗苹果",
+      "targetText": "如果说简单地比较处理组与对照组的均值是饭后的一颗苹果",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780131783817,
+      "lastSeen": 1780131783817
+    },
+    "v2|google|auto|zh-CN|y=Xβ+εy = X\\beta + \\varepsilony=Xβ+ε": {
+      "sourceText": "y=Xβ+εy = X\\beta + \\varepsilony=Xβ+ε",
+      "targetText": "y=Xβ+εy = X\\beta + \\varepsilony=Xβ+ε",
+      "sourceLang": "el",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780132959689,
+      "lastSeen": 1780132959689
+    },
+    "v2|google|auto|zh-CN|RSS(β)=∥y−Xβ∥2=(y−Xβ)T(y−Xβ)RSS(\\beta) = |y - X\\beta|^2 = (y - X\\beta)^T (y - X\\beta)RSS(β)=∥y−Xβ∥2=(y−Xβ)T(y−Xβ)": {
+      "sourceText": "RSS(β)=∥y−Xβ∥2=(y−Xβ)T(y−Xβ)RSS(\\beta) = |y - X\\beta|^2 = (y - X\\beta)^T (y - X\\beta)RSS(β)=∥y−Xβ∥2=(y−Xβ)T(y−Xβ)",
+      "targetText": "RSS(β)=∥y−Xβ∥2=(y−Xβ)T(y−Xβ)RSS(\\beta) = |y - X\\beta|^2 = (y - X\\beta)^T (y - X\\beta)RSS(β)=∥y−Xβ∥2=(y−Xβ)T(y−Xβ)",
+      "sourceLang": "lt",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780132966551,
+      "lastSeen": 1780132966551
+    },
+    "v2|google|auto|zh-CN|∂RSS∂β=−2XT(y−Xβ)=0\\frac{\\partial RSS}{\\partial \\beta} = -2X^T(y - X\\beta) = 0∂β∂RSS​=−2XT(y−Xβ)=0": {
+      "sourceText": "∂RSS∂β=−2XT(y−Xβ)=0\\frac{\\partial RSS}{\\partial \\beta} = -2X^T(y - X\\beta) = 0∂β∂RSS​=−2XT(y−Xβ)=0",
+      "targetText": "∂RSS∂β=−2XT(y−Xβ)=0\\frac{\\partial RSS}{\\partial \\beta} = -2X^T(y - X\\beta) = 0∂β∂RSS​=−2XT(y−Xβ)=0",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780132971101,
+      "lastSeen": 1780132971101
+    },
+    "v2|google|auto|zh-CN|etaβ": {
+      "sourceText": "etaβ",
+      "targetText": "埃塔β",
+      "sourceLang": "eo",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780132976744,
+      "lastSeen": 1780132976744
+    },
+    "v2|google|auto|zh-CN|RSS(β)=∥y−Xβ∥2=(y−Xβ)T(y−Xβ)$$": {
+      "sourceText": "RSS(β)=∥y−Xβ∥2=(y−Xβ)T(y−Xβ)$$",
+      "targetText": "RSS(β)=∥y−Xβ∥2=(y−Xβ)T(y−Xβ)$$",
+      "sourceLang": "lt",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780132995675,
+      "lastSeen": 1780132995675
+    },
+    "v2|google|auto|zh-CN|RSS": {
+      "sourceText": "RSS",
+      "targetText": "RSS",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780132997118,
+      "lastSeen": 1780132997118
+    },
+    "v2|google|auto|zh-CN|RSS(β)=∥y−Xβ∥2=(y−Xβ)T(y−Xβ": {
+      "sourceText": "RSS(β)=∥y−Xβ∥2=(y−Xβ)T(y−Xβ",
+      "targetText": "RSS(β)=∥y−Xβ∥2=(y−Xβ)T(y−Xβ)",
+      "sourceLang": "lt",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133000019,
+      "lastSeen": 1780133000019
+    },
+    "v2|google|auto|zh-CN|beta": {
+      "sourceText": "beta",
+      "targetText": "贝塔",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "名词",
+          "terms": [
+            "倍塔"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1780133000295,
+      "lastSeen": 1780133000295
+    },
+    "v2|google|auto|zh-CN|使得": {
+      "sourceText": "使得",
+      "targetText": "使得",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133003270,
+      "lastSeen": 1780133003270
+    },
+    "v2|google|auto|zh-CN|的回归系数": {
+      "sourceText": "的回归系数",
+      "targetText": "的回归系数",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133005549,
+      "lastSeen": 1780133005549
+    },
+    "v2|google|auto|zh-CN|y=Xβ+ε$": {
+      "sourceText": "y=Xβ+ε$",
+      "targetText": "y=Xβ+ε$",
+      "sourceLang": "lt",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133015037,
+      "lastSeen": 1780133015037
+    },
+    "v2|google|auto|zh-CN|$y=Xβ+εy = X\\beta + \\varepsilon": {
+      "sourceText": "$y=Xβ+εy = X\\beta + \\varepsilon",
+      "targetText": "$y=Xβ+εy = X\\beta + \\varepsilon",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133016699,
+      "lastSeen": 1780133016699
+    },
+    "v2|google|auto|zh-CN|varepsilon": {
+      "sourceText": "varepsilon",
+      "targetText": "瓦瑞西隆",
+      "sourceLang": "el",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133021609,
+      "lastSeen": 1780133021609
+    },
+    "v2|google|auto|zh-CN|y": {
+      "sourceText": "y",
+      "targetText": "和",
+      "sourceLang": "es",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133035168,
+      "lastSeen": 1780133035168
+    },
+    "v2|google|auto|zh-CN|y=Xβ+ε": {
+      "sourceText": "y=Xβ+ε",
+      "targetText": "y=Xβ+ε",
+      "sourceLang": "lt",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133037371,
+      "lastSeen": 1780133037371
+    },
+    "v2|google|auto|zh-CN|- yyy 是 n×1n\\times 1n×1 的因变量向量，\n- XXX 是 n×pn\\times pn×p 的设计矩阵（每一行是一个样本，每一列是一个特征，通常第一列是全 1 表示截距项），\n- β\\betaβ 是 p×1p\\times 1p×1 的回归系数，\n- ε\\varepsilonε 是误差项。": {
+      "sourceText": "- yyy 是 n×1n\\times 1n×1 的因变量向量，\n- XXX 是 n×pn\\times pn×p 的设计矩阵（每一行是一个样本，每一列是一个特征，通常第一列是全 1 表示截距项），\n- β\\betaβ 是 p×1p\\times 1p×1 的回归系数，\n- ε\\varepsilonε 是误差项。",
+      "targetText": "- yyy 是 n×1n\\times 1n×1 的因变量向量，\n- XXX 是 n×pn\\times pn×p 的设计矩阵（每一行是一个样本，每一列是一个特征，通常第一列是全 1 表示截距项），\n- β\\betaβ 是 p×1p\\times 1p×1 的回归系数，\n- ε\\varepsilonε 是误差项。",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133043765,
+      "lastSeen": 1780133043765
+    },
+    "v2|google|auto|zh-CN|1n": {
+      "sourceText": "1n",
+      "targetText": "1n",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133048725,
+      "lastSeen": 1780133048725
+    },
+    "v2|google|auto|zh-CN|n\\times 1n×1": {
+      "sourceText": "n\\times 1n×1",
+      "targetText": "n\\乘1n×1",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133050967,
+      "lastSeen": 1780133050967
+    },
+    "v2|google|auto|zh-CN|pn": {
+      "sourceText": "pn",
+      "targetText": "PN",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133052918,
+      "lastSeen": 1780133052918
+    },
+    "v2|google|auto|zh-CN|n\\times pn×p": {
+      "sourceText": "n\\times pn×p",
+      "targetText": "n\\次 pn×p",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133054724,
+      "lastSeen": 1780133054724
+    },
+    "v2|google|auto|zh-CN|XXX": {
+      "sourceText": "XXX",
+      "targetText": "XXX",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133055391,
+      "lastSeen": 1780133055391
+    },
+    "v2|google|auto|zh-CN|X": {
+      "sourceText": "X",
+      "targetText": "X",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133056359,
+      "lastSeen": 1780133056359
+    },
+    "v2|google|auto|zh-CN|\\betaβ": {
+      "sourceText": "\\betaβ",
+      "targetText": "ββ",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133063180,
+      "lastSeen": 1780133063180
+    },
+    "v2|google|auto|zh-CN|p\\times 1p×1": {
+      "sourceText": "p\\times 1p×1",
+      "targetText": "p\\times 1p×1",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133065255,
+      "lastSeen": 1780133065255
+    },
+    "v2|google|auto|zh-CN|varepsilonε": {
+      "sourceText": "varepsilonε",
+      "targetText": "瓦瑞西隆",
+      "sourceLang": "el",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133067726,
+      "lastSeen": 1780133067726
+    },
+    "v2|google|auto|zh-CN|化简得到正规方程：\n\nXTXβ=XTyX^TX\\beta = X^TyXTXβ=XTy\n\n如果矩阵 XTXX^TXXTX 可逆（满秩），则解为：\n\nβ^=(XTX)−1XTy\\hat{\\beta} = (X^TX)^{-1} X^Tyβ^​=(XTX)−1XTy": {
+      "sourceText": "化简得到正规方程：\n\nXTXβ=XTyX^TX\\beta = X^TyXTXβ=XTy\n\n如果矩阵 XTXX^TXXTX 可逆（满秩），则解为：\n\nβ^=(XTX)−1XTy\\hat{\\beta} = (X^TX)^{-1} X^Tyβ^​=(XTX)−1XTy",
+      "targetText": "化简得到正规方程：\n\nXTXβ=XTyX^TX\\beta = X^TyXTXβ=XTy\n\n如果矩阵 XTXX^TXXTX 可逆（满秩），则解为：\n\nβ^=(XTX)−1XTy\\hat{\\beta} = (X^TX)^{-1} X^Tyβ^​=(XTX)−1XTy",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133074226,
+      "lastSeen": 1780133074226
+    },
+    "v2|google|auto|zh-CN|XTXβ=XTyX^TX\\beta = X^TyXTXβ=XTy\n\n如果矩阵 XTXX^TXXTX 可逆（满秩），则解为：\n\nβ^=(XTX)−1XTy\\hat{\\beta} = (X^TX)^{-1} X^Tyβ^​=(XTX)−1XTy": {
+      "sourceText": "XTXβ=XTyX^TX\\beta = X^TyXTXβ=XTy\n\n如果矩阵 XTXX^TXXTX 可逆（满秩），则解为：\n\nβ^=(XTX)−1XTy\\hat{\\beta} = (X^TX)^{-1} X^Tyβ^​=(XTX)−1XTy",
+      "targetText": "XTXβ=XTyX^TX\\beta = X^TyXTXβ=XTy\n\n如果矩阵 XTXX^TXXTX 可逆（满秩），则解为：\n\nβ^=(XTX)−1XTy\\hat{\\beta} = (X^TX)^{-1} X^Tyβ^​=(XTX)−1XTy",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133096009,
+      "lastSeen": 1780133096009
+    },
+    "v2|google|auto|zh-CN|XTyX": {
+      "sourceText": "XTyX",
+      "targetText": "XTyX",
+      "sourceLang": "vi",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133116298,
+      "lastSeen": 1780133116298
+    },
+    "v2|google|auto|zh-CN|XTXβ=XTy": {
+      "sourceText": "XTXβ=XTy",
+      "targetText": "XTXβ=XTy",
+      "sourceLang": "hmn",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133116935,
+      "lastSeen": 1780133116935
+    },
+    "v2|google|auto|zh-CN|X^TX\\beta = X^Ty": {
+      "sourceText": "X^TX\\beta = X^Ty",
+      "targetText": "X^TX\\beta = X^Ty",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133122462,
+      "lastSeen": 1780133122462
+    },
+    "v2|google|auto|zh-CN|1XTy": {
+      "sourceText": "1XTy",
+      "targetText": "1XTy",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133134062,
+      "lastSeen": 1780133134062
+    },
+    "v2|google|auto|zh-CN|XTXX": {
+      "sourceText": "XTXX",
+      "targetText": "XXXX",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133135741,
+      "lastSeen": 1780133135741
+    },
+    "v2|google|auto|zh-CN|XTXX^TXXTX 可逆（满秩），则解为：": {
+      "sourceText": "XTXX^TXXTX 可逆（满秩），则解为：",
+      "targetText": "XTXX^TXXTX 可逆（满秩），则解为：",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133137327,
+      "lastSeen": 1780133137327
+    },
+    "v2|google|auto|zh-CN|XTX": {
+      "sourceText": "XTX",
+      "targetText": "XTX",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133139385,
+      "lastSeen": 1780133139385
+    },
+    "v2|google|auto|zh-CN|X^TX": {
+      "sourceText": "X^TX",
+      "targetText": "X^TX",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133149076,
+      "lastSeen": 1780133149076
+    },
+    "v2|google|auto|zh-CN|β^=(XTX)−1XTy": {
+      "sourceText": "β^=(XTX)−1XTy",
+      "targetText": "β^=(XTX)−1XTy",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133159650,
+      "lastSeen": 1780133159650
+    },
+    "v2|google|auto|zh-CN|β^​=(XTX)−1XTy": {
+      "sourceText": "β^​=(XTX)−1XTy",
+      "targetText": "β^​=(XTX)−1XTy",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133162331,
+      "lastSeen": 1780133162331
+    },
+    "v2|google|auto|zh-CN|\\hat{\\beta} = (X^TX)^{-1} X^Ty": {
+      "sourceText": "\\hat{\\beta} = (X^TX)^{-1} X^Ty",
+      "targetText": "\\hat{\\beta} = (X^TX)^{-1} X^Ty",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133163622,
+      "lastSeen": 1780133163622
+    },
+    "v2|google|auto|zh-CN|这些变量通常仅起辅助作用": {
+      "sourceText": "这些变量通常仅起辅助作用",
+      "targetText": "这些变量通常仅起辅助作用",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780133588324,
+      "lastSeen": 1780133588324
+    },
+    "v2|google|auto|zh-CN|2. 推导过程（针对单变量）": {
+      "sourceText": "2. 推导过程（针对单变量）",
+      "targetText": "2. 推导过程（针对单变量）",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780134281896,
+      "lastSeen": 1780134281896
+    },
+    "v2|google|auto|zh-CN|经过代数整理": {
+      "sourceText": "经过代数整理",
+      "targetText": "经过代数整理",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780134365012,
+      "lastSeen": 1780134365012
+    },
+    "v2|google|auto|zh-CN|添加其他变量有助于我们估计处理的因果效应": {
+      "sourceText": "添加其他变量有助于我们估计处理的因果效应",
+      "targetText": "添加其他变量有助于我们估计处理的因果效应",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780134371469,
+      "lastSeen": 1780134371469
+    },
+    "v2|google|auto|zh-CN|的情况下": {
+      "sourceText": "的情况下",
+      "targetText": "的情况下",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780134378426,
+      "lastSeen": 1780134378426
+    },
+    "v2|google|auto|zh-CN|T的情况下": {
+      "sourceText": "T的情况下",
+      "targetText": "T的情况下",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780134380822,
+      "lastSeen": 1780134380822
+    },
+    "v2|google|auto|zh-CN|β": {
+      "sourceText": "β",
+      "targetText": "乙",
+      "sourceLang": "el",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780134393307,
+      "lastSeen": 1780134393307
+    },
+    "v2|google|auto|zh-CN|第二步：对 \n 求偏导（找斜率": {
+      "sourceText": "第二步：对 \n 求偏导（找斜率",
+      "targetText": "第二步：对 \n求偏导（找斜率",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780134676491,
+      "lastSeen": 1780134676491
+    },
+    "v2|google|auto|zh-CN|明": {
+      "sourceText": "明",
+      "targetText": "明",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780134700340,
+      "lastSeen": 1780134700340
+    },
+    "v2|google|auto|zh-CN|每一行是一个样本": {
+      "sourceText": "每一行是一个样本",
+      "targetText": "每一行是一个样本",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780134701505,
+      "lastSeen": 1780134701505
+    },
+    "v2|google|auto|zh-CN|对于多元线性回归模型": {
+      "sourceText": "对于多元线性回归模型",
+      "targetText": "对于多元线性回归模型",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780134709959,
+      "lastSeen": 1780134709959
+    },
+    "v2|google|auto|zh-CN|造会幕他起来奉献": {
+      "sourceText": "造会幕他起来奉献",
+      "targetText": "造会幕他起来奉献",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1780203465199,
+      "lastSeen": 1780203465199
+    },
+    "v2|google|auto|zh-CN|认识的本质是主体在实践基础上对客体的能动反映": {
+      "sourceText": "认识的本质是主体在实践基础上对客体的能动反映",
+      "targetText": "认识的本质是主体在实践基础上对客体的能动反映",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1782393827300,
+      "lastSeen": 1782393827300
+    },
+    "v2|google|auto|zh-CN|认识的真理性只有在实践中才能得到检验和发展": {
+      "sourceText": "认识的真理性只有在实践中才能得到检验和发展",
+      "targetText": "认识的真理性只有在实践中才能得到检验和发展",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1782393828647,
+      "lastSeen": 1782393828647
+    },
+    "v2|google|auto|zh-CN|理性认识依赖于感性认识": {
+      "sourceText": "理性认识依赖于感性认识",
+      "targetText": "理性认识依赖于感性认识",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1782393829552,
+      "lastSeen": 1782393829552
+    },
+    "v2|google|auto|zh-CN|感性认识有待于发展和深化为理性认识": {
+      "sourceText": "感性认识有待于发展和深化为理性认识",
+      "targetText": "感性认识有待于发展和深化为理性认识",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1782393843960,
+      "lastSeen": 1782393843960
+    },
+    "v2|google|auto|zh-CN|感性认识和理性认识相互渗透": {
+      "sourceText": "感性认识和理性认识相互渗透",
+      "targetText": "感性认识和理性认识相互渗透",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1782393896256,
+      "lastSeen": 1782393896256
+    },
+    "v2|google|auto|zh-CN|从实践到认识": {
+      "sourceText": "从实践到认识",
+      "targetText": "从实践到认识",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1782394441893,
+      "lastSeen": 1782394441893
+    },
+    "v2|google|auto|zh-CN|从实践到认识再到实践的过程From": {
+      "sourceText": "从实践到认识再到实践的过程From",
+      "targetText": "从实践到认识再到实践的过程From",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1782395162359,
+      "lastSeen": 1782395162359
+    },
+    "v2|google|auto|zh-CN|'YYYY'": {
+      "sourceText": "'YYYY'",
+      "targetText": "'YYYY'",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1782436553763,
+      "lastSeen": 1782436553763
+    },
+    "v2|google|auto|zh-CN|attachment": {
+      "sourceText": "attachment",
+      "targetText": "依恋",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "名词",
+          "terms": [
+            "附件",
+            "附属",
+            "附属物"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1782436582317,
+      "lastSeen": 1782436582317
+    },
+    "v2|google|auto|zh-CN|originalAttachmentFileName": {
+      "sourceText": "originalAttachmentFileName",
+      "targetText": "原始附件文件名",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1782436583972,
+      "lastSeen": 1782436583972
+    },
+    "v2|google|auto|zh-CN|reported": {
+      "sourceText": "reported",
+      "targetText": "报道",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "动词",
+          "terms": [
+            "报告",
+            "汇报",
+            "报"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1782436594934,
+      "lastSeen": 1782436594934
+    },
+    "v2|google|auto|zh-CN|optional": {
+      "sourceText": "optional",
+      "targetText": "选修的",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "形容词",
+          "terms": [
+            "选修的",
+            "自选的"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1782436597022,
+      "lastSeen": 1782436597022
+    },
+    "v2|google|auto|zh-CN|Format": {
+      "sourceText": "Format",
+      "targetText": "格式",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "名词",
+          "terms": [
+            "格式",
+            "规格",
+            "版式"
+          ]
+        },
+        {
+          "pos": "动词",
+          "terms": [
+            "格式化"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1782436607467,
+      "lastSeen": 1782436607467
+    },
+    "v2|google|auto|zh-CN|mat for the URL": {
+      "sourceText": "mat for the URL",
+      "targetText": "URL 的垫子",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1782436609031,
+      "lastSeen": 1782436609031
+    },
+    "v2|google|auto|zh-CN|into Markdown.": {
+      "sourceText": "into Markdown.",
+      "targetText": "进入 Markdown。",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1782436610578,
+      "lastSeen": 1782436610578
+    },
+    "v2|google|auto|zh-CN|lowercase": {
+      "sourceText": "lowercase",
+      "targetText": "小写",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "名词",
+          "terms": [
+            "小写"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1782436611213,
+      "lastSeen": 1782436611213
+    },
+    "v2|google|auto|zh-CN|existingFile": {
+      "sourceText": "existingFile",
+      "targetText": "现有文件",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1782436639740,
+      "lastSeen": 1782436639740
+    },
+    "v2|google|auto|zh-CN|不难发现它本质上是集体主义和威权主义意识形态在审美领域的投影": {
+      "sourceText": "不难发现它本质上是集体主义和威权主义意识形态在审美领域的投影",
+      "targetText": "不难发现它本质上是集体主义和威权主义意识形态在审美领域的投影",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783585927014,
+      "lastSeen": 1783585927014
+    },
+    "v2|google|auto|zh-CN|艺术界对于里芬斯塔尔的作品持更为警觉的态度": {
+      "sourceText": "艺术界对于里芬斯塔尔的作品持更为警觉的态度",
+      "targetText": "艺术界对于里芬斯塔尔的作品持更为警觉的态度",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783585927946,
+      "lastSeen": 1783585927946
+    },
+    "v2|google|auto|zh-CN|布尔逻辑与逻辑电路": {
+      "sourceText": "布尔逻辑与逻辑电路",
+      "targetText": "布尔逻辑与逻辑电路",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783585945262,
+      "lastSeen": 1783585945262
+    },
+    "v2|google|auto|zh-CN|引申意为": {
+      "sourceText": "引申意为",
+      "targetText": "引申意为",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783585950763,
+      "lastSeen": 1783585950763
+    },
+    "v2|google|auto|zh-CN|因为它们预示着我的待办集合中又一个新任务的出现": {
+      "sourceText": "因为它们预示着我的待办集合中又一个新任务的出现",
+      "targetText": "因为它们预示着我的待办集合中又一个新任务的出现",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783585953587,
+      "lastSeen": 1783585953587
+    },
+    "v2|google|auto|zh-CN|我邮箱里的每封新邮件": {
+      "sourceText": "我邮箱里的每封新邮件",
+      "targetText": "我邮箱里的每封新邮件",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783585954669,
+      "lastSeen": 1783585954669
+    },
+    "v2|google|auto|zh-CN|如": {
+      "sourceText": "如",
+      "targetText": "如",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783586841527,
+      "lastSeen": 1783586841527
+    },
+    "v2|google|auto|zh-CN|![](https://pic2.zhimg.com/v2-3af25a83043f599beefd5e8422d5eda5_b.jpg)": {
+      "sourceText": "![](https://pic2.zhimg.com/v2-3af25a83043f599beefd5e8422d5eda5_b.jpg)",
+      "targetText": "![](https://pic2.zhimg.com/v2-3af25a83043f599beefd5e8422d5eda5_b.jpg)",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783586856397,
+      "lastSeen": 1783586856397
+    },
+    "v2|google|auto|zh-CN|v2-3af25a83043f599beefd5e8422d5eda5_b": {
+      "sourceText": "v2-3af25a83043f599beefd5e8422d5eda5_b",
+      "targetText": "v2-3af25a83043f599beefd5e8422d5eda5_b",
+      "sourceLang": "ar",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783586872114,
+      "lastSeen": 1783586872114
+    },
+    "v2|google|auto|zh-CN|https://pic2.zhimg.com/v2-3af25a83043f599beefd5e8422d5eda5_b.jpg": {
+      "sourceText": "https://pic2.zhimg.com/v2-3af25a83043f599beefd5e8422d5eda5_b.jpg",
+      "targetText": "https://pic2.zhimg.com/v2-3af25a83043f599beefd5e8422d5eda5_b.jpg",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783586875878,
+      "lastSeen": 1783586875878
+    },
+    "v2|google|auto|zh-CN|know": {
+      "sourceText": "know",
+      "targetText": "知道",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "动词",
+          "terms": [
+            "知道",
+            "认识",
+            "知"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1783587900256,
+      "lastSeen": 1783587900256
+    },
+    "v2|google|auto|zh-CN|aliases:\n  - 战争美学\n  - 旧艺术\n  - 战争艺术\ntags:\n  - aesthetics\n  - art\ncategories: quote\nfirstLetterColor: black\nicon: \"1\"\ndescription: 强调力量、集体主义及对个人主义的消解\npubDate: March 19 2024\nheroImage: /src/assets/Holy Mountain.jpg\ntitle: Fascism法西斯美学——遗落的艺术": {
+      "sourceText": "aliases:\n  - 战争美学\n  - 旧艺术\n  - 战争艺术\ntags:\n  - aesthetics\n  - art\ncategories: quote\nfirstLetterColor: black\nicon: \"1\"\ndescription: 强调力量、集体主义及对个人主义的消解\npubDate: March 19 2024\nheroImage: /src/assets/Holy Mountain.jpg\ntitle: Fascism法西斯美学——遗落的艺术",
+      "targetText": "aliases:\n - 战争美学\n - 旧艺术\n - 战争艺术\ntags:\n - aesthetics\n - art\ncategories: quote\nfirstLetterColor: black\nicon: \"1\"\ndescription: 强调力量、集体主义及对个人主义的消解\npubDate: March 19 2024\nheroImage: /src/assets/Holy Mountain.jpg\ntitle: Fascism法西斯美学——遗落的艺术",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783588254932,
+      "lastSeen": 1783588254932
+    },
+    "v2|google|auto|zh-CN|复制智能需复现肉身": {
+      "sourceText": "复制智能需复现肉身",
+      "targetText": "复制智能需复现肉身",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783589366332,
+      "lastSeen": 1783589366332
+    },
+    "v2|google|auto|zh-CN|学校就是这样破坏了对学习的热爱": {
+      "sourceText": "学校就是这样破坏了对学习的热爱",
+      "targetText": "学校就是这样破坏了对学习的热爱",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783589415950,
+      "lastSeen": 1783589415950
+    },
+    "v2|google|auto|zh-CN|学生的反应通常有两种": {
+      "sourceText": "学生的反应通常有两种",
+      "targetText": "学生的反应通常有两种",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783589435155,
+      "lastSeen": 1783589435155
+    },
+    "v2|google|auto|zh-CN|you've": {
+      "sourceText": "you've",
+      "targetText": "你已经",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783589436816,
+      "lastSeen": 1783589436816
+    },
+    "v2|google|auto|zh-CN|![[Pasted image 20240912154157.png]": {
+      "sourceText": "![[Pasted image 20240912154157.png]",
+      "targetText": "![[粘贴图像20240912154157.png]",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783589441210,
+      "lastSeen": 1783589441210
+    },
+    "v2|google|auto|zh-CN|找不到“Pasted image 20240912154157.png”。": {
+      "sourceText": "找不到“Pasted image 20240912154157.png”。",
+      "targetText": "找不到“Pasted image 20240912154157.png”。",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783589442976,
+      "lastSeen": 1783589442976
+    },
+    "v2|google|auto|zh-CN|找不到“Pasted image 20240912204944.png”。": {
+      "sourceText": "找不到“Pasted image 20240912204944.png”。",
+      "targetText": "找不到“Pasted image 20240912204944.png”。",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783589452202,
+      "lastSeen": 1783589452202
+    },
+    "v2|google|auto|zh-CN|破坏学习的热情": {
+      "sourceText": "破坏学习的热情",
+      "targetText": "破坏学习的热情",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783589454262,
+      "lastSeen": 1783589454262
+    },
+    "v2|google|auto|zh-CN|人工智能与肉身现象学": {
+      "sourceText": "人工智能与肉身现象学",
+      "targetText": "人工智能与肉身现象学",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783589650864,
+      "lastSeen": 1783589650864
+    },
+    "v2|google|auto|zh-CN|pic4": {
+      "sourceText": "pic4",
+      "targetText": "图4",
+      "sourceLang": "fr",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783590184819,
+      "lastSeen": 1783590184819
+    },
+    "v2|google|auto|zh-CN|![嘻嘻|219](https://pic4.zhimg.com/v2-731465c438dfac1558bbacde8bb477cf_1440w.jpg)": {
+      "sourceText": "![嘻嘻|219](https://pic4.zhimg.com/v2-731465c438dfac1558bbacde8bb477cf_1440w.jpg)",
+      "targetText": "![嘻嘻|219](https://pic4.zhimg.com/v2-731465c438dfac1558bbacde8bb477cf_1440w.jpg)",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783590501339,
+      "lastSeen": 1783590501339
+    },
+    "v2|google|auto|zh-CN|<% tp.file.content %>": {
+      "sourceText": "<% tp.file.content %>",
+      "targetText": "<% tp.file.content %>",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783769900001,
+      "lastSeen": 1783769900001
+    },
+    "v2|google|auto|zh-CN|---\naliases:\ntags:\n  - casual-inference\n  - statistics\nseries: 因果推断casual inference\nseries_id: \"4\"\n---\n---\ntags:\npubDate:\ntitle:\ndescription:\ncategories:\nseries:\nseries id:\nheroImage:\nfirstLetterColor:": {
+      "sourceText": "---\naliases:\ntags:\n  - casual-inference\n  - statistics\nseries: 因果推断casual inference\nseries_id: \"4\"\n---\n---\ntags:\npubDate:\ntitle:\ndescription:\ncategories:\nseries:\nseries id:\nheroImage:\nfirstLetterColor:",
+      "targetText": "---\n别名：\n标签：\n  - 随意推理\n  - 统计数据\n系列： 推理推断 休闲推理\n系列 ID：“4”\n---\n---\n标签：\n发布日期：\n标题：\n描述：\n类别：\n系列：\n系列编号：\n英雄图片：\n第一个字母颜色：",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783769952994,
+      "lastSeen": 1783769952994
+    },
+    "v2|google|auto|zh-CN|---\naliases:\ntags:\n  - casual-inference\n  - statistics\nseries: 因果推断casual inference\nseries_id: \"4\"\n-": {
+      "sourceText": "---\naliases:\ntags:\n  - casual-inference\n  - statistics\nseries: 因果推断casual inference\nseries_id: \"4\"\n-",
+      "targetText": "---\naliases:\ntags:\n - casual-inference\n - statistics\nseries: 因果推断casual inference\nseries_id: \"4\"\n-",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783769955957,
+      "lastSeen": 1783769955957
+    },
+    "v2|google|auto|zh-CN|---\naliases:\ntags:\n  - casual-inference\n  - statistics\nseries: 因果推断casual inference\nseries_id: \"4\"\n---": {
+      "sourceText": "---\naliases:\ntags:\n  - casual-inference\n  - statistics\nseries: 因果推断casual inference\nseries_id: \"4\"\n---",
+      "targetText": "---\naliases:\ntags:\n - casual-inference\n - statistics\nseries: 因果推断casual inference\nseries_id: \"4\"\n---",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783769958686,
+      "lastSeen": 1783769958686
+    },
+    "v2|google|auto|zh-CN|of": {
+      "sourceText": "of",
+      "targetText": "的",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "介词",
+          "terms": [
+            "的",
+            "于"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1783769962297,
+      "lastSeen": 1783769962297
+    },
+    "v2|google|auto|zh-CN|- casual-inference\n  - statistics": {
+      "sourceText": "- casual-inference\n  - statistics",
+      "targetText": "- 随意推理\n  - 统计数据",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783770060338,
+      "lastSeen": 1783770060338
+    },
+    "v2|google|auto|zh-CN|---\naliases:\ntags:\n  - casual-inference\n  - statistics\nseries: 因果推断casual inference\nseries id: \"4\"\n---": {
+      "sourceText": "---\naliases:\ntags:\n  - casual-inference\n  - statistics\nseries: 因果推断casual inference\nseries id: \"4\"\n---",
+      "targetText": "---\naliases:\ntags:\n - casual-inference\n - statistics\nseries: 因果推断casual inference\nseries id: \"4\"\n---",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783770081899,
+      "lastSeen": 1783770081899
+    },
+    "v2|google|auto|zh-CN|因果推断casual inference": {
+      "sourceText": "因果推断casual inference",
+      "targetText": "因果推断casual inference",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783770114801,
+      "lastSeen": 1783770114801
+    },
+    "v2|google|auto|zh-CN|\"4\"": {
+      "sourceText": "\"4\"",
+      "targetText": "\"4\"",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783770126233,
+      "lastSeen": 1783770126233
+    },
+    "v2|google|auto|zh-CN|---\naliases:\ntags:\n\nseries: \nseries id: \n---": {
+      "sourceText": "---\naliases:\ntags:\n\nseries: \nseries id: \n---",
+      "targetText": "---\n别名：\n标签：\n\n系列： \n系列编号： \n---",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783770133832,
+      "lastSeen": 1783770133832
+    },
+    "v2|google|auto|zh-CN|我们采用仅含该变量的回归模型来估算这一效应": {
+      "sourceText": "我们采用仅含该变量的回归模型来估算这一效应",
+      "targetText": "我们采用仅含该变量的回归模型来估算这一效应",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783770326696,
+      "lastSeen": 1783770326696
+    },
+    "v2|google|auto|zh-CN|print": {
+      "sourceText": "print",
+      "targetText": "打印",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "动词",
+          "terms": [
+            "打印",
+            "印刷",
+            "印"
+          ]
+        },
+        {
+          "pos": "名词",
+          "terms": [
+            "版画",
+            "版",
+            "印子"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1783770352676,
+      "lastSeen": 1783770352676
+    },
+    "v2|google|auto|zh-CN|从而更有可能在机器学习领域表现优异": {
+      "sourceText": "从而更有可能在机器学习领域表现优异",
+      "targetText": "从而更有可能在机器学习领域表现优异",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783825502894,
+      "lastSeen": 1783825502894
+    },
+    "v2|google|auto|zh-CN|若未获得教育": {
+      "sourceText": "若未获得教育",
+      "targetText": "若未获得教育",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783825503353,
+      "lastSeen": 1783825503353
+    },
+    "v2|google|auto|zh-CN|类似逻辑适用于不投资者群体": {
+      "sourceText": "类似逻辑适用于不投资者群体",
+      "targetText": "类似逻辑适用于不投资者群体",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783825522449,
+      "lastSeen": 1783825522449
+    },
+    "v2|google|auto|zh-CN|Face": {
+      "sourceText": "Face",
+      "targetText": "脸",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "动词",
+          "terms": [
+            "面对",
+            "面",
+            "面向"
+          ]
+        },
+        {
+          "pos": "名词",
+          "terms": [
+            "面",
+            "脸",
+            "表面"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1783825869981,
+      "lastSeen": 1783825869981
+    },
+    "v2|google|auto|zh-CN|正如莫瓦方程所示": {
+      "sourceText": "正如莫瓦方程所示",
+      "targetText": "正如莫瓦方程所示",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783828143136,
+      "lastSeen": 1783828143136
+    },
+    "v2|google|auto|zh-CN|莫": {
+      "sourceText": "莫",
+      "targetText": "莫",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783828146299,
+      "lastSeen": 1783828146299
+    },
+    "v2|google|auto|zh-CN|罗伯逊亲手烘焙的乡村酸面包": {
+      "sourceText": "罗伯逊亲手烘焙的乡村酸面包",
+      "targetText": "罗伯逊亲手烘焙的乡村酸面包",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783828198601,
+      "lastSeen": 1783828198601
+    },
+    "v2|google|auto|zh-CN|那么问题就变成": {
+      "sourceText": "那么问题就变成",
+      "targetText": "那么问题就变成",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783828490122,
+      "lastSeen": 1783828490122
+    },
+    "v2|google|auto|zh-CN|Z": {
+      "sourceText": "Z",
+      "targetText": "和",
+      "sourceLang": "pl",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1783828661243,
+      "lastSeen": 1783828661243
+    }
+  }
+}

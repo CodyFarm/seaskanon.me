@@ -1,0 +1,199 @@
+---
+import { Icon } from "astro-icon/components";
+import { tracks } from "@/lib/playlist";
+
+const firstTrack = tracks[0] ?? { title: "No tracks found", artist: "", src: "", cover: "" };
+const playlistJSON = JSON.stringify(tracks);
+---
+
+<section class="music-player rounded-3xl border-[3px] border-black bg-white p-3 shadow-card">
+  <!-- Album Cover -->
+  <div class="relative mx-auto mt-1 mb-3 block max-w-[12rem] overflow-hidden rounded-xl lg:mx-0 lg:max-w-none">
+    <img id="mp-cover" src={firstTrack.cover} alt="Album Cover"
+      class="mx-auto h-full w-full object-cover lg:mt-0" />
+  </div>
+
+  <div class="px-2">
+    <!-- Title -->
+    <div id="mp-title" class="mb-1 text-center text-xl font-bold text-black truncate transition">
+      {firstTrack.title}
+    </div>
+    <div class="mx-auto mb-2 h-1 w-5 rounded-full bg-pgold transition"></div>
+    <!-- Artist -->
+    <div id="mp-artist" class="mb-1 text-center text-sm text-pblack transition">
+      {firstTrack.artist}
+    </div>
+
+    <!-- Time + Progress -->
+    <div class="mb-2.5 flex items-center gap-2">
+      <span id="mp-current" class="text-xs font-mono text-pblack w-10 text-right">0:00</span>
+      <input id="mp-progress" type="range" min="0" max="100" value="0"
+        class="h-1 flex-1 appearance-none rounded-full bg-pblack/20 cursor-pointer accent-pgold" />
+      <span id="mp-duration" class="text-xs font-mono text-pblack w-10">0:00</span>
+    </div>
+
+    <!-- Controls -->
+    <div class="mb-2 flex flex-wrap justify-center gap-2">
+      <button id="mp-btn-rand" aria-label="Toggle shuffle" title="Shuffle"
+        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-black bg-white shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
+        <Icon name="shuffle" class="text-[1.5rem]" />
+      </button>
+
+      <button id="mp-btn-prev" aria-label="Previous track"
+        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-black bg-white shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
+        <Icon name="skip-back" class="text-[1.5rem]" />
+      </button>
+
+      <button id="mp-btn-play" aria-label="Play"
+        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-black bg-white shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
+        <Icon id="mp-icon-play" name="play" class="text-[1.5rem]" />
+        <Icon id="mp-icon-pause" name="pause" class="hidden text-[1.5rem]" />
+      </button>
+
+      <button id="mp-btn-next" aria-label="Next track"
+        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-black bg-white shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
+        <Icon name="skip-forward" class="text-[1.5rem]" />
+      </button>
+
+      <button id="mp-btn-list" aria-label="Playlist" title="Playlist"
+        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-black bg-white shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
+        <Icon name="list-music" class="text-[1.5rem]" />
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Slide-out Playlist Panel -->
+<div id="mp-overlay" class="fixed inset-0 z-40 hidden bg-black/20 backdrop-blur-sm"
+  aria-hidden="true"></div>
+<div id="mp-panel" class="fixed top-0 right-0 z-50 h-full w-72 translate-x-full overflow-hidden rounded-l-3xl border-l-[3px] border-black bg-white shadow-card transition-transform duration-300 ease-in-out">
+  <div class="flex items-center justify-between border-b-[3px] border-black px-4 py-3">
+    <span class="text-lg font-bold text-black">Playlist</span>
+    <button id="mp-panel-close" aria-label="Close playlist"
+      class="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-black shadow-card1 transition hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
+      <svg width="16" height="16" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4 4l8 8m0-8l-8 8"/></svg>
+    </button>
+  </div>
+  <ul id="mp-panel-list" class="max-h-[calc(100vh-64px)] space-y-1 overflow-y-auto p-2"></ul>
+</div>
+
+<script is:inline define:vars={{ playlistJSON }} data-astro-rerun>
+(function () {
+  var playlist = JSON.parse(playlistJSON);
+  if (!playlist.length) return;
+  if (!window.__music) return setTimeout(arguments.callee, 50);
+
+  var music = window.__music;
+  music.init(playlist);
+
+  var KEY = 'music-player-large';
+  window.__musicHandlers = window.__musicHandlers || {};
+  var old = window.__musicHandlers[KEY];
+  if (old) {
+    music.off('statechange', old.statechange);
+    music.off('timeupdate', old.timeupdate);
+  }
+
+  var cover = document.getElementById("mp-cover");
+  var titleEl = document.getElementById("mp-title");
+  var artistEl = document.getElementById("mp-artist");
+  var currentEl = document.getElementById("mp-current");
+  var durationEl = document.getElementById("mp-duration");
+  var progress = document.getElementById("mp-progress");
+  var btnPlay = document.getElementById("mp-btn-play");
+  var btnPrev = document.getElementById("mp-btn-prev");
+  var btnNext = document.getElementById("mp-btn-next");
+  var btnRand = document.getElementById("mp-btn-rand");
+  var btnList = document.getElementById("mp-btn-list");
+  var iconPlay = document.getElementById("mp-icon-play");
+  var iconPause = document.getElementById("mp-icon-pause");
+
+  var overlay = document.getElementById("mp-overlay");
+  var panel = document.getElementById("mp-panel");
+  var panelList = document.getElementById("mp-panel-list");
+  var panelClose = document.getElementById("mp-panel-close");
+
+  function fmt(sec) {
+    if (!sec || isNaN(sec)) return "0:00";
+    var m = Math.floor(sec / 60);
+    var s = Math.floor(sec % 60);
+    return m + ":" + (s < 10 ? "0" : "") + s;
+  }
+
+  function updateUI() {
+    var s = music.getState();
+    var track = playlist[s.index];
+    if (track) {
+      if (cover.src !== track.cover) cover.src = track.cover;
+      titleEl.textContent = track.title;
+      artistEl.textContent = track.artist;
+    }
+    if (s.playing) { iconPlay.classList.add("hidden"); iconPause.classList.remove("hidden"); btnPlay.setAttribute("aria-label", "Pause"); }
+    else { iconPause.classList.add("hidden"); iconPlay.classList.remove("hidden"); btnPlay.setAttribute("aria-label", "Play"); }
+    if (s.shuffle) { btnRand.classList.add("bg-black", "text-white"); btnRand.classList.remove("bg-white"); }
+    else { btnRand.classList.remove("bg-black", "text-white"); btnRand.classList.add("bg-white"); }
+    durationEl.textContent = fmt(s.duration);
+  }
+
+  function updateTime() {
+    var s = music.getState();
+    currentEl.textContent = fmt(s.currentTime);
+    if (s.duration > 0) progress.value = String((s.currentTime / s.duration) * 100);
+  }
+
+  function buildPanelList() {
+    var s = music.getState();
+    var html = "";
+    for (var i = 0; i < playlist.length; i++) {
+      var t = playlist[i];
+      var isActive = i === s.index;
+      html += '<li class="flex cursor-pointer items-center gap-3 rounded-xl px-2 py-2 transition ' + (isActive ? 'bg-pgold/20' : 'hover:bg-pyellow/30') + '" data-index="' + i + '">';
+      html += '<img src="' + t.cover + '" alt="" class="h-10 w-10 flex-shrink-0 rounded-lg object-cover border-2 border-black" />';
+      html += '<div class="min-w-0 flex-1"><div class="truncate text-sm font-semibold text-black">' + t.title + '</div><div class="text-xs text-pblack">' + t.artist + '</div></div>';
+      if (isActive) html += '<svg width="16" height="16" viewBox="0 0 24 24" class="flex-shrink-0 text-pgold"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9z"/></svg>';
+      html += '</li>';
+    }
+    panelList.innerHTML = html;
+    var items = panelList.querySelectorAll("li[data-index]");
+    for (var j = 0; j < items.length; j++) {
+      items[j].addEventListener("click", function () {
+        var idx = parseInt(this.getAttribute("data-index"));
+        music.skipTo(idx);
+        closePanel();
+      });
+    }
+  }
+
+  function openPanel() { overlay.classList.remove("hidden"); panel.classList.remove("translate-x-full"); buildPanelList(); }
+  function closePanel() { overlay.classList.add("hidden"); panel.classList.add("translate-x-full"); }
+
+  function onStateChange() { updateUI(); buildPanelList(); }
+  music.on("statechange", onStateChange);
+  music.on("timeupdate", updateTime);
+  window.__musicHandlers[KEY] = { statechange: onStateChange, timeupdate: updateTime };
+
+  btnPlay.addEventListener("click", function () { music.toggle(); });
+  btnPrev.addEventListener("click", function () { music.prev(); });
+  btnNext.addEventListener("click", function () { music.next(); });
+  btnRand.addEventListener("click", function () { music.toggleShuffle(); });
+
+  btnList.addEventListener("click", openPanel);
+  panelClose.addEventListener("click", closePanel);
+  overlay.addEventListener("click", closePanel);
+
+  progress.addEventListener("input", function () {
+    var val = parseFloat(this.value);
+    var s = music.getState();
+    if (s.duration > 0) music.seek((val / 100) * s.duration);
+  });
+
+  updateUI();
+  updateTime();
+  buildPanelList();
+
+  function onKeydown(e) { if (e.key === "Escape") closePanel(); }
+  if (window.__musicPanelKeydown) document.removeEventListener("keydown", window.__musicPanelKeydown);
+  window.__musicPanelKeydown = onKeydown;
+  document.addEventListener("keydown", onKeydown);
+})();
+</script>

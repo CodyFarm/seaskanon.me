@@ -1,0 +1,62 @@
+---
+import { Picture } from "astro:assets";
+import { getHeroImageLoader } from "@/lib/images";
+import { getPostCover, resolveHeroImagePath } from "@/lib/writing";
+import type { WritingPost } from "@/lib/writing";
+
+interface Props {
+  post?: WritingPost;
+  rawPath?: string;
+  alt: string;
+  class?: string;
+  widths?: number[];
+  sizes?: string;
+  quality?: number;
+}
+
+const {
+  post,
+  rawPath,
+  alt,
+  class: className,
+  widths = [480, 720, 1000, 1280, 1920],
+  sizes = "100vw",
+  quality = 82,
+} = Astro.props;
+
+const coverSource = rawPath ?? (post ? getPostCover(post) : undefined);
+const resolvedPath = resolveHeroImagePath(coverSource, post);
+const loader = resolvedPath ? getHeroImageLoader(resolvedPath) : undefined;
+
+let publicUrl: string | undefined;
+if (!loader && resolvedPath) {
+  if (resolvedPath.startsWith("/public/")) {
+    publicUrl = resolvedPath.replace(/^\/public/, "");
+  } else if (resolvedPath.endsWith(".svg")) {
+    publicUrl = resolvedPath;
+  } else if (
+    resolvedPath.startsWith("/") &&
+    !resolvedPath.startsWith("/src/")
+  ) {
+    publicUrl = resolvedPath;
+  }
+}
+---
+
+{
+  loader ? (
+    <Picture
+      src={loader()}
+      alt={alt}
+      class={className}
+      format="webp"
+      widths={widths}
+      sizes={sizes}
+      quality={quality}
+    />
+  ) : publicUrl ? (
+    <img src={publicUrl} alt={alt} class={className} />
+  ) : (
+    <slot />
+  )
+}

@@ -1,0 +1,261 @@
+{
+  "main": {
+    "id": "3fe946548ba1af86",
+    "type": "split",
+    "children": [
+      {
+        "id": "7bfde8491030dceb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "64f4dec672ad1619",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "blog/神经科学上理解强制教育和学校优化陷阱.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "神经科学上理解强制教育和学校优化陷阱"
+            }
+          },
+          {
+            "id": "554559e6099d1e47",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "blog/casual inference/最危险的方程.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "最危险的方程"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "4e77c6dc2c9adb85",
+    "type": "split",
+    "children": [
+      {
+        "id": "0cff47f927bd79ab",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "49dd418bc8b1af28",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "137f809293a34d01",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "e914728854b0bdc7",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "2a96d8c46d0ba94f",
+    "type": "split",
+    "children": [
+      {
+        "id": "81a567498b2f9685",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4af70a8a33312958",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "blog/third-post.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "third-post 的反向链接列表"
+            }
+          },
+          {
+            "id": "b36ae5dbe6d74275",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "blog/third-post.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "third-post 的出链列表"
+            }
+          },
+          {
+            "id": "c0db3477067b5202",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "f14ba3cdc6c22f38",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "53f0b1e79a8b9249",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "blog/third-post.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "third-post 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false,
+      "obsidian-git:Open Git source control": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "auto-moc:AutoMOC": false,
+      "obsidian42-brat:BRAT": false,
+      "copilot:Open Copilot Chat": false,
+      "obsidian-excalidraw-plugin:新建绘图文件": false,
+      "mouse-tooltip-translator:Open translation panel": false,
+      "mouse-tooltip-translator:Open vocabulary list": false,
+      "mouse-tooltip-translator:Translate page / Restore": false,
+      "omnisearch:Omnisearch": false,
+      "templater-obsidian:Templater": false
+    }
+  },
+  "active": "554559e6099d1e47",
+  "lastOpenFiles": [
+    "blog/casual inference/因果模型图.md",
+    "blog/casual inference/线性回归的惊人有效性.md",
+    "blog/casual inference/随机试验.md",
+    "blog/casual inference/因果性导论.md",
+    "blog/casual inference/最危险的方程.md",
+    "blog/法西斯美学——遗落的艺术.md",
+    "blog/casual inference/assets/random dice.png",
+    "blog/casual inference/因果性导论.md.tmp.41076.f11ba28f8f76",
+    "010-templater/blog templater.md",
+    "010-templater/短篇文章阅读模板.md",
+    "010-templater/test.md",
+    "010-templater/math content template.md",
+    "010-templater/diary templater.md",
+    "010-templater/book notes-《Conservatism-the fight for  a tradition》.md",
+    "010-templater/圣经模板/圣经学习目录模板.md",
+    "010-templater/圣经模板/圣经学习笔记模板.md",
+    "010-templater/问题模板.md",
+    "blog/casual inference/随机试验.md.tmp.41420.049dfbcb47a9",
+    "blog/casual inference/因果模型图.md.tmp.41420.bb48235af0c3",
+    "blog/casual inference/线性回归的惊人有效性.md.tmp.41420.1924c4c3c2f2",
+    "blog/casual inference/最危险的方程.md.tmp.41420.a4d7e7924050",
+    "blog/casual inference/因果性导论.md.tmp.41420.09c423a20da4",
+    "blog/casual inference/assets/random dice.avif",
+    "blog/casual inference/assets/random dice.avif.crdownload",
+    "blog/whoIsThatguy.md",
+    "blog/casual inference/assets/Pasted image 20260530170302.png",
+    "blog/casual inference/assets/Pasted image 20260528184255.png",
+    "blog/casual inference/assets/Pasted image 20260528164559.png",
+    "blog/casual inference/assets/Pasted image 20260528164459.png",
+    "blog/casual inference/assets/Pasted image 20260528164443.png",
+    "blog/casual inference/assets/Pasted image 20260518221259.png",
+    "blog/casual inference/assets/Pasted image 20260518204019.png",
+    "blog/casual inference/assets/Pasted image 20260518200840.png",
+    "blog/casual inference/assets",
+    "blog/casual inference",
+    "blog/新建文件夹",
+    "blog/AI与肉身现象学.md",
+    "blog/神经科学上理解强制教育和学校优化陷阱.md",
+    "blog/似然比检验的思想.md",
+    "blog/方差分析.md",
+    "blog/分布拟合检验.md",
+    "音乐剧.md",
+    "，.md",
+    "未命名.md",
+    "猫啧咚重点.md",
+    "未命名.canvas"
+  ]
+}

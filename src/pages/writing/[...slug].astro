@@ -2,7 +2,12 @@
 import { type CollectionEntry } from "astro:content";
 import { render } from "astro:content";
 import WritingPost from "@/layouts/WritingPost.astro";
-import { getPublishedWriting } from "@/lib/writing";
+import {
+  getPublishedWriting,
+  getCategoryCounts,
+  getTagCounts,
+  getSeriesPosts,
+} from "@/lib/writing";
 
 export async function getStaticPaths() {
   const posts = await getPublishedWriting();
@@ -11,6 +16,7 @@ export async function getStaticPaths() {
     params: { slug: post.id },
     props: {
       post,
+      allPosts: posts,
       relatedPosts: posts.filter((candidate) => candidate.id !== post.id),
     },
   }));
@@ -20,13 +26,28 @@ export const prerender = true;
 
 type Props = {
   post: CollectionEntry<"blog">;
+  allPosts: CollectionEntry<"blog">[];
   relatedPosts: CollectionEntry<"blog">[];
 };
 
-const { post, relatedPosts } = Astro.props;
+const { post, allPosts, relatedPosts } = Astro.props;
 const { Content } = await render(post);
+
+// Compute taxonomy data for post sidebar modules
+const allCategories = getCategoryCounts(allPosts);
+const allTags = getTagCounts(allPosts);
+const seriesPosts =
+  post.data.series
+    ? getSeriesPosts(allPosts, post.data.series)
+    : [];
 ---
 
-<WritingPost post={post} relatedPosts={relatedPosts}>
+<WritingPost
+  post={post}
+  relatedPosts={relatedPosts}
+  allCategories={allCategories}
+  allTags={allTags}
+  seriesPosts={seriesPosts}
+>
   <Content />
 </WritingPost>

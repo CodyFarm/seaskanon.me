@@ -5,6 +5,7 @@ import Footer from "@/components/Footer.astro";
 import ArticleCard from "@/components/blog/ArticleCard.astro";
 import Sidebar from "@/components/blog/Sidebar.astro";
 import { SITE_TITLE } from "@/consts";
+import { getTaxonomyDescription } from "@/data/taxonomyDescriptions";
 import {
   getCategoryCounts,
   getPublishedWriting,
@@ -30,12 +31,15 @@ export const prerender = true;
 
 const { category } = Astro.props as { category: TaxonomyCount };
 const posts = await getPublishedWriting();
-const filteredPosts = posts.filter((post: WritingPost) => matchesTaxonomySlug(post.data.category, category.slug));
+const filteredPosts = posts.filter((post: WritingPost) =>
+  matchesTaxonomySlug(post.data.category, category.slug) ||
+  matchesTaxonomySlug(post.data.categories, category.slug)
+);
 const stats = getWritingStats(posts);
 const categories = getCategoryCounts(posts);
 const tags = getTagCounts(posts);
 const series = getSeriesCounts(posts);
-const colors = ["blue", "green", "pink", "yellow"] as const;
+const description = getTaxonomyDescription("categories", category.slug);
 ---
 
 <!doctype html>
@@ -46,17 +50,20 @@ const colors = ["blue", "green", "pink", "yellow"] as const;
   <body>
     <Header />
     <main class="container mx-auto px-4 py-12 md:px-10 md:py-20">
-      <section class="mx-auto mb-10 max-w-5xl rounded-3xl border-[3px] border-black bg-pgreen p-8 shadow-card">
+      <section class="mx-auto mb-10 max-w-5xl rounded-3xl border-[3px] border-black bg-[#AEFFAE] p-8 shadow-card">
         <p class="font-semibold text-pblack">Category</p>
         <h1 class="mt-2 text-5xl font-black md:text-7xl">{category.name}</h1>
-        <p class="mt-4 text-lg text-black">{filteredPosts.length} article{filteredPosts.length === 1 ? "" : "s"} in this category.</p>
+        <p class="mt-4 text-lg text-black">
+          {filteredPosts.length} article{filteredPosts.length === 1 ? "" : "s"} in this category.
+          {description && <span class="mt-2 block text-base leading-7 text-pblack">{description}</span>}
+        </p>
       </section>
 
-      <div class="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[320px_1fr]">
+      <div class="mx-auto grid max-w-6xl gap-8 sidebar-grid sidebar-grid--left">
         <Sidebar stats={stats} categories={categories} tags={tags} series={series} activeCategory={category.slug} />
         <section class="grid gap-6 md:grid-cols-2">
-          {filteredPosts.map((post, index) => (
-            <ArticleCard post={post} color={colors[index % colors.length]} />
+          {filteredPosts.map((post) => (
+            <ArticleCard post={post} />
           ))}
         </section>
       </div>

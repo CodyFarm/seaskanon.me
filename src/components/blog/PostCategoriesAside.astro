@@ -1,0 +1,41 @@
+---
+import type { TaxonomyCount } from "@/lib/writing";
+
+interface Props {
+  categories: TaxonomyCount[];
+  activeSlug: string;
+}
+
+const { categories, activeSlug } = Astro.props;
+---
+
+<section class="rounded-3xl border-[3px] border-black bg-[#F5FFFA] p-5 shadow-card">
+  <span
+    class="inline-block rounded-lg border-2 border-black bg-[#C1FFC1] px-4 py-1.5 text-xl font-bold shadow-card1"
+  >
+    Categories
+  </span>
+
+  {categories.length > 0 ? (
+    <ul class="mt-4 flex flex-col gap-2">
+      {categories.map((cat) => (
+        <li>
+          <a
+            href={`/writing/categories/${cat.slug}/`}
+            class:list={[
+              "flex items-center justify-between rounded-xl border-2 border-black px-3 py-2 text-sm font-semibold shadow-card1 transition hover:-translate-y-0.5 hover:shadow-card",
+              cat.slug === activeSlug ? "bg-[#F2F2F2]" : "bg-[#F2F2F2]",
+            ]}
+          >
+            <span class="text-black">{cat.name}</span>
+            <span class="rounded-full border border-black bg-pblue px-2 py-0.5 text-xs">
+              {cat.count}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p class="mt-4 text-sm text-pblack">No categories yet.</p>
+  )}
+</section>

@@ -1,0 +1,194 @@
+---
+import { Icon } from "astro-icon/components";
+import { tracks } from "@/lib/playlist";
+
+const firstTrack = tracks[0] ?? { title: "", artist: "", src: "", cover: "" };
+const playlistJSON = JSON.stringify(tracks);
+---
+
+<!--
+  Capsule Player — floating pill for non-writing pages.
+  Position: fixed, bottom-left by default.
+  Supports drag to reposition. Dual-color: left white, right gamma-extracted.
+  Persists playback across pages via window.__music.
+-->
+
+<div id="capsule"
+  class="fixed bottom-6 left-6 z-50 flex cursor-grab select-none items-stretch overflow-hidden rounded-full border-[3px] border-black shadow-card active:cursor-grabbing"
+  style="height:52px; max-width:520px; min-width:200px;"
+  data-astro-transition-persist="capsule-player"
+>
+  <!-- Left block: album cover + white/Light bg -->
+  <div id="capsule-left" class="flex flex-shrink-0 items-center gap-2 bg-[#f2f2f2] pl-1.5 pr-3">
+    <img id="cap-cover" src={firstTrack.cover} alt=""
+      class="h-9 w-9 flex-shrink-0 rounded-full border-2 border-black object-cover" />
+    <span id="cap-title" class="max-w-[140px] truncate text-sm font-semibold text-black leading-tight">
+      {firstTrack.title}
+    </span>
+  </div>
+
+  <!-- Right block: gamma color from cover -->
+  <div id="capsule-right" class="flex items-center gap-1 px-2 text-white"
+    style="background: rgba(180,160,140,0.6);">
+    <span id="cap-time" class="font-mono text-xs text-pblack min-w-[70px] text-center whitespace-nowrap">0:00 / 0:00</span>
+
+    <button id="cap-btn-prev" aria-label="Previous"
+      class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border-2 border-black/40 bg-white/30 transition hover:bg-white/50 active:scale-90">
+      <svg width="12" height="12" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 20L9 12l10-8zM5 19V5"/></svg>
+    </button>
+
+    <button id="cap-btn-play" aria-label="Play"
+      class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border-2 border-black/40 bg-white/30 transition hover:bg-white/50 active:scale-90">
+      <svg id="cap-icon-play" width="12" height="12" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M5 3l14 9l-14 9z"/></svg>
+      <svg id="cap-icon-pause" width="12" height="12" viewBox="0 0 24 24" class="hidden"><rect x="4" y="3" width="5" height="18" rx="1" fill="currentColor"/><rect x="15" y="3" width="5" height="18" rx="1" fill="currentColor"/></svg>
+    </button>
+
+    <button id="cap-btn-next" aria-label="Next"
+      class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border-2 border-black/40 bg-white/30 transition hover:bg-white/50 active:scale-90">
+      <svg width="12" height="12" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 4l10 8l-10 8zM19 5v14"/></svg>
+    </button>
+  </div>
+</div>
+
+<script is:inline define:vars={{ playlistJSON }} data-astro-rerun>
+(function () {
+  var playlist = JSON.parse(playlistJSON);
+  if (!playlist.length) return;
+  if (!window.__music) return setTimeout(arguments.callee, 50);
+
+  var music = window.__music;
+  music.init(playlist);
+
+  var KEY = 'music-player-capsule';
+  window.__musicHandlers = window.__musicHandlers || {};
+  var old = window.__musicHandlers[KEY];
+  if (old) {
+    music.off('statechange', old.statechange);
+    music.off('timeupdate', old.timeupdate);
+  }
+
+  var capsule = document.getElementById("capsule");
+  var cover = document.getElementById("cap-cover");
+  var titleEl = document.getElementById("cap-title");
+  var timeEl = document.getElementById("cap-time");
+  var btnPlay = document.getElementById("cap-btn-play");
+  var iconPlay = document.getElementById("cap-icon-play");
+  var iconPause = document.getElementById("cap-icon-pause");
+  var capsuleRight = document.getElementById("capsule-right");
+
+  function fmt(sec) {
+    if (!sec || isNaN(sec)) return "0:00";
+    var m = Math.floor(sec / 60);
+    var s = Math.floor(sec % 60);
+    return m + ":" + (s < 10 ? "0" : "") + s;
+  }
+
+  function updateUI() {
+    var s = music.getState();
+    var track = playlist[s.index];
+    if (track) {
+      if (cover.src !== track.cover) { cover.src = track.cover; extractColor(track.cover); }
+      titleEl.textContent = track.title;
+    }
+    if (s.playing) { iconPlay.classList.add("hidden"); iconPause.classList.remove("hidden"); }
+    else { iconPause.classList.add("hidden"); iconPlay.classList.remove("hidden"); }
+    timeEl.textContent = fmt(s.currentTime) + " / " + fmt(s.duration);
+  }
+
+  function updateTime() {
+    var s = music.getState();
+    timeEl.textContent = fmt(s.currentTime) + " / " + fmt(s.duration);
+  }
+
+  // Extract dominant color from cover image via offscreen canvas
+  function extractColor(imgSrc) {
+    var img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = function () {
+      var canvas = document.createElement("canvas");
+      canvas.width = 10; canvas.height = 10;
+      var ctx = canvas.getContext("2d");
+      if (!ctx) return;
+      ctx.drawImage(img, 0, 0, 10, 10);
+      var data = ctx.getImageData(0, 0, 10, 10).data;
+      var r = 0, g = 0, b = 0, count = 0;
+      for (var i = 0; i < data.length; i += 4) {
+        r += data[i]; g += data[i + 1]; b += data[i + 2]; count++;
+      }
+      r = Math.round(r / count); g = Math.round(g / count); b = Math.round(b / count);
+      // Gamma correction (~2.0) to lighten and desaturate
+      var gamma = 2.0;
+      var rG = Math.round(Math.pow(r / 255, 1 / gamma) * 255);
+      var gG = Math.round(Math.pow(g / 255, 1 / gamma) * 255);
+      var bG = Math.round(Math.pow(b / 255, 1 / gamma) * 255);
+      capsuleRight.style.background = "rgba(" + rG + "," + gG + "," + bG + ",0.55)";
+    };
+    img.src = imgSrc;
+  }
+
+  music.on("statechange", updateUI);
+  music.on("timeupdate", updateTime);
+  window.__musicHandlers[KEY] = { statechange: updateUI, timeupdate: updateTime };
+
+  // Avoid attaching duplicate DOM listeners when the capsule element is persisted across view transitions.
+  var domListenersBound = capsule.dataset.musicBound === "true";
+
+  if (!domListenersBound) {
+    btnPlay.addEventListener("click", function () { music.toggle(); });
+    document.getElementById("cap-btn-prev").addEventListener("click", function () { music.prev(); });
+    document.getElementById("cap-btn-next").addEventListener("click", function () { music.next(); });
+
+    // ── Drag logic ──
+    var dragging = false, startX = 0, startY = 0, startLeft = 0, startTop = 0;
+    capsule.addEventListener("mousedown", function (e) {
+      if (e.target.closest("button")) return;
+      dragging = true; capsule.style.transition = "none";
+      startX = e.clientX; startY = e.clientY;
+      var rect = capsule.getBoundingClientRect();
+      startLeft = rect.left; startTop = rect.top;
+      e.preventDefault();
+    });
+    document.addEventListener("mousemove", function (e) {
+      if (!dragging) return;
+      var dx = e.clientX - startX, dy = e.clientY - startY;
+      var newLeft = Math.max(0, Math.min(window.innerWidth - capsule.offsetWidth, startLeft + dx));
+      var newTop = Math.max(0, Math.min(window.innerHeight - capsule.offsetHeight, startTop + dy));
+      capsule.style.left = newLeft + "px"; capsule.style.top = newTop + "px";
+      capsule.style.bottom = "auto"; capsule.style.right = "auto";
+    });
+    document.addEventListener("mouseup", function () {
+      if (!dragging) return;
+      dragging = false; capsule.style.transition = "";
+    });
+
+    // Touch support
+    capsule.addEventListener("touchstart", function (e) {
+      if (e.target.closest("button")) return;
+      dragging = true; capsule.style.transition = "none";
+      var t = e.touches[0];
+      startX = t.clientX; startY = t.clientY;
+      var rect = capsule.getBoundingClientRect();
+      startLeft = rect.left; startTop = rect.top;
+    }, { passive: false });
+    document.addEventListener("touchmove", function (e) {
+      if (!dragging) return;
+      var t = e.touches[0];
+      var dx = t.clientX - startX, dy = t.clientY - startY;
+      var newLeft = Math.max(0, Math.min(window.innerWidth - capsule.offsetWidth, startLeft + dx));
+      var newTop = Math.max(0, Math.min(window.innerHeight - capsule.offsetHeight, startTop + dy));
+      capsule.style.left = newLeft + "px"; capsule.style.top = newTop + "px";
+      capsule.style.bottom = "auto"; capsule.style.right = "auto";
+    }, { passive: false });
+    document.addEventListener("touchend", function () {
+      if (!dragging) return;
+      dragging = false; capsule.style.transition = "";
+    });
+
+    capsule.dataset.musicBound = "true";
+  }
+
+  // Initial render + color extraction
+  updateUI();
+  if (firstTrack.cover) extractColor(firstTrack.cover);
+})();
+</script>

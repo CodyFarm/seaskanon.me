@@ -17,14 +17,18 @@ const items = [
   ["Tags", stats.totalTags],
   ["Words", stats.totalWords],
 ];
----
+const barColors = ["bg-pblue", "bg-pgreen", "bg-ppink", "bg-pyellow"];
 
+---
 <section class="rounded-3xl border-[3px] border-black bg-white p-5 shadow-card">
-  <h2 class="text-xl font-bold">Statistics</h2>
+  <h2 class="font-kablamo text-2xl">Statistics</h2>
   <dl class="mt-4 grid grid-cols-2 gap-3">
-    {items.map(([label, value]) => (
-      <div class="rounded-2xl border-2 border-black bg-pyellow p-3 shadow-card1">
-        <dt class="text-xs font-semibold uppercase tracking-wide text-pblack">{label}</dt>
+    {items.map(([label, value], i) => (
+      <div class="rounded-2xl border-2 border-black bg-white p-3 shadow-card1">
+        <dt class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-pblack">
+          <span class:list={["inline-block h-4 w-1 rounded-full", barColors[i]]}></span>
+          {label}
+        </dt>
         <dd class="text-2xl font-black text-black">{formatNumber(value as number)}</dd>
       </div>
     ))}

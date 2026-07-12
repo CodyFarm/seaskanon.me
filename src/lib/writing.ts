@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from "astro:content";
+import { posix as path } from "node:path";
 
 export type WritingPost = CollectionEntry<"blog">;
 export type TaxonomyCount = {
@@ -28,6 +29,70 @@ export function getPostUrl(post: WritingPost) {
 
 export function getPostCover(post: WritingPost) {
   return post.data.cover || post.data.heroImage;
+}
+
+/** Convert backslashes to forward slashes, collapse duplicate slashes,
+ *  strip Windows drive letters, and extract /src/ or /public/ root from
+ *  absolute paths so they match Vite glob keys. */
+export function normalizeImagePath(raw: string | undefined): string | undefined {
+  if (!raw) return undefined;
+
+  let normalized = raw.replace(/\\/g, "/").trim();
+  normalized = normalized.replace(/\/+/g, "/");
+  normalized = normalized.replace(/^[A-Za-z]:\//, "/");
+
+  if (
+    normalized.startsWith("/") &&
+    !normalized.startsWith("/src/") &&
+    !normalized.startsWith("/public/")
+  ) {
+    const srcIdx = normalized.indexOf("/src/");
+    const publicIdx = normalized.indexOf("/public/");
+    const idx = srcIdx !== -1 ? srcIdx : publicIdx;
+    if (idx !== -1) normalized = normalized.slice(idx);
+  }
+
+  if (normalized.startsWith("src/") || normalized.startsWith("public/")) {
+    normalized = "/" + normalized;
+  }
+
+  return normalized;
+}
+
+function getPostBaseDir(post: WritingPost): string {
+  if (post.filePath) {
+    const normalized = post.filePath.replace(/\\/g, "/");
+    const match = normalized.match(/src\/content\/blog\/(.+)\/[^/]+$/);
+    if (match) return match[1];
+  }
+  return post.id.includes("/") ? path.dirname(post.id) : post.id;
+}
+
+/** Resolve a hero/cover path, using the post directory for content-relative paths. */
+export function resolveHeroImagePath(
+  raw: string | undefined,
+  post?: WritingPost,
+): string | undefined {
+  let normalized = normalizeImagePath(raw);
+  if (!normalized || !post) return normalized;
+
+  const baseDir = getPostBaseDir(post);
+
+  // /assets/foo.png -> /src/content/blog/<post-dir>/assets/foo.png
+  if (normalized.startsWith("/assets/")) {
+    normalized = `/src/content/blog/${baseDir}${normalized}`;
+  }
+  // bare relative path -> /src/content/blog/<post-dir>/<path>
+  else if (!normalized.startsWith("/")) {
+    normalized = `/src/content/blog/${baseDir}/${normalized}`;
+  }
+
+  return normalized.replace(/\/+/g, "/");
+}
+
+/** Convenience wrapper: get the normalized cover path for a post. */
+export function getNormalizedPostCover(post: WritingPost): string | undefined {
+  return resolveHeroImagePath(getPostCover(post), post);
 }
 
 export function stripHtml(value = "") {
@@ -67,7 +132,10 @@ export function getWritingStats(posts: WritingPost[]) {
 }
 
 export function getCategoryCounts(posts: WritingPost[]) {
-  return getTaxonomyCounts(posts.flatMap((post) => post.data.category ? [post.data.category] : []));
+  return getTaxonomyCounts(posts.flatMap((post) => {
+    const cat = post.data.category || post.data.categories;
+    return cat ? [cat] : [];
+  }));
 }
 
 export function getTagCounts(posts: WritingPost[]) {
@@ -76,6 +144,17 @@ export function getTagCounts(posts: WritingPost[]) {
 
 export function getSeriesCounts(posts: WritingPost[]) {
   return getTaxonomyCounts(posts.flatMap((post) => post.data.series ? [post.data.series] : []));
+}
+
+/** Return all posts in the same series, ordered by series_id ascending. */
+export function getSeriesPosts(allPosts: WritingPost[], seriesName: string): WritingPost[] {
+  return allPosts
+    .filter((p) => p.data.series === seriesName)
+    .sort((a, b) => {
+      const aId = parseInt(a.data.series_id ?? "0", 10);
+      const bId = parseInt(b.data.series_id ?? "0", 10);
+      return aId - bId;
+    });
 }
 
 export function getTaxonomyCounts(values: string[]) {
@@ -121,14 +200,106 @@ export function formatNumber(value: number) {
   return new Intl.NumberFormat("en-US").format(value);
 }
 
+// ── First-letter colour ────────────────────────────────────────────────
+
+const PRESET_COLORS: Record<string, { hex: string; twClass: string }> = {
+  // Original curated palette
+  pink:      { hex: "#F396E5", twClass: "text-ppink" },
+  blue:      { hex: "#96C7F2", twClass: "text-pblue" },
+  green:     { hex: "#ADF296", twClass: "text-pgreen" },
+  yellow:    { hex: "#F2CF96", twClass: "text-pyellow" },
+  purple:    { hex: "#9D859A", twClass: "text-ppurlple" },
+  gold:      { hex: "#D4A574", twClass: "text-pgold" },
+
+  // Warm / red family
+  red:       { hex: "#E85D5D", twClass: "" },
+  orange:    { hex: "#F2A96C", twClass: "" },
+  coral:     { hex: "#FF7F7F", twClass: "" },
+  crimson:   { hex: "#DC143C", twClass: "" },
+  salmon:    { hex: "#FA8072", twClass: "" },
+  tomato:    { hex: "#FF6347", twClass: "" },
+
+  // Cool / cyan-teal family
+  cyan:      { hex: "#5CE1E6", twClass: "" },
+  teal:      { hex: "#008B8B", twClass: "" },
+  aquamarine:{ hex: "#7FFFD4", twClass: "" },
+  turquoise: { hex: "#40E0D0", twClass: "" },
+
+  // Green / yellow-green family
+  lime:      { hex: "#B8E600", twClass: "" },
+  chartreuse:{ hex: "#7FFF00", twClass: "" },
+  olive:     { hex: "#808000", twClass: "" },
+
+  // Purple / violet family
+  indigo:    { hex: "#4B0082", twClass: "" },
+  violet:    { hex: "#8A2BE2", twClass: "" },
+  magenta:   { hex: "#FF00FF", twClass: "" },
+  orchid:    { hex: "#DA70D6", twClass: "" },
+  plum:      { hex: "#DDA0DD", twClass: "" },
+  lavender:  { hex: "#E6E6FA", twClass: "" },
+
+  // Earthy / brown family
+  khaki:     { hex: "#F0E68C", twClass: "" },
+  wheat:     { hex: "#F5DEB3", twClass: "" },
+  tan:       { hex: "#D2B48C", twClass: "" },
+  peru:      { hex: "#CD853F", twClass: "" },
+  sienna:    { hex: "#A0522D", twClass: "" },
+  maroon:    { hex: "#800000", twClass: "" },
+  brown:     { hex: "#A52A2A", twClass: "" },
+
+  // Neutral / muted family
+  slate:     { hex: "#708090", twClass: "" },
+  charcoal:  { hex: "#36454F", twClass: "" },
+};
+
+const PRESET_ENTRIES = Object.values(PRESET_COLORS);
+const HEX_RE = /^#[0-9a-fA-F]{3,8}$/;
+
+function isValidHexColor(value: string): boolean {
+  return HEX_RE.test(value);
+}
+
+export interface FirstLetterColor {
+  /** Tailwind text colour class (may be empty for custom hex colours). */
+  className: string;
+  /** Inline CSS colour value (hex). */
+  style: string;
+}
+
+/**
+ * Resolve a first-letter colour from metadata.
+ *
+ * | Input            | Result                              |
+ * |------------------|-------------------------------------|
+ * | `"pink"`         | preset → Tailwind class + hex style |
+ * | `"#ff6600"`      | custom hex → inline style only      |
+ * | `undefined` / "" | random preset                       |
+ */
+export function getFirstLetterColor(color?: string): FirstLetterColor {
+  // 1. Known preset name
+  if (color && PRESET_COLORS[color]) {
+    const preset = PRESET_COLORS[color];
+    return { className: preset.twClass, style: preset.hex };
+  }
+
+  // 2. Valid hex colour → inline style, no Tailwind class
+  if (color && isValidHexColor(color)) {
+    return { className: "", style: color };
+  }
+
+  // 3. Fallback: random preset
+  const entry = PRESET_ENTRIES[Math.floor(Math.random() * PRESET_ENTRIES.length)];
+  return { className: entry.twClass, style: entry.hex };
+}
+
 export function buildWritingSearchIndex(posts: WritingPost[]) {
   return posts.map((post) => ({
     title: post.data.title,
     description: stripHtml(post.data.description),
     url: getPostUrl(post),
-    category: post.data.category ?? "",
+    category: (post.data.category || post.data.categories) ?? "",
     tags: post.data.tags,
     pubDate: post.data.pubDate.toISOString(),
-    text: stripHtml(`${post.data.title} ${post.data.description} ${post.data.category ?? ""} ${post.data.tags.join(" ")} ${post.body ?? ""}`),
+    text: stripHtml(`${post.data.title} ${post.data.description} ${(post.data.category || post.data.categories) ?? ""} ${post.data.tags.join(" ")} ${post.body ?? ""}`),
   }));
 }

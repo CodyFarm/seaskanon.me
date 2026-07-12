@@ -1,0 +1,75 @@
+---
+import { Icon } from "astro-icon/components";
+import { Picture } from "astro:assets";
+import { heroImages } from "@/lib/images";
+
+const avatarLoader = heroImages["/src/assets/hero.webp"];
+---
+
+<section class="rounded-3xl border-[3px] border-black bg-white p-3 shadow-card">
+  <a
+    aria-label="Go to About Page"
+    href="/about"
+    class="group relative mx-auto mt-1 mb-3 block max-w-[12rem] overflow-hidden rounded-xl active:scale-95 lg:mx-0 lg:max-w-none"
+  >
+    <div
+      class="pointer-events-none absolute z-50 flex h-full w-full items-center justify-center transition group-hover:bg-black/30 group-active:bg-black/50"
+    >
+      <Icon
+        name="web"
+        class="scale-90 text-5xl text-white opacity-0 transition group-hover:scale-100 group-hover:opacity-100"
+      />
+    </div>
+    {avatarLoader ? (
+      <Picture
+        src={avatarLoader()}
+        alt="Profile Image of the Author"
+        class="mx-auto h-full w-full object-cover lg:mt-0"
+        format="webp"
+        widths={[256, 384]}
+        sizes="12rem"
+        quality={80}
+      />
+    ) : (
+      <div class="flex h-32 items-center justify-center bg-pblue">
+        <span class="font-kablamo text-5xl text-pblack">S</span>
+      </div>
+    )}
+  </a>
+
+  <div class="px-2">
+    <div class="mb-1 text-center text-xl font-bold text-black transition">seasKanon</div>
+    <div class="mx-auto mb-2 h-1 w-5 rounded-full bg-pgold transition"></div>
+    <div class="mb-2.5 text-center text-sm text-pblack transition">
+      四季的卡农：在数学、代码、阅读与旅途中持续记录。
+    </div>
+
+    <div class="mb-1 flex flex-wrap justify-center gap-2">
+      <a
+        href="/"
+        aria-label="Personal website"
+        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-black bg-white shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90"
+      >
+        <Icon name="web" class="text-[1.5rem]" />
+      </a>
+      <a
+        href="https://github.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitHub profile"
+        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-black bg-white shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90"
+      >
+        <Icon name="github" class="text-[1.5rem]" />
+      </a>
+      <a
+        href="https://www.linkedin.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LinkedIn profile"
+        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-black bg-white shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90"
+      >
+        <Icon name="linkedin" class="text-[1.5rem]" />
+      </a>
+    </div>
+  </div>
+</section>

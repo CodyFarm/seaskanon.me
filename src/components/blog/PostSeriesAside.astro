@@ -1,0 +1,67 @@
+---
+import FormattedDate from "@/components/FormattedDate.astro";
+import type { WritingPost } from "@/lib/writing";
+import { getFirstLetterColor } from "@/lib/writing";
+
+interface Props {
+  seriesName: string;
+  seriesPosts: WritingPost[];
+  currentPostId: string;
+}
+
+const { seriesName, seriesPosts, currentPostId } = Astro.props;
+---
+
+<section class="rounded-3xl border-[3px] border-black bg-[#FFFFF0] p-5 shadow-card">
+  <span
+    class="inline-block rounded-lg border-2 border-black bg-[#F5DEB3] px-4 py-1.5 text-xl font-bold shadow-card1"
+  >
+    Series
+  </span>
+
+  <p class="mt-3 text-base font-semibold text-pblack">{seriesName}</p>
+
+  <div class="mt-4">
+    {
+      seriesPosts.map((p, i) => {
+        const isCurrent = p.id === currentPostId;
+        const isLast = i === seriesPosts.length - 1;
+
+        return (
+          <div class="flex gap-3">
+            {/* ── Timeline column ── */}
+            <div class="flex flex-col items-center">
+              {/* dot */}
+              <span
+                class:list={[
+                  "mt-1 block h-3 w-3 flex-shrink-0 rounded-full border-2 border-black",
+                  isCurrent ? "bg-ppink" : "bg-white",
+                ]}
+              ></span>
+              {/* dashed line to next, unless last */}
+              {!isLast && (
+                <div class="h-full min-h-[1.5rem] w-0 border-l-2 border-dashed border-black"></div>
+              )}
+            </div>
+
+            {/* ── Post link ── */}
+            <div class:list={["pb-3", isLast && "pb-0"]}>
+              <a
+                href={`/writing/${p.id}/`}
+                class:list={[
+                  "text-sm font-semibold transition-colors duration-200 hover:text-ppink",
+                ]}
+                style={`color: ${getFirstLetterColor(p.data.firstLetterColor).style}`}
+              >
+                {p.data.title}
+              </a>
+              <p class="mt-0.5 text-xs text-pblack">
+                <FormattedDate date={p.data.pubDate} />
+              </p>
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+</section>
