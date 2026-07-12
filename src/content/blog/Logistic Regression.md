@@ -7,7 +7,7 @@ description: Logistic回归虽然名字叫”回归” ，但却是一种分类
 categories: quote
 series:
 series id:
-heroImage: blog/assets/Logistic Regression
+heroImage: blog/assets/Logistic Regression/logistic regression.webp
 firstLetterColor: blue
 icon: "2"
 ---
