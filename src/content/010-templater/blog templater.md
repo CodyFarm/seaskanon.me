@@ -10,4 +10,3 @@ heroImage:
 firstLetterColor:
 icon:
 ---
-<% tp.file.content %>
