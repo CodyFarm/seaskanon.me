@@ -30,3 +30,6 @@ bun.lock
 # pnpm-lock.yaml
 .wrangler
 desktop.ini
+
+# obsidian sensitive config
+src/content/.obsidian/plugins/copilot/data.json
