@@ -2,6 +2,7 @@
 import BaseHead from "@/components/BaseHead.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import PageBanner from "@/components/PageBanner.astro";
 import { SITE_TITLE } from "@/consts";
 import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
 
@@ -16,16 +17,14 @@ const areas = ["Computer Graphics", "Mathematical Modeling", "Operations Researc
   <body>
     <Header />
     <main class="container mx-auto px-4 py-12 md:px-10 md:py-20">
-      <section class="mx-auto max-w-5xl rounded-3xl border-[3px] border-black bg-pblue p-8 shadow-card">
-        <p class="font-semibold text-pblack">Knowledge</p>
-        <h1 class="mt-2 text-5xl font-black leading-tight md:text-7xl">A future Quarto knowledge network.</h1>
-        <p class="mt-5 max-w-3xl text-lg leading-8 text-black">
-          Knowledge will become an independent note system for linked concepts, reading notes, and long-term study. It stays separate from Writing, including search and taxonomy.
-        </p>
-      </section>
+      <PageBanner
+        label="Knowledge"
+        title="A future Quarto knowledge network."
+        description="Knowledge will become an independent note system for linked concepts, reading notes, and long-term study. It stays separate from Writing, including search and taxonomy."
+      />
 
-      <section class="mx-auto mt-10 max-w-5xl rounded-3xl border-[3px] border-black bg-white p-6 shadow-card md:p-8">
-        <div class="rounded-3xl border-[3px] border-black bg-pyellow p-6 shadow-card1">
+      <section class="mx-auto mt-10 max-w-5xl rounded-3xl border-[3px] border-border-main bg-card p-6 shadow-card md:p-8">
+        <div class="rounded-3xl border-[3px] border-border-main bg-pyellow p-6 shadow-card1">
           <h2 class="text-3xl font-black">Coming soon</h2>
           <p class="mt-3 leading-7 text-pblack">
             The current implementation only reserves this route and visual boundary. Quartz can later be mounted under `/knowledge` without coupling to Writing posts.
@@ -33,7 +32,7 @@ const areas = ["Computer Graphics", "Mathematical Modeling", "Operations Researc
         </div>
         <ul class="mt-6 grid gap-3 md:grid-cols-3">
           {areas.map((area) => (
-            <li class="rounded-2xl border-2 border-black bg-pgreen px-4 py-3 font-bold shadow-card1">{area}</li>
+            <li class="rounded-2xl border-2 border-border-main bg-pgreen px-4 py-3 font-bold shadow-card1">{area}</li>
           ))}
         </ul>
       </section>

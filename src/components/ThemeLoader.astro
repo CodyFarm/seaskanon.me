@@ -1,0 +1,64 @@
+---
+// Full-screen theme transition loader.
+// Coordinates with window.__theme (defined in BaseHead.astro).
+---
+
+<div
+  id="theme-loader"
+  class="theme-loader fixed inset-0 z-[100] flex flex-col items-center justify-center gap-6 opacity-0 pointer-events-none"
+  aria-hidden="true"
+>
+  <div class="theme-loader__spinner relative flex items-center justify-center">
+    <div class="absolute h-20 w-20 rounded-full border-4 border-border-main border-t-accent-primary animate-spin"></div>
+    <div class="absolute h-14 w-14 rounded-full border-4 border-border-main border-b-accent-secondary animate-spin" style="animation-direction: reverse; animation-duration: 1.2s;"></div>
+    <div class="font-kablamo text-3xl text-accent-tertiary">S</div>
+  </div>
+  <p id="theme-loader__name" class="text-xl font-bold text-text-main">Switching theme…</p>
+</div>
+
+<style>
+  .theme-loader {
+    background-color: var(--bg-body);
+    transition: opacity 200ms ease;
+  }
+  .theme-loader.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .theme-loader__spinner {
+    width: 5rem;
+    height: 5rem;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    if (!window.__theme) return;
+
+    var loader = document.getElementById('theme-loader');
+    var nameEl = document.getElementById('theme-loader__name');
+    if (!loader || !nameEl) return;
+
+    var isAnimating = false;
+
+    window.__theme.transitionTo = function (themeName) {
+      if (window.__theme.themes.indexOf(themeName) === -1) themeName = 'default';
+      if (isAnimating) return;
+      isAnimating = true;
+
+      nameEl.textContent = window.__theme.names[themeName] || themeName;
+      loader.classList.add('is-visible');
+      document.documentElement.classList.add('theme-loading');
+
+      window.setTimeout(function () {
+        window.__theme.set(themeName);
+        document.documentElement.classList.remove('theme-loading');
+
+        window.setTimeout(function () {
+          loader.classList.remove('is-visible');
+          isAnimating = false;
+        }, 350);
+      }, 500);
+    };
+  })();
+</script>

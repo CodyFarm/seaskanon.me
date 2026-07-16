@@ -6,7 +6,7 @@ import { heroImages } from "@/lib/images";
 const avatarLoader = heroImages["/src/assets/hero.webp"];
 ---
 
-<section class="rounded-3xl border-[3px] border-black bg-white p-3 shadow-card">
+<section class="rounded-3xl border-[3px] border-border-main bg-card p-3 shadow-card">
   <a
     aria-label="Go to About Page"
     href="/about"
@@ -17,7 +17,7 @@ const avatarLoader = heroImages["/src/assets/hero.webp"];
     >
       <Icon
         name="web"
-        class="scale-90 text-5xl text-white opacity-0 transition group-hover:scale-100 group-hover:opacity-100"
+        class="scale-90 text-5xl text-text-inverse opacity-0 transition group-hover:scale-100 group-hover:opacity-100"
       />
     </div>
     {avatarLoader ? (
@@ -38,7 +38,7 @@ const avatarLoader = heroImages["/src/assets/hero.webp"];
   </a>
 
   <div class="px-2">
-    <div class="mb-1 text-center text-xl font-bold text-black transition">seasKanon</div>
+    <div class="mb-1 text-center text-xl font-bold text-text-main transition">seasKanon</div>
     <div class="mx-auto mb-2 h-1 w-5 rounded-full bg-pgold transition"></div>
     <div class="mb-2.5 text-center text-sm text-pblack transition">
       四季的卡农：在数学、代码、阅读与旅途中持续记录。
@@ -47,28 +47,37 @@ const avatarLoader = heroImages["/src/assets/hero.webp"];
     <div class="mb-1 flex flex-wrap justify-center gap-2">
       <a
         href="/"
-        aria-label="Personal website"
-        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-black bg-white shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90"
+        aria-label="Home"
+        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-border-main bg-ppink shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90"
       >
         <Icon name="web" class="text-[1.5rem]" />
       </a>
       <a
-        href="https://github.com"
+        href="https://github.com/your-github"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="GitHub profile"
-        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-black bg-white shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90"
+        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-border-main bg-pblue shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90"
       >
         <Icon name="github" class="text-[1.5rem]" />
       </a>
       <a
-        href="https://www.linkedin.com"
+        href="https://www.bilibili.com/your-bilibili"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="LinkedIn profile"
-        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-black bg-white shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90"
+        aria-label="Bilibili profile"
+        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-border-main bg-pgreen shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90"
       >
-        <Icon name="linkedin" class="text-[1.5rem]" />
+        <Icon name="bilibili" class="text-[1.5rem]" />
+      </a>
+      <a
+        href="https://www.zhihu.com/your-zhihu"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Zhihu profile"
+        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-border-main bg-pyellow shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90"
+      >
+        <Icon name="zhihu" class="text-[1.5rem]" />
       </a>
     </div>
   </div>

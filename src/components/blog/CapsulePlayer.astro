@@ -14,37 +14,37 @@ const playlistJSON = JSON.stringify(tracks);
 -->
 
 <div id="capsule"
-  class="fixed bottom-6 left-6 z-50 flex cursor-grab select-none items-stretch overflow-hidden rounded-full border-[3px] border-black shadow-card active:cursor-grabbing"
+  class="fixed bottom-6 left-6 z-50 flex cursor-grab select-none items-stretch overflow-hidden rounded-full border-[3px] border-border-main shadow-card active:cursor-grabbing"
   style="height:52px; max-width:520px; min-width:200px;"
   data-astro-transition-persist="capsule-player"
 >
   <!-- Left block: album cover + white/Light bg -->
-  <div id="capsule-left" class="flex flex-shrink-0 items-center gap-2 bg-[#f2f2f2] pl-1.5 pr-3">
+  <div id="capsule-left" class="flex flex-shrink-0 items-center gap-2 bg-card-soft pl-1.5 pr-3">
     <img id="cap-cover" src={firstTrack.cover} alt=""
-      class="h-9 w-9 flex-shrink-0 rounded-full border-2 border-black object-cover" />
-    <span id="cap-title" class="max-w-[140px] truncate text-sm font-semibold text-black leading-tight">
+      class="h-9 w-9 flex-shrink-0 rounded-full border-2 border-border-main object-cover" />
+    <span id="cap-title" class="max-w-[140px] truncate text-sm font-semibold text-text-main leading-tight">
       {firstTrack.title}
     </span>
   </div>
 
   <!-- Right block: gamma color from cover -->
-  <div id="capsule-right" class="flex items-center gap-1 px-2 text-white"
+  <div id="capsule-right" class="flex items-center gap-1 px-2 text-text-inverse"
     style="background: rgba(180,160,140,0.6);">
     <span id="cap-time" class="font-mono text-xs text-pblack min-w-[70px] text-center whitespace-nowrap">0:00 / 0:00</span>
 
     <button id="cap-btn-prev" aria-label="Previous"
-      class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border-2 border-black/40 bg-white/30 transition hover:bg-white/50 active:scale-90">
+      class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border-2 border-border-main/40 bg-card/30 transition hover:bg-card/50 active:scale-90">
       <svg width="12" height="12" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 20L9 12l10-8zM5 19V5"/></svg>
     </button>
 
     <button id="cap-btn-play" aria-label="Play"
-      class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border-2 border-black/40 bg-white/30 transition hover:bg-white/50 active:scale-90">
+      class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border-2 border-border-main/40 bg-card/30 transition hover:bg-card/50 active:scale-90">
       <svg id="cap-icon-play" width="12" height="12" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M5 3l14 9l-14 9z"/></svg>
       <svg id="cap-icon-pause" width="12" height="12" viewBox="0 0 24 24" class="hidden"><rect x="4" y="3" width="5" height="18" rx="1" fill="currentColor"/><rect x="15" y="3" width="5" height="18" rx="1" fill="currentColor"/></svg>
     </button>
 
     <button id="cap-btn-next" aria-label="Next"
-      class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border-2 border-black/40 bg-white/30 transition hover:bg-white/50 active:scale-90">
+      class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border-2 border-border-main/40 bg-card/30 transition hover:bg-card/50 active:scale-90">
       <svg width="12" height="12" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 4l10 8l-10 8zM19 5v14"/></svg>
     </button>
   </div>

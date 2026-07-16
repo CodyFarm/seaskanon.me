@@ -9,10 +9,10 @@ interface Props {
 const { series, activeSlug = "" } = Astro.props;
 ---
 
-<section class="rounded-3xl border-[3px] border-black bg-[#FDF5E6] p-5 shadow-card">
+<section class="rounded-3xl border-[3px] border-border-main bg-series-bg p-5 shadow-card">
   <a
     href="/writing"
-    class="inline-block rounded-lg border-2 border-black bg-pyellow px-4 py-1.5 text-xl font-bold shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pyellowHover"
+    class="inline-block rounded-lg border-2 border-border-main bg-series-button px-4 py-1.5 text-xl font-bold shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pyellowHover"
   >
     Series
   </a>
@@ -23,12 +23,12 @@ const { series, activeSlug = "" } = Astro.props;
           <a
             href={`/writing/series/${item.slug}/`}
             class:list={[
-              "flex items-center justify-between rounded-xl border-2 border-black px-3 py-2 text-sm font-semibold shadow-card1 transition hover:-translate-y-0.5 hover:shadow-card",
-              item.slug === activeSlug ? "bg-white" : "bg-white",
+              "flex items-center justify-between rounded-xl border-2 border-border-main px-3 py-2 text-sm font-semibold shadow-card1 transition hover:-translate-y-0.5 hover:shadow-card",
+              item.slug === activeSlug ? "bg-card" : "bg-card",
             ]}
           >
             <span>{item.name}</span>
-            <span class="rounded-full border border-black bg-pblue px-2 py-0.5 text-xs">{item.count}</span>
+            <span class="rounded-full border border-border-main bg-pblue px-2 py-0.5 text-xs">{item.count}</span>
           </a>
         </li>
       ))}

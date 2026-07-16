@@ -1,0 +1,191 @@
+---
+import { projects } from "@/data/projects";
+
+const isExternal = (href: string) => href.startsWith("http");
+---
+
+<section
+  class="project-gallery mx-auto w-full max-w-6xl"
+  aria-label="Projects gallery"
+>
+  <h2 class="gallery-title">seaskanon</h2>
+
+  <!-- Project cover anchors — normal grid items -->
+  {
+    projects.map((project, index) => (
+      <a
+        href={project.href}
+        target={isExternal(project.href) ? "_blank" : undefined}
+        rel={isExternal(project.href) ? "noopener noreferrer" : undefined}
+        class="project-node"
+        data-project={project.id}
+        data-title={project.title}
+        data-color={project.color}
+        aria-label={project.title}
+        style={`grid-column: ${project.col} / span 1; grid-row: ${project.row} / span 1; --reveal-delay: ${index * 60}ms;`}
+      >
+        <img
+          class="project-cover"
+          src={project.cover}
+          alt={project.title}
+          loading="lazy"
+        />
+      </a>
+    ))
+  }
+
+  <!-- Context image links — display:contents wrapper so they become grid items -->
+  {
+    projects.map((project) => (
+      <div
+        class="project-context-group"
+        data-project={project.id}
+        style="display: contents;"
+      >
+        {project.context.map((ctx, i) => (
+          <a
+            href={project.href}
+            target={isExternal(project.href) ? "_blank" : undefined}
+            rel={isExternal(project.href) ? "noopener noreferrer" : undefined}
+            class="project-context-link"
+            data-project={project.id}
+            data-title={project.title}
+            data-color={project.color}
+            aria-hidden="true"
+            style={`grid-column: ${ctx.col} / span ${ctx.colSpan || 1}; grid-row: ${ctx.row} / span ${ctx.rowSpan || 1}; --ctx-delay: ${i * 100}ms;`}
+          >
+            <img
+              class="project-context"
+              src={ctx.src || project.cover}
+              alt=""
+              loading="lazy"
+            />
+          </a>
+        ))}
+      </div>
+    ))
+  }
+</section>
+
+<script is:inline data-astro-rerun>
+  (function () {
+    var DEFAULT_TITLE = "seaskanon";
+
+    function init() {
+      var gallery = document.querySelector(".project-gallery");
+      if (!gallery || gallery.__pgInited) return;
+      gallery.__pgInited = true;
+
+      var titleEl = gallery.querySelector(".gallery-title");
+      var typeInterval = null;
+      var currentText = DEFAULT_TITLE;
+      var currentColor = null;
+      var leaveTimer = null;
+
+      function updateDisplay(text, color) {
+        if (!titleEl) return;
+        if (color && text.length > 0) {
+          titleEl.innerHTML =
+            '<span class="gallery-title__first" style="color:' + color + '">' +
+            text.charAt(0) + '</span>' + text.slice(1);
+        } else {
+          titleEl.textContent = text;
+        }
+      }
+
+      function typeTo(target, color) {
+        if (typeInterval) { clearInterval(typeInterval); typeInterval = null; }
+        if (currentText === target && currentColor === color) return;
+
+        typeInterval = window.setInterval(function () {
+          if (currentText === target) {
+            clearInterval(typeInterval);
+            typeInterval = null;
+            updateDisplay(target, color);
+            currentColor = color;
+            return;
+          }
+
+          if (currentText.length > 0 && !target.startsWith(currentText)) {
+            currentText = currentText.slice(0, -1);
+          } else {
+            currentText = target.slice(0, currentText.length + 1);
+          }
+
+          // Keep the old colour during deletion; only switch to the new
+          // colour once we start _typing_ the target word.
+          var displayColor = null;
+          if (currentText.length > 0 && target.startsWith(currentText)) {
+            displayColor = color;        // typing the target → use target colour
+          } else {
+            displayColor = currentColor; // deleting → keep whatever colour we had
+          }
+          updateDisplay(currentText, displayColor);
+        }, 40);
+      }
+
+      function deactivateAll() {
+        gallery.querySelectorAll("[data-active]").forEach(function (el) {
+          el.removeAttribute("data-active");
+        });
+      }
+
+      function activate(node) {
+        if (leaveTimer) { clearTimeout(leaveTimer); leaveTimer = null; }
+        deactivateAll();
+
+        var id = node.dataset.project;
+        var title = node.dataset.title;
+        var color = node.dataset.color;
+
+        gallery.setAttribute("data-active-project", id);
+
+        gallery.querySelectorAll('.project-node[data-project="' + id + '"]')
+          .forEach(function (el) { el.setAttribute("data-active", "true"); });
+
+        gallery.querySelectorAll('.project-context-link[data-project="' + id + '"]')
+          .forEach(function (el) { el.setAttribute("data-active", "true"); });
+
+        typeTo(title || DEFAULT_TITLE, color || null);
+      }
+
+      function deactivate() {
+        gallery.removeAttribute("data-active-project");
+        deactivateAll();
+        typeTo(DEFAULT_TITLE, null);
+      }
+
+      gallery.addEventListener("mouseover", function (e) {
+        var target = e.target;
+        var node = target.closest(".project-node, .project-context-link");
+        if (!node) return;
+        activate(node);
+      });
+
+      gallery.addEventListener("mouseout", function (e) {
+        var target = e.target;
+        var leaving = target.closest(".project-node, .project-context-link");
+        if (!leaving) return;
+        var goingTo = e.relatedTarget && e.relatedTarget.closest(".project-node, .project-context-link");
+        if (goingTo && goingTo.dataset.project === leaving.dataset.project) return;
+        if (leaveTimer) clearTimeout(leaveTimer);
+        leaveTimer = window.setTimeout(function () { deactivate(); }, 150);
+      });
+
+      gallery.addEventListener("focusin", function (e) {
+        var target = e.target;
+        var node = target.closest(".project-node, .project-context-link");
+        if (!node) return;
+        activate(node);
+      });
+
+      gallery.addEventListener("focusout", function () {
+        if (leaveTimer) clearTimeout(leaveTimer);
+        leaveTimer = window.setTimeout(function () { deactivate(); }, 150);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", init);
+    document.addEventListener("astro:page-load", init);
+  })();
+</script>

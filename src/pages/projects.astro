@@ -2,32 +2,10 @@
 import BaseHead from "@/components/BaseHead.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import PageBanner from "@/components/PageBanner.astro";
+import ProjectGallery from "@/components/projects/ProjectGallery.astro";
 import { SITE_TITLE } from "@/consts";
 import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
-
-const projects = [
-  {
-    title: "SageRoute",
-    description: "A future space for routing, optimization, and product experiments.",
-    stack: ["Operations Research", "Web", "Maps"],
-    period: "Building",
-    color: "bg-pgreen",
-  },
-  {
-    title: "Mathematical Modeling",
-    description: "Course projects, modeling notes, and competition-style problem solving.",
-    stack: ["Math", "Modeling", "Python"],
-    period: "Ongoing",
-    color: "bg-pblue",
-  },
-  {
-    title: "Digital Garden Architecture",
-    description: "The rebuild of this site into Writing, Projects, and future Quartz Knowledge.",
-    stack: ["Astro", "Tailwind", "Content"],
-    period: "2026",
-    color: "bg-ppink",
-  },
-];
 ---
 
 <!doctype html>
@@ -37,35 +15,119 @@ const projects = [
   </head>
   <body>
     <Header />
-    <main class="container mx-auto px-4 py-12 md:px-10 md:py-20">
-      <section class="mx-auto max-w-5xl rounded-3xl border-[3px] border-black bg-pyellow p-8 shadow-card">
-        <p class="font-semibold text-pblack">Projects</p>
-        <h1 class="mt-2 text-5xl font-black leading-tight md:text-7xl">Work worth keeping, not just showing.</h1>
-        <p class="mt-5 max-w-3xl text-lg leading-8 text-black">
-          This page reserves a dedicated home for SageRoute, mathematical modeling, course work, research experiments, and future demos.
-        </p>
-      </section>
-
-      <section class="mx-auto mt-10 grid max-w-5xl gap-6 md:grid-cols-3">
-        {projects.map((project) => (
-          <article class:list={["flex min-h-80 flex-col rounded-3xl border-[3px] border-black p-5 shadow-card transition hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-hover", project.color]}>
-            <p class="self-start rounded-full border-2 border-black bg-white px-3 py-1 text-sm font-bold shadow-card1">{project.period}</p>
-            <h2 class="mt-5 text-3xl font-black leading-tight">{project.title}</h2>
-            <p class="mt-4 flex-1 leading-7 text-black">{project.description}</p>
-            <ul class="mt-5 flex flex-wrap gap-2">
-              {project.stack.map((item) => (
-                <li class="rounded-full border border-black bg-white px-3 py-1 text-xs font-bold shadow-card1">{item}</li>
-              ))}
-            </ul>
-            <div class="mt-6 grid grid-cols-2 gap-3 text-sm font-bold">
-              <span class="rounded-xl border-2 border-black bg-white px-3 py-2 text-center shadow-card1">GitHub soon</span>
-              <span class="rounded-xl border-2 border-black bg-white px-3 py-2 text-center shadow-card1">Demo soon</span>
-            </div>
-          </article>
-        ))}
-      </section>
+    <main class="projects-page">
+      <div class="projects-stage" data-stage>
+        <div class="projects-banner">
+          <PageBanner
+            label="Projects"
+            title="Work worth keeping, not just showing."
+            description="This page reserves a dedicated home for SageRoute, mathematical modeling, course work, research experiments, and future demos."
+          />
+        </div>
+        <div class="projects-gallery-wrapper">
+          <ProjectGallery />
+        </div>
+      </div>
     </main>
     <Footer />
     <CapsulePlayer />
+
+    <script is:inline data-astro-rerun>
+      (function () {
+        function init() {
+          const stage = document.querySelector('[data-stage]');
+          if (!stage || stage.__stageInited) return;
+          stage.__stageInited = true;
+
+          const header = document.querySelector('header');
+          function setHeaderHeight() {
+            const h = header ? header.offsetHeight : 64;
+            document.documentElement.style.setProperty('--header-height', h + 'px');
+          }
+          setHeaderHeight();
+          window.addEventListener('resize', setHeaderHeight);
+
+          let shown = false;
+          let lock = false;
+          let accum = 0;
+          let resetTimer = null;
+          const THRESHOLD = 70;
+          const LOCK_MS = 700;
+
+          function show() {
+            if (shown) return;
+            shown = true;
+            stage.classList.add('is-shown');
+          }
+
+          function hide() {
+            if (!shown) return;
+            shown = false;
+            stage.classList.remove('is-shown');
+          }
+
+          function trigger(direction) {
+            if (lock) return false;
+            if (direction === 'down' && !shown) {
+              show();
+            } else if (direction === 'up' && shown && window.scrollY <= 0) {
+              hide();
+            } else {
+              return false;
+            }
+            lock = true;
+            accum = 0;
+            window.setTimeout(() => { lock = false; }, LOCK_MS);
+            return true;
+          }
+
+          function onWheel(e) {
+            if (window.innerWidth <= 768) return;
+            const dy = e.deltaY;
+            if (Math.abs(dy) < 2) return;
+            accum += dy;
+            if (resetTimer) clearTimeout(resetTimer);
+            resetTimer = window.setTimeout(() => { accum = 0; }, 120);
+
+            if (accum > THRESHOLD) {
+              if (trigger('down')) e.preventDefault();
+            } else if (accum < -THRESHOLD) {
+              if (trigger('up')) e.preventDefault();
+            }
+          }
+
+          function onKey(e) {
+            if (window.innerWidth <= 768) return;
+            if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+              e.preventDefault();
+              trigger('down');
+            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+              e.preventDefault();
+              trigger('up');
+            }
+          }
+
+          let touchStartY = 0;
+          function onTouchStart(e) {
+            touchStartY = e.touches[0].clientY;
+          }
+          function onTouchEnd(e) {
+            if (window.innerWidth <= 768) return;
+            const dy = touchStartY - e.changedTouches[0].clientY;
+            if (dy > 60) trigger('down');
+            else if (dy < -60) trigger('up');
+          }
+
+          stage.addEventListener('wheel', onWheel, { passive: false });
+          stage.addEventListener('keydown', onKey);
+          stage.addEventListener('touchstart', onTouchStart, { passive: true });
+          stage.addEventListener('touchend', onTouchEnd, { passive: true });
+          stage.setAttribute('tabindex', '0');
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('astro:page-load', init);
+      })();
+    </script>
   </body>
 </html>

@@ -12,9 +12,9 @@ interface Props {
 const { seriesName, seriesPosts, currentPostId } = Astro.props;
 ---
 
-<section class="rounded-3xl border-[3px] border-black bg-[#FFFFF0] p-5 shadow-card">
+<section class="rounded-3xl border-[3px] border-border-main bg-series-bg p-5 shadow-card">
   <span
-    class="inline-block rounded-lg border-2 border-black bg-[#F5DEB3] px-4 py-1.5 text-xl font-bold shadow-card1"
+    class="inline-block rounded-lg border-2 border-border-main bg-series-header px-4 py-1.5 text-xl font-bold shadow-card1"
   >
     Series
   </span>
@@ -34,13 +34,13 @@ const { seriesName, seriesPosts, currentPostId } = Astro.props;
               {/* dot */}
               <span
                 class:list={[
-                  "mt-1 block h-3 w-3 flex-shrink-0 rounded-full border-2 border-black",
-                  isCurrent ? "bg-ppink" : "bg-white",
+                  "mt-1 block h-3 w-3 flex-shrink-0 rounded-full border-2 border-border-main",
+                  isCurrent ? "bg-ppink" : "bg-card",
                 ]}
               ></span>
               {/* dashed line to next, unless last */}
               {!isLast && (
-                <div class="h-full min-h-[1.5rem] w-0 border-l-2 border-dashed border-black"></div>
+                <div class="h-full min-h-[1.5rem] w-0 border-l-2 border-dashed border-border-main"></div>
               )}
             </div>
 

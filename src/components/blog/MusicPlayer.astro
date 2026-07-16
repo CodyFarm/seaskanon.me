@@ -6,7 +6,7 @@ const firstTrack = tracks[0] ?? { title: "No tracks found", artist: "", src: "",
 const playlistJSON = JSON.stringify(tracks);
 ---
 
-<section class="music-player rounded-3xl border-[3px] border-black bg-white p-3 shadow-card">
+<section class="music-player rounded-3xl border-[3px] border-border-main bg-card p-3 shadow-card">
   <!-- Album Cover -->
   <div class="relative mx-auto mt-1 mb-3 block max-w-[12rem] overflow-hidden rounded-xl lg:mx-0 lg:max-w-none">
     <img id="mp-cover" src={firstTrack.cover} alt="Album Cover"
@@ -15,7 +15,7 @@ const playlistJSON = JSON.stringify(tracks);
 
   <div class="px-2">
     <!-- Title -->
-    <div id="mp-title" class="mb-1 text-center text-xl font-bold text-black truncate transition">
+    <div id="mp-title" class="mb-1 text-center text-xl font-bold text-text-main truncate transition">
       {firstTrack.title}
     </div>
     <div class="mx-auto mb-2 h-1 w-5 rounded-full bg-pgold transition"></div>
@@ -35,28 +35,28 @@ const playlistJSON = JSON.stringify(tracks);
     <!-- Controls -->
     <div class="mb-2 flex flex-wrap justify-center gap-2">
       <button id="mp-btn-rand" aria-label="Toggle shuffle" title="Shuffle"
-        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-black bg-white shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
+        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-border-main bg-card shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
         <Icon name="shuffle" class="text-[1.5rem]" />
       </button>
 
       <button id="mp-btn-prev" aria-label="Previous track"
-        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-black bg-white shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
+        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-border-main bg-card shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
         <Icon name="skip-back" class="text-[1.5rem]" />
       </button>
 
       <button id="mp-btn-play" aria-label="Play"
-        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-black bg-white shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
+        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-border-main bg-card shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
         <Icon id="mp-icon-play" name="play" class="text-[1.5rem]" />
         <Icon id="mp-icon-pause" name="pause" class="hidden text-[1.5rem]" />
       </button>
 
       <button id="mp-btn-next" aria-label="Next track"
-        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-black bg-white shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
+        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-border-main bg-card shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
         <Icon name="skip-forward" class="text-[1.5rem]" />
       </button>
 
       <button id="mp-btn-list" aria-label="Playlist" title="Playlist"
-        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-black bg-white shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
+        class="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-border-main bg-card shadow-card1 transition ease-in-out hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
         <Icon name="list-music" class="text-[1.5rem]" />
       </button>
     </div>
@@ -66,11 +66,11 @@ const playlistJSON = JSON.stringify(tracks);
 <!-- Slide-out Playlist Panel -->
 <div id="mp-overlay" class="fixed inset-0 z-40 hidden bg-black/20 backdrop-blur-sm"
   aria-hidden="true"></div>
-<div id="mp-panel" class="fixed top-0 right-0 z-50 h-full w-72 translate-x-full overflow-hidden rounded-l-3xl border-l-[3px] border-black bg-white shadow-card transition-transform duration-300 ease-in-out">
-  <div class="flex items-center justify-between border-b-[3px] border-black px-4 py-3">
-    <span class="text-lg font-bold text-black">Playlist</span>
+<div id="mp-panel" class="fixed top-0 right-0 z-50 h-full w-72 translate-x-full overflow-hidden rounded-l-3xl border-l-[3px] border-border-main bg-card shadow-card transition-transform duration-300 ease-in-out">
+  <div class="flex items-center justify-between border-b-[3px] border-border-main px-4 py-3">
+    <span class="text-lg font-bold text-text-main">Playlist</span>
     <button id="mp-panel-close" aria-label="Close playlist"
-      class="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-black shadow-card1 transition hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
+      class="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-border-main shadow-card1 transition hover:-translate-y-0.5 hover:shadow-pgoldHover active:scale-90">
       <svg width="16" height="16" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4 4l8 8m0-8l-8 8"/></svg>
     </button>
   </div>
@@ -130,8 +130,8 @@ const playlistJSON = JSON.stringify(tracks);
     }
     if (s.playing) { iconPlay.classList.add("hidden"); iconPause.classList.remove("hidden"); btnPlay.setAttribute("aria-label", "Pause"); }
     else { iconPause.classList.add("hidden"); iconPlay.classList.remove("hidden"); btnPlay.setAttribute("aria-label", "Play"); }
-    if (s.shuffle) { btnRand.classList.add("bg-black", "text-white"); btnRand.classList.remove("bg-white"); }
-    else { btnRand.classList.remove("bg-black", "text-white"); btnRand.classList.add("bg-white"); }
+    if (s.shuffle) { btnRand.classList.add("bg-black", "text-text-inverse"); btnRand.classList.remove("bg-card"); }
+    else { btnRand.classList.remove("bg-black", "text-text-inverse"); btnRand.classList.add("bg-card"); }
     durationEl.textContent = fmt(s.duration);
   }
 
@@ -148,8 +148,8 @@ const playlistJSON = JSON.stringify(tracks);
       var t = playlist[i];
       var isActive = i === s.index;
       html += '<li class="flex cursor-pointer items-center gap-3 rounded-xl px-2 py-2 transition ' + (isActive ? 'bg-pgold/20' : 'hover:bg-pyellow/30') + '" data-index="' + i + '">';
-      html += '<img src="' + t.cover + '" alt="" class="h-10 w-10 flex-shrink-0 rounded-lg object-cover border-2 border-black" />';
-      html += '<div class="min-w-0 flex-1"><div class="truncate text-sm font-semibold text-black">' + t.title + '</div><div class="text-xs text-pblack">' + t.artist + '</div></div>';
+      html += '<img src="' + t.cover + '" alt="" class="h-10 w-10 flex-shrink-0 rounded-lg object-cover border-2 border-border-main" />';
+      html += '<div class="min-w-0 flex-1"><div class="truncate text-sm font-semibold text-text-main">' + t.title + '</div><div class="text-xs text-pblack">' + t.artist + '</div></div>';
       if (isActive) html += '<svg width="16" height="16" viewBox="0 0 24 24" class="flex-shrink-0 text-pgold"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9z"/></svg>';
       html += '</li>';
     }

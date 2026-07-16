@@ -10,6 +10,7 @@ export type TaxonomyCount = {
 
 const CJK_RE = /[㐀-鿿豈-﫿]/g;
 const WORD_RE = /[A-Za-z0-9]+(?:[-'][A-Za-z0-9]+)*/g;
+const CONTENT_ROOT = "/src/content";
 
 export async function getPublishedWriting() {
   const posts = await getCollection("blog");
@@ -68,26 +69,47 @@ function getPostBaseDir(post: WritingPost): string {
   return post.id.includes("/") ? path.dirname(post.id) : post.id;
 }
 
-/** Resolve a hero/cover path, using the post directory for content-relative paths. */
+/** Two resolution bases for hero/cover image paths:
+ *  1. Project path   — /src/… or /public/… (resolved from project root)
+ *  2. Content path   — any other path resolved from src/content/ as root
+ *
+ *  When post context is available, post-relative /assets/ and bare paths
+ *  are resolved relative to the post's directory first, then fall back
+ *  to content-root resolution. */
 export function resolveHeroImagePath(
   raw: string | undefined,
   post?: WritingPost,
 ): string | undefined {
   let normalized = normalizeImagePath(raw);
-  if (!normalized || !post) return normalized;
+  if (!normalized) return undefined;
 
-  const baseDir = getPostBaseDir(post);
-
-  // /assets/foo.png -> /src/content/blog/<post-dir>/assets/foo.png
-  if (normalized.startsWith("/assets/")) {
-    normalized = `/src/content/blog/${baseDir}${normalized}`;
-  }
-  // bare relative path -> /src/content/blog/<post-dir>/<path>
-  else if (!normalized.startsWith("/")) {
-    normalized = `/src/content/blog/${baseDir}/${normalized}`;
+  // 1. Project-root absolute paths — return as-is
+  if (normalized.startsWith("/src/") || normalized.startsWith("/public/")) {
+    return normalized.replace(/\/+/g, "/");
   }
 
-  return normalized.replace(/\/+/g, "/");
+  // 2. Post-relative resolution (requires post context)
+  if (post) {
+    const baseDir = getPostBaseDir(post);
+
+    // /assets/foo.png -> /src/content/blog/<post-dir>/assets/foo.png
+    if (normalized.startsWith("/assets/")) {
+      return `/src/content/blog/${baseDir}${normalized}`.replace(/\/+/g, "/");
+    }
+    // bare relative path -> /src/content/blog/<post-dir>/<path>
+    if (!normalized.startsWith("/")) {
+      return `/src/content/blog/${baseDir}/${normalized}`.replace(/\/+/g, "/");
+    }
+  }
+
+  // 3. Content-root-relative — resolve from src/content/
+  //    /blog/…  → /src/content/blog/…
+  //    blog/…   → /src/content/blog/…
+  if (normalized.startsWith("/")) {
+    return `${CONTENT_ROOT}${normalized}`.replace(/\/+/g, "/");
+  }
+
+  return `${CONTENT_ROOT}/${normalized}`.replace(/\/+/g, "/");
 }
 
 /** Convenience wrapper: get the normalized cover path for a post. */

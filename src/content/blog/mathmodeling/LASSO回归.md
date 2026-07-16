@@ -6,6 +6,10 @@ title: LASSO回归
 description: LASSO回归通过L1正则化实现变量选择与防止过拟合，是高维数据分析中的常用方法。本文详解其数学原理、与岭回归的对比、优缺点及R语言实战。
 categories: quote
 icon: "1"
+series: mathmodeling
+series_id: "1"
+firstLetterColor: salmon
+heroImage: \src\content\blog\mathmodeling\assets\LASSO回归.avif
 ---
 
 

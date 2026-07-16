@@ -49,7 +49,7 @@ const getRandomClass = () => {
   </head>
   <body>
     <Header />
-    <main class="container mx-auto md:px-10 text-white">
+    <main class="container mx-auto md:px-10 text-text-inverse">
       <article >
         <div class="relative mb-20" transition:animate="fade">
           <span class="bg-black/25 w-full h-full absolute"></span>
@@ -70,7 +70,7 @@ const getRandomClass = () => {
             quality={80}
           />
         </div>
-        <div class="text-black px-6 md:px-0">
+        <div class="text-text-main px-6 md:px-0">
           <div class="">
             <div class="text-sm text-pblack flex items-center justify-between">
               <FormattedDate date={pubDate} />
@@ -96,7 +96,7 @@ const getRandomClass = () => {
                 {
                   posts.map((post) => {
                     return (
-                      <li class=`text-left rounded-lg border-1 border-black shadow-card group hover:shadow-hover transition  px-2 py-2 ${getRandomClass()}` >
+                      <li class=`text-left rounded-lg border-1 border-border-main shadow-card group hover:shadow-hover transition  px-2 py-2 ${getRandomClass()}` >
                         <a
                           href={`/blog/${post.id}/`}
                           aria-label={post.data.title}
@@ -128,7 +128,7 @@ const getRandomClass = () => {
                   <a
                     href="https://casset.cat"
                     target="_blank"
-                    class="py-1 pl-3 rounded-md border-1 border-black bg-ppink shadow-card hover:shadow-hover transition"
+                    class="py-1 pl-3 rounded-md border-1 border-border-main bg-ppink shadow-card hover:shadow-hover transition"
                     aria-label="Personal Website"
                   >
                     <Icon name="web" />
@@ -136,7 +136,7 @@ const getRandomClass = () => {
                   <a
                     href="https://github.com/jramma"
                     target="_blank"
-                    class="border-1 p-1 border-black rounded-full bg-pblue shadow-card hover:shadow-hover transition"
+                    class="border-1 p-1 border-border-main rounded-full bg-pblue shadow-card hover:shadow-hover transition"
                     aria-label="GitHub Profile"
                     >
                     <Icon name="github" />
@@ -144,7 +144,7 @@ const getRandomClass = () => {
                   <a
                     href="https://www.linkedin.com/in/jramma/"
                     target="_blank"
-                    class="border-1 p-1 border-black rounded-full bg-pgreen shadow-card hover:shadow-hover transition"
+                    class="border-1 p-1 border-border-main rounded-full bg-pgreen shadow-card hover:shadow-hover transition"
                     aria-label="LinkedIn Profile"
                   >
                     <Icon name="linkedin" />

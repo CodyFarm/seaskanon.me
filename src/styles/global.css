@@ -4,30 +4,76 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-    /* Colors */
-    --color-pblue: #96C7F2;
-    --color-pgreen: #ADF296;
-    --color-ppink: #F396E5;
-    --color-pyellow: #F2CF96;
-    --color-ppurlple: #9D859A;
-    --color-pblack: #4E6273;
-    --color-pgold: #D4A574;
-    --color-white: #F2F2F2; /* Default override removed as it is unusual, keeping as named color */
+    /* ───────────────────────────────────────────────
+       Semantic theme tokens (reference CSS variables)
+       ─────────────────────────────────────────────── */
+    --color-bg-body: var(--bg-body);
+    --color-bg-card: var(--bg-card);
+    --color-bg-card-alt: var(--bg-card-alt);
+    --color-bg-card-soft: var(--bg-card-soft);
+    --color-bg-overlay: var(--bg-overlay);
 
-    /* Shadows */
-    --shadow-card1: 2px 2px #000000;
-    --shadow-card: 4px 4px #000000;
-    --shadow-hover: 10px 10px #000000;
-    --shadow-pblue: 7px 7px #96C7F2;
-    --shadow-pgreen: 7px 7px #ADF296;
-    --shadow-ppink: 7px 7px #F396E5;
-    --shadow-pblueHover: 10px 10px #96C7F2;
-    --shadow-pgreenHover: 10px 10px #ADF296;
-    --shadow-ppinkHover: 10px 10px #F396E5;
-    --shadow-pyellow: 7px 7px #F2CF96;
-    --shadow-pyellowHover: 10px 10px #F2CF96;
-    --shadow-pgold: 7px 7px #D4A574;
-    --shadow-pgoldHover: 10px 10px #D4A574;
+    /* Card surface colors (used by bg-card / bg-card-alt / bg-card-soft) */
+    --color-card: var(--bg-card);
+    --color-card-alt: var(--bg-card-alt);
+    --color-card-soft: var(--bg-card-soft);
+    --color-banner-bg: var(--banner-bg);
+
+    --color-text-main: var(--text-main);
+    --color-text-muted: var(--text-muted);
+    --color-text-inverse: var(--text-inverse);
+
+    --color-border-main: var(--border-main);
+    --color-border-muted: var(--border-muted);
+
+    --color-accent-primary: var(--accent-primary);
+    --color-accent-secondary: var(--accent-secondary);
+    --color-accent-tertiary: var(--accent-tertiary);
+    --color-accent-quaternary: var(--accent-quaternary);
+    --color-accent-gold: var(--accent-gold);
+    --color-accent-spot: var(--accent-spot);
+    --color-accent-dark: var(--accent-dark);
+
+    /* Surface accents for taxonomy/components */
+    --color-category-banner: var(--category-banner);
+    --color-category-header: var(--category-header);
+    --color-category-bg: var(--category-bg);
+    --color-tag-banner: var(--tag-banner);
+    --color-tag-header: var(--tag-header);
+    --color-tag-bg: var(--tag-bg);
+    --color-series-banner: var(--series-banner);
+    --color-series-header: var(--series-header);
+    --color-series-bg: var(--series-bg);
+    --color-series-button: var(--series-button-bg);
+    --color-about-card: var(--about-card);
+    --color-about-tag: var(--about-tag);
+    --color-related-card: var(--related-card);
+    --color-related-tag: var(--related-tag);
+
+    /* Legacy brand aliases — now theme-aware */
+    --color-pblue: var(--accent-secondary);
+    --color-pgreen: var(--accent-primary);
+    --color-ppink: var(--accent-tertiary);
+    --color-pyellow: var(--accent-quaternary);
+    --color-ppurlple: var(--accent-dark);
+    --color-pblack: var(--text-muted);
+    --color-pgold: var(--accent-gold);
+    --color-white: var(--bg-card);
+
+    /* Shadows (theme-aware hard shadows) */
+    --shadow-card1: 2px 2px var(--shadow-color);
+    --shadow-card: 4px 4px var(--shadow-color);
+    --shadow-hover: 10px 10px var(--shadow-color);
+    --shadow-pblue: 7px 7px var(--accent-secondary);
+    --shadow-pgreen: 7px 7px var(--accent-primary);
+    --shadow-ppink: 7px 7px var(--accent-tertiary);
+    --shadow-pblueHover: 10px 10px var(--accent-secondary);
+    --shadow-pgreenHover: 10px 10px var(--accent-primary);
+    --shadow-ppinkHover: 10px 10px var(--accent-tertiary);
+    --shadow-pyellow: 7px 7px var(--accent-quaternary);
+    --shadow-pyellowHover: 10px 10px var(--accent-quaternary);
+    --shadow-pgold: 7px 7px var(--accent-gold);
+    --shadow-pgoldHover: 10px 10px var(--accent-gold);
 
     /* Fonts */
     --font-mono: Alexandria, monospace;
@@ -37,14 +83,224 @@
     /* Spacing */
     --margin-30: 7.3rem;
 
-    /* Borders */
+    /* Border widths */
     --border-width-1: 1px;
     --border-width-3: 3px;
-    
-    /* Border Colors */
-    --color-border-black: #000;
-    --color-border-blackRad: rgba(0,0,0,0.8);
-    --color-border-whiteRad: rgba(242, 242, 242, 0.8);
+
+    /* Legacy border colors */
+    --color-border-black: var(--border-main);
+    --color-border-blackRad: var(--border-main-rad);
+    --color-border-whiteRad: var(--border-muted-rad);
+}
+
+/* ───────────────────────────────────────────────
+   Default theme (matches current site)
+   ─────────────────────────────────────────────── */
+:root {
+    --bg-body: #f2f2f2;
+    --bg-card: #F2F2F2;
+    --bg-card-alt: #FFFFFF;
+    --bg-card-soft: #F2F2F2;
+    --bg-overlay: rgba(0, 0, 0, 0.2);
+
+    --text-main: #000000;
+    --text-muted: #4E6273;
+    --text-inverse: #F2F2F2;
+
+    --border-main: #000000;
+    --border-muted: rgba(0, 0, 0, 0.3);
+    --border-main-rad: rgba(0, 0, 0, 0.8);
+    --border-muted-rad: rgba(242, 242, 242, 0.8);
+
+    --shadow-color: #000000;
+
+    --accent-primary: #ADF296;
+    --accent-secondary: #96C7F2;
+    --accent-tertiary: #F396E5;
+    --accent-quaternary: #F2CF96;
+    --accent-gold: #D4A574;
+    --accent-spot: #E85D5D;
+    --accent-dark: #9D859A;
+    --highlight-bg: #F2CF96;
+    --banner-bg: #F2CF96;
+
+    --category-banner: #AEFFAE;
+    --category-header: #C1FFC1;
+    --category-bg: #F5FFFA;
+    --tag-banner: #FFB6C1;
+    --tag-header: #DDA0DD;
+    --tag-bg: #FFF0F5;
+    --series-banner: #FDF5E6;
+    --series-header: #F5DEB3;
+    --series-bg: #F0FFFF;
+    --series-button-bg: #96C7F2;
+    --about-card: #F0FFFF;
+    --about-tag: #87CEFF;
+    --related-card: #F8F8FF;
+    --related-tag: #DCDCDC;
+
+    --theme-name: "Default";
+}
+
+/* ───────────────────────────────────────────────
+   Theme 1: 敦煌鎏彩（原 国风/人物插画）
+   ─────────────────────────────────────────────── */
+[data-theme="dunhuang-gold"] {
+    --bg-body: #FFF9E6;
+    --bg-card: #FFFDF5;
+    --bg-card-alt: #F9E2B0;
+    --bg-card-soft: #E8D9BF;
+    --bg-overlay: rgba(42, 31, 24, 0.2);
+
+    --text-main: #2A1F18;
+    --text-muted: #0A66A0;
+    --text-inverse: #FFF9E6;
+
+    --border-main: #2A1F18;
+    --border-muted: rgba(42, 31, 24, 0.3);
+    --border-main-rad: rgba(42, 31, 24, 0.8);
+    --border-muted-rad: rgba(249, 226, 176, 0.8);
+
+    --shadow-color: #2A1F18;
+
+    --accent-primary: #FFD048;
+    --accent-secondary: #FF9A47;
+    --accent-tertiary: #36D1C9;
+    --accent-quaternary: #0A66A0;
+    --accent-gold: #D4AF6A;
+    --accent-spot: #C84232;
+    --accent-dark: #2A1F18;
+    --highlight-bg: #FFD048;
+    --banner-bg: #FFFCF0;
+
+    --category-banner: #E8F8C8;
+    --category-header: #B8E8A8;
+    --category-bg: #F3F9E8;
+    --tag-banner: #FFE4E1;
+    --tag-header: #E8B4B8;
+    --tag-bg: #FFF0F3;
+    --series-banner: #FFF5E0;
+    --series-header: #F0D8A8;
+    --series-bg: #FFFBF0;
+    --series-button-bg: #FF9A47;
+    --about-card: #E8F8FF;
+    --about-tag: #7FD8E8;
+    --related-card: #F8F8FF;
+    --related-tag: #D8D0C0;
+
+    --theme-name: "敦煌鎏彩";
+}
+
+/* ───────────────────────────────────────────────
+   Theme 2: 敦煌 1 盛唐暖调
+   ─────────────────────────────────────────────── */
+[data-theme="dunhuang-warm"] {
+    --bg-body: #F5E9D3;
+    --bg-card: #FFFFFF;
+    --bg-card-alt: #F0E6D6;
+    --bg-card-soft: #E8DCC8;
+    --bg-overlay: rgba(58, 40, 30, 0.25);
+
+    --text-main: #3A281E;
+    --text-muted: #8B6935;
+    --text-inverse: #F5E9D3;
+
+    --border-main: #3A281E;
+    --border-muted: rgba(58, 40, 30, 0.3);
+    --border-main-rad: rgba(58, 40, 30, 0.8);
+    --border-muted-rad: rgba(240, 230, 214, 0.8);
+
+    --shadow-color: #3A281E;
+
+    --accent-primary: #C67A3A;
+    --accent-secondary: #B04A2A;
+    --accent-tertiary: #3A8F6C;
+    --accent-quaternary: #C67A3A;
+    --accent-gold: #D4AF6A;
+    --accent-spot: #B04A2A;
+    --accent-dark: #2B5A8C;
+    --highlight-bg: #D4AF6A;
+    --banner-bg: #FBF7F0;
+
+    --category-banner: #D8E8B8;
+    --category-header: #A8C878;
+    --category-bg: #EEF5DC;
+    --tag-banner: #F0D0C8;
+    --tag-header: #D8A8B8;
+    --tag-bg: #F9EBEF;
+    --series-banner: #F5E6C8;
+    --series-header: #E0C898;
+    --series-bg: #FCF6E8;
+    --series-button-bg: #B04A2A;
+    --about-card: #E8E0D0;
+    --about-tag: #98B8C8;
+    --related-card: #F0E8DC;
+    --related-tag: #C8B8A0;
+
+    --theme-name: "盛唐暖调";
+}
+
+/* ───────────────────────────────────────────────
+   Theme 3: 敦煌 2 北凉冷调
+   ─────────────────────────────────────────────── */
+[data-theme="dunhuang-cool"] {
+    --bg-body: #EDE4D3;
+    --bg-card: #F0EBE4;
+    --bg-card-alt: #F0E6D6;
+    --bg-card-soft: #E5DDD0;
+    --bg-overlay: rgba(46, 36, 29, 0.22);
+
+    --text-main: #2E241D;
+    --text-muted: #6B5A4A;
+    --text-inverse: #EDE4D3;
+
+    --border-main: #2E241D;
+    --border-muted: rgba(46, 36, 29, 0.3);
+    --border-main-rad: rgba(46, 36, 29, 0.8);
+    --border-muted-rad: rgba(240, 230, 214, 0.8);
+
+    --shadow-color: #2E241D;
+
+    --accent-primary: #365E82;
+    --accent-secondary: #7FA691;
+    --accent-tertiary: #9A4430;
+    --accent-quaternary: #7FA691;
+    --accent-gold: #A67453;
+    --accent-spot: #9A4430;
+    --accent-dark: #365E82;
+    --highlight-bg: #A8C878;
+    --banner-bg: #F7F4EE;
+
+    --category-banner: #C8D8C8;
+    --category-header: #98B8A0;
+    --category-bg: #E8F0E8;
+    --tag-banner: #E8D0C8;
+    --tag-header: #C8A098;
+    --tag-bg: #F5EBE8;
+    --series-banner: #F0E8D8;
+    --series-header: #D8C8A8;
+    --series-bg: #cfdcdf;
+    --series-button-bg: #4682B4;
+    --about-card: #E0E8E8;
+    --about-tag: #88A8B0;
+    --related-card: #F0EBE4;
+    --related-tag: #C0B0A0;
+
+    --theme-name: "北凉冷调";
+}
+
+/* Smooth transitions for themeable properties */
+html,
+html * {
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+    transition-duration: 250ms;
+    transition-timing-function: ease-out;
+}
+
+/* Disable transitions during theme loader animation to avoid partial paints */
+html.theme-loading,
+html.theme-loading * {
+    transition-duration: 0ms !important;
 }
 
 @font-face {
@@ -126,17 +382,82 @@
     font-weight: normal;
     font-style: normal;
 }
+
 body {
     font-family: 'Alexandria', sans-serif;
-    background-color: #f2f2f2;
+    background-color: var(--bg-body);
+    color: var(--text-main);
 }
 
 /* ==highlight== syntax (Obsidian compat) */
 mark {
-    background-color: var(--color-pyellow);
+    background-color: var(--highlight-bg);
     color: inherit;
     padding: 0.1em 0.2em;
     border-radius: 0.2em;
+}
+
+/* ───────────────────────────────────────────────
+   Prose / typography theme overrides
+   ─────────────────────────────────────────────── */
+.prose,
+.prose-lg {
+    --tw-prose-body: var(--text-main);
+    --tw-prose-headings: var(--text-main);
+    --tw-prose-lead: var(--text-muted);
+    --tw-prose-links: var(--accent-tertiary);
+    --tw-prose-bold: var(--text-main);
+    --tw-prose-counters: var(--text-muted);
+    --tw-prose-bullets: var(--text-muted);
+    --tw-prose-hr: var(--border-muted);
+    --tw-prose-quotes: var(--text-muted);
+    --tw-prose-quote-borders: var(--accent-tertiary);
+    --tw-prose-captions: var(--text-muted);
+    --tw-prose-kbd: var(--text-main);
+    --tw-prose-kbd-shadows: var(--border-main);
+    --tw-prose-code: var(--text-main);
+    --tw-prose-pre-code: var(--text-main);
+    --tw-prose-pre-bg: var(--bg-card-soft);
+    --tw-prose-th-borders: var(--border-muted);
+    --tw-prose-td-borders: var(--border-muted);
+}
+
+.prose :where(blockquote):not(:where([class~="not-prose"],[class~="not-prose"] *)),
+.prose-lg :where(blockquote):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
+    background-color: var(--bg-card-soft);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+}
+
+.prose :where(pre):not(:where([class~="not-prose"],[class~="not-prose"] *)),
+.prose-lg :where(pre):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
+    border: 2px solid var(--border-main);
+    box-shadow: 4px 4px var(--shadow-color);
+}
+
+/* ───────────────────────────────────────────────
+   Page banner (Writing / Projects / Knowledge)
+   ─────────────────────────────────────────────── */
+.page-banner {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--banner-bg);
+}
+
+/* Page banner images are shown/hidden by syncBannerImages() in BaseHead.astro.
+   Base styles only — display is controlled via inline style="display:none". */
+.page-banner__img {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: auto;
+    max-width: 55%;
+    object-fit: contain;
+    object-position: right bottom;
+    pointer-events: none;
+    mask-image: linear-gradient(to right, transparent 0%, black 35%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 35%);
 }
 
 /* ───────────────────────────────────────────────
@@ -201,12 +522,12 @@ mark {
    ─────────────────────────────────────────────── */
 
 :root {
-    --admonitions-color-tip: #ADF296;
-    --admonitions-color-note: #96C7F2;
-    --admonitions-color-important: #F396E5;
-    --admonitions-color-warning: #F2CF96;
-    --admonitions-color-caution: #E85D5D;
-    --admonitions-color-question: #9D859A;
+    --admonitions-color-tip: var(--accent-primary);
+    --admonitions-color-note: var(--accent-secondary);
+    --admonitions-color-important: var(--accent-tertiary);
+    --admonitions-color-warning: var(--accent-quaternary);
+    --admonitions-color-caution: var(--accent-spot);
+    --admonitions-color-question: var(--accent-dark);
 }
 
 blockquote.admonition {
@@ -214,10 +535,10 @@ blockquote.admonition {
     margin: 1.5rem 0;
     padding: 1rem 1.25rem;
     border-radius: 0.75rem;
-    border: 2px solid #000;
-    background-color: #fff;
-    box-shadow: 4px 4px #000;
-    color: #1f2937;
+    border: 2px solid var(--border-main);
+    background-color: var(--bg-card-alt);
+    box-shadow: 4px 4px var(--shadow-color);
+    color: var(--text-main);
 }
 
 blockquote.admonition > .bdm-title {
@@ -251,7 +572,7 @@ blockquote.admonition > p:last-child {
 
 /* Type-specific colours and icons */
 blockquote.admonition.bdm-tip {
-    background-color: #f6fef4;
+    background-color: color-mix(in srgb, var(--accent-primary) 10%, var(--bg-card-alt));
 }
 blockquote.admonition.bdm-tip > .bdm-title {
     color: var(--admonitions-color-tip);
@@ -261,7 +582,7 @@ blockquote.admonition.bdm-tip > .bdm-title::before {
 }
 
 blockquote.admonition.bdm-note {
-    background-color: #f4fafe;
+    background-color: color-mix(in srgb, var(--accent-secondary) 10%, var(--bg-card-alt));
 }
 blockquote.admonition.bdm-note > .bdm-title {
     color: var(--admonitions-color-note);
@@ -271,7 +592,7 @@ blockquote.admonition.bdm-note > .bdm-title::before {
 }
 
 blockquote.admonition.bdm-important {
-    background-color: #fef6fb;
+    background-color: color-mix(in srgb, var(--accent-tertiary) 10%, var(--bg-card-alt));
 }
 blockquote.admonition.bdm-important > .bdm-title {
     color: var(--admonitions-color-important);
@@ -281,17 +602,17 @@ blockquote.admonition.bdm-important > .bdm-title::before {
 }
 
 blockquote.admonition.bdm-warning {
-    background-color: #fffbf5;
+    background-color: color-mix(in srgb, var(--accent-quaternary) 10%, var(--bg-card-alt));
 }
 blockquote.admonition.bdm-warning > .bdm-title {
-    color: #d97706;
+    color: var(--admonitions-color-warning);
 }
 blockquote.admonition.bdm-warning > .bdm-title::before {
     mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16' aria-hidden='true'%3E%3Cpath d='M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z'/%3E%3C/svg%3E");
 }
 
 blockquote.admonition.bdm-caution {
-    background-color: #fef5f5;
+    background-color: color-mix(in srgb, var(--accent-spot) 10%, var(--bg-card-alt));
 }
 blockquote.admonition.bdm-caution > .bdm-title {
     color: var(--admonitions-color-caution);
@@ -301,11 +622,262 @@ blockquote.admonition.bdm-caution > .bdm-title::before {
 }
 
 blockquote.admonition.bdm-question {
-    background-color: #f9f8fa;
+    background-color: color-mix(in srgb, var(--accent-dark) 10%, var(--bg-card-alt));
 }
 blockquote.admonition.bdm-question > .bdm-title {
     color: var(--admonitions-color-question);
 }
-blockquote.admonition.bdm-question > .bdm-title::before {
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16' aria-hidden='true'%3E%3Cpath d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z'/%3E%3C/svg%3E");
+/* ───────────────────────────────────────────────
+   Project gallery — contextual interactive map
+   ─────────────────────────────────────────────── */
+.project-gallery {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-template-rows: repeat(5, minmax(0, 1fr));
+    gap: 1rem;
+    position: relative;
+    min-height: 70vh;
+}
+
+.gallery-title {
+    grid-column: 3 / span 3;
+    grid-row: 2 / span 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: clamp(2rem, 5vw, 5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    z-index: 5;
+    pointer-events: none;
+    min-width: 9ch;
+}
+
+.gallery-title__first {
+    font-family: 'Kablammo', serif;
+}
+
+.project-node {
+    z-index: 1;
+}
+
+.project-node img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.project-cover {
+    opacity: 1;
+    filter: none;
+    transition: opacity 500ms ease-out var(--reveal-delay, 0ms), filter 400ms ease-out;
+}
+
+.project-gallery[data-active-project] .project-node .project-cover {
+    transition: opacity 350ms ease-out, filter 350ms ease-out;
+}
+
+/* ── Context image links ── */
+
+.project-context-group {
+    display: contents;
+}
+
+.project-context-link {
+    z-index: 1;
+    pointer-events: none;
+}
+
+.project-context-link img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.project-context {
+    opacity: 0;
+    transition: opacity 450ms ease-out;
+}
+
+.project-context-link[data-active] {
+    pointer-events: auto;
+}
+
+.project-context-link[data-active] .project-context {
+    opacity: 1;
+    transition-delay: var(--ctx-delay, 0ms);
+}
+
+/* ── Active / contextual state ── */
+
+.project-gallery[data-active-project] .project-node:not([data-active]) .project-cover {
+    opacity: 0;
+}
+
+.project-node[data-active] .project-cover {
+    opacity: 1;
+    filter: invert(1);
+}
+
+.project-node[data-active] {
+    z-index: 20;
+}
+
+.project-context-link[data-active] {
+    z-index: 20;
+}
+
+.project-node:focus-visible .project-cover {
+    outline: 3px solid var(--accent-primary);
+    outline-offset: 4px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .project-cover,
+    .project-context {
+        transition-duration: 0ms !important;
+    }
+}
+
+/* Mobile fallback */
+@media (max-width: 768px) {
+    .project-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: none;
+        gap: 1rem;
+        min-height: auto;
+    }
+
+    .gallery-title {
+        grid-column: 1 / -1;
+        grid-row: auto;
+        padding: 2rem 0;
+        font-size: 2.5rem;
+    }
+
+    .project-node .project-cover,
+    .project-node .project-context {
+        grid-column: auto / span 1 !important;
+        grid-row: auto !important;
+    }
+
+    .project-context {
+        display: none;
+    }
+}
+
+/* ───────────────────────────────────────────────
+   Projects page stage: banner → gallery reveal
+   ─────────────────────────────────────────────── */
+.projects-page {
+    padding: 0;
+}
+
+.projects-stage {
+    position: relative;
+    height: calc(100vh - var(--header-height, 64px));
+    width: 100%;
+    overflow: hidden;
+}
+
+.projects-banner,
+.projects-gallery-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 600ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.projects-banner {
+    z-index: 1;
+    transform: translateY(0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.projects-banner .page-banner__img {
+    transform: scale(1);
+    transition: transform 600ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.projects-stage.is-shown .projects-banner .page-banner__img {
+    transform: scale(1.05);
+}
+
+.projects-gallery-wrapper {
+    z-index: 2;
+    transform: translateY(100%);
+    background-color: var(--bg-body);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.projects-gallery-wrapper .project-node img {
+    transform: scale(1.06);
+    transition: transform 700ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.projects-stage.is-shown .projects-gallery-wrapper .project-node img {
+    transform: scale(1);
+}
+
+.projects-stage.is-shown .projects-banner {
+    transform: translateY(-100%);
+}
+
+.projects-stage.is-shown .projects-gallery-wrapper {
+    transform: translateY(0);
+}
+
+.projects-stage .project-gallery {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    min-height: 0;
+}
+
+@media (max-width: 768px) {
+    .projects-stage {
+        height: auto;
+        overflow: visible;
+    }
+
+    .projects-banner,
+    .projects-gallery-wrapper {
+        position: relative;
+        transform: none !important;
+        inset: auto;
+        height: auto;
+        padding: 1rem;
+    }
+
+    .projects-banner .page-banner {
+        border-radius: 1.5rem;
+        min-height: 50vh;
+    }
+
+    .projects-gallery-wrapper {
+        margin-top: 1rem;
+    }
+
+    .projects-stage .project-gallery {
+        height: auto;
+        min-height: auto;
+    }
+
+    .projects-banner .page-banner__img,
+    .projects-gallery-wrapper .project-node img {
+        transform: none !important;
+    }
 }

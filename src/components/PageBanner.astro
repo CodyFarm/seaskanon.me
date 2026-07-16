@@ -1,0 +1,56 @@
+---
+// Page banner with per-theme illustration support.
+// Each theme can have its own image; the default theme shows none.
+// Images are rendered at build time but shown/hidden by JS (syncBannerImages
+// in BaseHead) so they survive Astro view transitions correctly.
+//
+// To add a new theme + image:
+//   1. import newImg from "@/assets/your-image.png";
+//   2. add 'theme-key': newImg to THEME_IMAGES below.
+
+import { Image } from "astro:assets";
+import imgDunhuangGold from "@/assets/banner-theme1.png";
+
+interface Props {
+  label: string;
+  title: string;
+  description: string;
+}
+
+const { label, title, description } = Astro.props;
+
+const THEME_IMAGES: Record<string, ImageMetadata | null> = {
+  'dunhuang-gold': imgDunhuangGold,
+  'dunhuang-warm': imgDunhuangGold,   // placeholder — swap later
+  'dunhuang-cool': imgDunhuangGold,   // placeholder — swap later
+};
+---
+
+<section
+  class="page-banner mx-auto mb-10 max-w-5xl rounded-3xl border-[3px] border-border-main p-8 shadow-card"
+>
+  {Object.entries(THEME_IMAGES).map(([themeKey, img]) =>
+    img ? (
+      <Image
+        src={img}
+        alt=""
+        class="page-banner__img"
+        loading="eager"
+        aria-hidden="true"
+        data-banner-theme={themeKey}
+        style="display:none"
+      />
+    ) : null
+  )}
+
+  <div class="relative z-10">
+    <p class="font-semibold text-pblack">{label}</p>
+    <h1
+      class="page-banner__title mt-2 text-5xl font-black leading-tight md:text-7xl"
+      set:html={title}
+    />
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-text-main">
+      {description}
+    </p>
+  </div>
+</section>

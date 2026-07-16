@@ -56,6 +56,88 @@ const { title, description, image = "/screenshot.webp" } = Astro.props;
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
+<!-- Theme restoration: apply saved theme before first paint to avoid flash -->
+<script is:inline>
+(function () {
+  var STORAGE_KEY = 'seaskanon-theme';
+  var THEMES = ['default', 'dunhuang-gold', 'dunhuang-warm', 'dunhuang-cool'];
+  var THEME_NAMES = {
+    'default': 'Default',
+    'dunhuang-gold': '敦煌鎏彩',
+    'dunhuang-warm': '盛唐暖调',
+    'dunhuang-cool': '北凉冷调'
+  };
+  var listeners = [];
+
+  function fire(name) {
+    for (var i = 0; i < listeners.length; i++) {
+      try { listeners[i](name); } catch (e) {}
+    }
+  }
+
+  function getSavedTheme() {
+    try {
+      var saved = localStorage.getItem(STORAGE_KEY);
+      if (saved && THEMES.indexOf(saved) !== -1) return saved;
+    } catch (e) {}
+    return 'default';
+  }
+
+  function setTheme(name) {
+    if (THEMES.indexOf(name) === -1) name = 'default';
+    document.documentElement.setAttribute('data-theme', name);
+    try {
+      localStorage.setItem(STORAGE_KEY, name);
+    } catch (e) {}
+    fire(name);
+  }
+
+  function nextTheme() {
+    var current = document.documentElement.getAttribute('data-theme') || 'default';
+    var idx = THEMES.indexOf(current);
+    return THEMES[(idx + 1) % THEMES.length];
+  }
+
+  // Apply saved theme immediately before paint.
+  document.documentElement.setAttribute('data-theme', getSavedTheme());
+
+  window.__theme = {
+    themes: THEMES,
+    names: THEME_NAMES,
+    current: function () { return document.documentElement.getAttribute('data-theme') || 'default'; },
+    set: setTheme,
+    next: nextTheme,
+    onChange: function (cb) { listeners.push(cb); }
+  };
+
+  // Show/hide banner images so only the current theme's image is visible.
+  // Called on init and on every theme change.
+  function syncBannerImages() {
+    var current = document.documentElement.getAttribute('data-theme') || 'default';
+    var imgs = document.querySelectorAll('.page-banner__img');
+    for (var i = 0; i < imgs.length; i++) {
+      imgs[i].style.display = imgs[i].getAttribute('data-banner-theme') === current ? 'block' : 'none';
+    }
+  }
+
+  syncBannerImages();
+  listeners.push(function () { syncBannerImages(); });
+
+  // Re-apply saved theme after Astro view transitions so navigation
+  // doesn't revert to the server-rendered default.
+  document.addEventListener('astro:page-load', function () {
+    var saved = getSavedTheme();
+    var current = document.documentElement.getAttribute('data-theme') || 'default';
+    if (current !== saved) {
+      document.documentElement.setAttribute('data-theme', saved);
+      fire(saved);
+    }
+    // Re-sync banner images for the new page's DOM
+    syncBannerImages();
+  });
+})();
+</script>
+
 <!-- Global Audio Manager — persists playback & state across page navigation -->
 <script is:inline>
 (function () {

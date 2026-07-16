@@ -4,41 +4,43 @@ import { Icon } from "astro-icon/components";
 ---
 
 <footer
-  class="flex flex-col items-center container mx-auto p-10 text-center gap-10 pb-40"
+  class="flex flex-col items-center container mx-auto p-10 text-center gap-10 pb-40 text-text-main"
 >
   &copy; {today.getFullYear()} seasKanon. All rights reserved.
   <div class="flex items-center gap-6 text-5xl">
     <a
-      href="/writing"
-      class="py-1 pl-3 rounded-md border-1 border-black bg-ppink shadow-card hover:shadow-hover transition"
-      aria-label="Writing"
+      href="/"
+      class="border-1 p-1 border-border-main rounded-full bg-ppink shadow-card hover:shadow-hover transition"
+      aria-label="Home"
       >
       <Icon name="web" />
     </a>
     <a
-      href="https://github.com"
+      href="https://github.com/your-github"
       target="_blank"
       rel="noopener noreferrer"
-      class="border-1 p-1 border-black rounded-full bg-pblue shadow-card hover:shadow-hover transition"
+      class="border-1 p-1 border-border-main rounded-full bg-pblue shadow-card hover:shadow-hover transition"
       aria-label="GitHub Profile"
       >
       <Icon name="github" />
     </a>
     <a
-      href="https://www.linkedin.com"
+      href="https://www.bilibili.com/your-bilibili"
       target="_blank"
       rel="noopener noreferrer"
-      class="border-1 p-1 border-black rounded-full bg-pgreen shadow-card hover:shadow-hover transition"
-      aria-label="LinkedIn Profile"
+      class="border-1 p-1 border-border-main rounded-full bg-pgreen shadow-card hover:shadow-hover transition"
+      aria-label="Bilibili Profile"
       >
-      <Icon name="linkedin" />
+      <Icon name="bilibili" />
+    </a>
+    <a
+      href="https://www.zhihu.com/your-zhihu"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="border-1 p-1 border-border-main rounded-full bg-pyellow shadow-card hover:shadow-hover transition"
+      aria-label="Zhihu Profile"
+      >
+      <Icon name="zhihu" />
     </a>
   </div>
-  <a
-    href="/projects"
-    class="bg-pyellow hover:bg-pgreen text-black font-bold py-2 px-6 rounded-xl border-[3px] border-black shadow-card hover:shadow-hover flex items-center gap-2 transition duration-200"
-    aria-label="View projects"
-  >
-    ☕ View Projects
-  </a>
 </footer>

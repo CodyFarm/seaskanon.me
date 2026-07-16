@@ -50,10 +50,10 @@ const description = getTaxonomyDescription("categories", category.slug);
   <body>
     <Header />
     <main class="container mx-auto px-4 py-12 md:px-10 md:py-20">
-      <section class="mx-auto mb-10 max-w-5xl rounded-3xl border-[3px] border-black bg-[#AEFFAE] p-8 shadow-card">
+      <section class="mx-auto mb-10 max-w-5xl rounded-3xl border-[3px] border-border-main bg-category-banner p-8 shadow-card">
         <p class="font-semibold text-pblack">Category</p>
         <h1 class="mt-2 text-5xl font-black md:text-7xl">{category.name}</h1>
-        <p class="mt-4 text-lg text-black">
+        <p class="mt-4 text-lg text-text-main">
           {filteredPosts.length} article{filteredPosts.length === 1 ? "" : "s"} in this category.
           {description && <span class="mt-2 block text-base leading-7 text-pblack">{description}</span>}
         </p>

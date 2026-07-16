@@ -9,9 +9,9 @@ interface Props {
 const { tags, activeSlugs } = Astro.props;
 ---
 
-<section class="rounded-3xl border-[3px] border-black bg-[#FFF0F5] p-5 shadow-card">
+<section class="rounded-3xl border-[3px] border-border-main bg-tag-bg p-5 shadow-card">
   <span
-    class="inline-block rounded-lg border-2 border-black bg-ppink px-4 py-1.5 text-xl font-bold shadow-card1"
+    class="inline-block rounded-lg border-2 border-border-main bg-ppink px-4 py-1.5 text-xl font-bold shadow-card1"
   >
     Tags
   </span>
@@ -22,8 +22,8 @@ const { tags, activeSlugs } = Astro.props;
         <a
           href={`/writing/tags/${tag.slug}/`}
           class:list={[
-            "inline-flex items-center gap-1.5 rounded-full border-2 border-black px-3 py-1 text-sm font-semibold shadow-card1 transition hover:-translate-y-0.5 hover:shadow-card",
-            activeSlugs.includes(tag.slug) ? "bg-white" : "bg-white",
+            "inline-flex items-center gap-1.5 rounded-full border-2 border-border-main px-3 py-1 text-sm font-semibold shadow-card1 transition hover:-translate-y-0.5 hover:shadow-card",
+            activeSlugs.includes(tag.slug) ? "bg-card" : "bg-card",
           ]}
         >
           <span>#{tag.name}</span>

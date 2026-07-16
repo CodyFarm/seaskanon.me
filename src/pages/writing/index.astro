@@ -3,6 +3,7 @@ import BaseHead from "@/components/BaseHead.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import ArticleCard from "@/components/blog/ArticleCard.astro";
+import PageBanner from "@/components/PageBanner.astro";
 import Sidebar from "@/components/blog/Sidebar.astro";
 import SearchBox from "@/components/blog/SearchBox.astro";
 import Pagination from "@/components/blog/Pagination.astro";
@@ -33,15 +34,11 @@ const totalPages = Math.ceil(posts.length / pageSize);
   <body>
     <Header />
     <main class="container mx-auto px-4 py-12 md:px-10 md:py-20">
-      <section class="mx-auto mb-10 max-w-5xl rounded-3xl border-[3px] border-black bg-pyellow p-8 shadow-card">
-        <p class="font-semibold text-pblack">Writing</p>
-        <h1 class="mt-2 text-5xl font-black leading-tight md:text-7xl">
-          Notes, logs, and essays for a growing digital garden.
-        </h1>
-        <p class="mt-5 max-w-3xl text-lg leading-8 text-black">
-          按时记录学习、开发、阅读、项目复盘与文化随笔。Regularly jotting down notes on studying, development, reading, project reviews, and cultural reflections.
-        </p>
-      </section>
+      <PageBanner
+        label="Writing"
+        title="Notes, logs, and essays for a growing digital garden."
+        description="按时记录学习、开发、阅读、项目复盘与文化随笔。Regularly jotting down notes on studying, development, reading, project reviews, and cultural reflections."
+      />
 
       <div class="mx-auto grid max-w-6xl gap-8 sidebar-grid sidebar-grid--left">
         <Sidebar stats={stats} categories={categories} tags={tags} series={series} showToggle={false} />
@@ -63,7 +60,7 @@ const totalPages = Math.ceil(posts.length / pageSize);
               {totalPages > 1 && <Pagination totalPages={totalPages} />}
             </>
           ) : (
-            <div class="rounded-3xl border-[3px] border-black bg-ppink p-8 shadow-card">
+            <div class="rounded-3xl border-[3px] border-border-main bg-ppink p-8 shadow-card">
               <h2 class="text-2xl font-bold">No writing yet</h2>
               <p class="mt-2 text-pblack">Published articles will appear here.</p>
             </div>

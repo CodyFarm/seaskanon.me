@@ -1,6 +1,8 @@
 ---
 import Link from "./HeaderLink.astro";
 import { Icon } from "astro-icon/components";
+import ThemeSwitcher from "./ThemeSwitcher.astro";
+import ThemeLoader from "./ThemeLoader.astro";
 
 const links = [
   { href: "/", text: "Home", style: "primary" },
@@ -15,17 +17,21 @@ const links = [
   Header component with responsive navigation.
   Uses a CSS-only approach for the mobile hamburger menu (no JavaScript).
 -->
+<ThemeLoader />
 <header>
   <nav
     class="flex container mx-auto md:p-10 px-4 py-6 items-center justify-between"
   >
-    <!-- Logo / Brand -->
-    <a class="flex items-center gap-2" href="/" aria-label="Home">
-      <p class="font-kablamo text-ppink text-4xl md:text-5xl">S</p>
-      <p class="pt-2 md:text-lg font-semibold flex">
-        <span class="hidden md:block">seas</span>Kanon
-      </p>
-    </a>
+    <!-- Logo / Brand + Theme Switcher -->
+    <div class="flex items-center gap-3">
+      <a class="flex items-center gap-2" href="/" aria-label="Home">
+        <p class="font-kablamo text-ppink text-4xl md:text-5xl">S</p>
+        <p class="pt-2 md:text-lg font-semibold flex">
+          <span class="hidden md:block">seas</span>Kanon
+        </p>
+      </a>
+      <ThemeSwitcher />
+    </div>
 
     <!-- Desktop Navigation -->
     <ul class="items-center md:gap-4 text-nowrap hidden md:flex">
@@ -61,7 +67,7 @@ const links = [
         The 'peer-checked:translate-y-0' applies when the checkbox is checked.
       -->
       <div
-        class="fixed top-0 left-0 w-full h-full bg-white -translate-y-full transition-transform duration-300 ease-in-out peer-checked:translate-y-0"
+        class="fixed top-0 left-0 w-full h-full bg-card -translate-y-full transition-transform duration-300 ease-in-out peer-checked:translate-y-0"
       >
         <ul
           class="flex flex-col items-center justify-center h-full gap-8 text-nowrap"

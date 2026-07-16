@@ -1,0 +1,172 @@
+---
+// Vertical theme switcher. Uses a one-shot delegated click listener
+// (registered once via a window flag) so it survives Astro view transitions.
+const themes = [
+  { key: 'default', name: 'Default' },
+  { key: 'dunhuang-gold', name: '敦煌鎏彩' },
+  { key: 'dunhuang-warm', name: '盛唐暖调' },
+  { key: 'dunhuang-cool', name: '北凉冷调' },
+];
+---
+
+<div class="theme-switcher group relative flex items-center" id="theme-switcher">
+  <button
+    id="theme-switcher-btn"
+    type="button"
+    aria-haspopup="true"
+    aria-expanded="false"
+    aria-label="Switch theme"
+    class="flex cursor-pointer items-center justify-center gap-1.5 rounded-xl border-[3px] border-border-main bg-card p-2 shadow-card transition hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-hover list-none"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-text-main" aria-hidden="true">
+      <circle cx="13.5" cy="6.5" r="2.5"></circle>
+      <circle cx="17.5" cy="10.5" r="2.5"></circle>
+      <circle cx="8.5" cy="7.5" r="2.5"></circle>
+      <circle cx="6.5" cy="12.5" r="2.5"></circle>
+      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.01 17.461 2 12 2z"></path>
+    </svg>
+    <span class="hidden text-sm font-bold text-text-main md:inline">Theme</span>
+  </button>
+
+  <!-- Hover tooltip -->
+  <span id="theme-switcher-tooltip" class="absolute left-full top-1/2 z-50 ml-3 -translate-y-1/2 whitespace-nowrap rounded-lg border-2 border-border-main bg-card px-3 py-1 text-sm font-semibold text-text-main shadow-card1 opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none" aria-hidden="true">Default</span>
+
+  <!-- Vertical dropdown panel -->
+  <div id="theme-switcher-panel" class="absolute left-0 top-full z-50 mt-3 hidden w-64 rounded-2xl border-[3px] border-border-main bg-card p-3 shadow-card" role="menu" aria-label="Choose theme">
+    <p class="mb-2 px-2 text-sm font-bold text-text-main">Choose theme</p>
+    <div class="flex flex-col gap-2" id="theme-options">
+      {themes.map((theme) => (
+        <button type="button" role="menuitem" data-theme={theme.key} class="theme-option flex w-full items-center gap-3 rounded-xl border-2 border-border-muted bg-card-alt px-2 py-2 text-left transition hover:border-border-main hover:shadow-card1">
+          <span data-theme={theme.key} class="flex h-10 w-10 flex-shrink-0 overflow-hidden rounded-lg border border-border-main shadow-sm">
+            <span class="h-full w-1/2" style="background-color: var(--bg-body);"></span>
+            <span class="h-full w-1/2" style="background-color: var(--bg-card);"></span>
+          </span>
+          <span class="flex min-w-0 flex-col">
+            <span class="truncate text-sm font-bold text-text-main">{theme.name}</span>
+            <span data-theme={theme.key} class="flex h-2.5 w-full gap-1 mt-1">
+              <span class="h-full w-3 rounded-full" style="background-color: var(--accent-primary);"></span>
+              <span class="h-full w-3 rounded-full" style="background-color: var(--accent-secondary);"></span>
+              <span class="h-full w-3 rounded-full border border-border-main" style="background-color: var(--text-main);"></span>
+            </span>
+          </span>
+          <span class="theme-check ml-auto text-text-muted text-xs font-bold opacity-0">✓</span>
+        </button>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .theme-switcher:hover #theme-switcher-tooltip { opacity: 1; }
+  .theme-option.is-current { border-color: var(--border-main); background-color: var(--bg-card-soft); box-shadow: 2px 2px var(--shadow-color); }
+  .theme-option.is-current .theme-check { opacity: 1; }
+</style>
+
+<script is:inline>
+  // One-shot event-delegation setup: registered once and survives
+  // Astro view transitions because it looks up elements fresh each click.
+  (function () {
+    if (window.__themeSwitcherReady) return;
+    window.__themeSwitcherReady = true;
+
+    document.addEventListener('click', function (e) {
+      if (!window.__theme) return;
+
+      var btn = document.getElementById('theme-switcher-btn');
+      var panel = document.getElementById('theme-switcher-panel');
+      var tooltip = document.getElementById('theme-switcher-tooltip');
+
+      // Click on the toggle button → open / close panel
+      if (btn && btn.contains(e.target)) {
+        if (panel) {
+          if (panel.classList.contains('hidden')) {
+            refreshCheckMarks(panel);
+            panel.classList.remove('hidden');
+            btn.setAttribute('aria-expanded', 'true');
+          } else {
+            panel.classList.add('hidden');
+            btn.setAttribute('aria-expanded', 'false');
+          }
+        }
+        return;
+      }
+
+      // Click on a theme option
+      var option = e.target.closest('.theme-option');
+      if (option && panel && panel.contains(option)) {
+        var target = option.getAttribute('data-theme');
+        if (panel) panel.classList.add('hidden');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+        if (!target || target === window.__theme.current()) return;
+        if (window.__theme.transitionTo) {
+          window.__theme.transitionTo(target);
+        } else {
+          window.__theme.set(target);
+        }
+        return;
+      }
+
+      // Click outside → close panel
+      if (panel && !panel.classList.contains('hidden')) {
+        var wrapper = document.getElementById('theme-switcher');
+        if (wrapper && !wrapper.contains(e.target)) {
+          panel.classList.add('hidden');
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+        }
+      }
+    });
+
+    // Escape to close
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      var panel = document.getElementById('theme-switcher-panel');
+      var btn = document.getElementById('theme-switcher-btn');
+      if (panel && !panel.classList.contains('hidden')) {
+        panel.classList.add('hidden');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Refresh check marks on options
+    function refreshCheckMarks(panel) {
+      if (!panel || !window.__theme) return;
+      var current = window.__theme.current();
+      var themeNames = window.__theme.names;
+      var options = panel.querySelectorAll('.theme-option');
+      options.forEach(function (opt) {
+        if (opt.getAttribute('data-theme') === current) {
+          opt.classList.add('is-current');
+        } else {
+          opt.classList.remove('is-current');
+        }
+      });
+      // Update tooltip
+      var tooltip = document.getElementById('theme-switcher-tooltip');
+      if (tooltip) tooltip.textContent = (themeNames[current]) || current;
+    }
+
+    // Listen for theme changes to keep tooltip + check marks updated
+    if (window.__theme) {
+      window.__theme.onChange(function () {
+        var tooltip = document.getElementById('theme-switcher-tooltip');
+        var themeNames = window.__theme.names;
+        if (tooltip && window.__theme) {
+          var current = window.__theme.current();
+          tooltip.textContent = (themeNames[current]) || current;
+        }
+        var panel = document.getElementById('theme-switcher-panel');
+        if (panel) refreshCheckMarks(panel);
+      });
+    }
+
+    // Initial tooltip
+    if (window.__theme) {
+      var initTooltip = document.getElementById('theme-switcher-tooltip');
+      if (initTooltip) {
+        var names = window.__theme.names;
+        var cur = window.__theme.current();
+        initTooltip.textContent = (names[cur]) || cur;
+      }
+    }
+  })();
+</script>

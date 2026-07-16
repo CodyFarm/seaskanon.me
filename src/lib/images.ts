@@ -6,6 +6,7 @@ export const heroImages = import.meta.glob<{ default: ImageMetadata }>(
   [
     "/src/assets/**/*.{webp,jpeg,jpg,png,gif,avif}",
     "/src/content/blog/**/assets/**/*.{webp,jpeg,jpg,png,gif,avif,svg}",
+    "/src/content/**/*.{webp,jpeg,jpg,png,gif,avif,svg}",
   ],
   { eager: false },
 );

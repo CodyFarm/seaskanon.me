@@ -42,14 +42,14 @@ const isLeft = side === "left";
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgb(242 242 242 / 0.92);
-    border: 2.5px solid #000;
+    background: color-mix(in srgb, var(--bg-card) 92%, transparent);
+    border: 2.5px solid var(--border-main);
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 3px 3px 0 #000;
+    box-shadow: 3px 3px 0 var(--shadow-color);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    color: #4E6273;
+    color: var(--text-muted);
     outline: none;
   }
 
@@ -86,15 +86,15 @@ const isLeft = side === "left";
     white-space: nowrap;
     font-size: 0.75rem;
     font-weight: 700;
-    color: #F2F2F2;
-    background: #4E6273;
+    color: var(--text-inverse);
+    background: var(--text-muted);
     padding: 0.4rem 0.7rem;
     border-radius: 6px;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.25s ease, transform 0.25s ease;
-    border: 1.5px solid #000;
-    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.15);
+    border: 1.5px solid var(--border-main);
+    box-shadow: 2px 2px 0 color-mix(in srgb, var(--shadow-color) 15%, transparent);
   }
 
   .sidebar-toggle-btn[data-side="left"] .sidebar-toggle-tooltip {
@@ -114,16 +114,16 @@ const isLeft = side === "left";
 
   /* ── Hover glow ── */
   .sidebar-toggle-btn:hover {
-    background: #fff;
-    color: #000;
+    background: var(--bg-card-alt);
+    color: var(--text-main);
     box-shadow:
-      0 0 22px 4px rgb(243 150 229 / 0.6),
-      0 0 44px 8px rgb(243 150 229 / 0.3),
-      4px 4px 0 #000;
+      0 0 22px 4px color-mix(in srgb, var(--accent-tertiary) 60%, transparent),
+      0 0 44px 8px color-mix(in srgb, var(--accent-tertiary) 30%, transparent),
+      4px 4px 0 var(--shadow-color);
   }
 
   .sidebar-toggle-btn:active {
-    box-shadow: 1px 1px 0 #000;
+    box-shadow: 1px 1px 0 var(--shadow-color);
     transform: translate(2px, 2px);
   }
 
@@ -144,22 +144,22 @@ const isLeft = side === "left";
     right: auto;
     left: calc(100% - 4px);
     border-radius: 0 8px 8px 0;
-    border-right: 2.5px solid #000;
+    border-right: 2.5px solid var(--border-main);
     border-left: none;
     width: 36px;
     height: 72px;
-    background: rgb(255 255 255 / 0.95);
+    background: color-mix(in srgb, var(--bg-card-alt) 95%, transparent);
     box-shadow:
-      0 0 16px 3px rgb(243 150 229 / 0.45),
-      3px 3px 0 #000;
+      0 0 16px 3px color-mix(in srgb, var(--accent-tertiary) 45%, transparent),
+      3px 3px 0 var(--shadow-color);
   }
 
   .sidebar-collapsed .sidebar-toggle-btn[data-side="left"]:hover {
     box-shadow:
-      0 0 26px 6px rgb(243 150 229 / 0.65),
-      0 0 50px 10px rgb(243 150 229 / 0.35),
-      4px 4px 0 #000;
-    background: #fff;
+      0 0 26px 6px color-mix(in srgb, var(--accent-tertiary) 65%, transparent),
+      0 0 50px 10px color-mix(in srgb, var(--accent-tertiary) 35%, transparent),
+      4px 4px 0 var(--shadow-color);
+    background: var(--bg-card-alt);
   }
 
   /* Right sidebar collapsed: button protrudes INTO content area from the right */
@@ -167,22 +167,22 @@ const isLeft = side === "left";
     left: auto;
     right: calc(100% - 4px);
     border-radius: 8px 0 0 8px;
-    border-left: 2.5px solid #000;
+    border-left: 2.5px solid var(--border-main);
     border-right: none;
     width: 36px;
     height: 72px;
-    background: rgb(255 255 255 / 0.95);
+    background: color-mix(in srgb, var(--bg-card-alt) 95%, transparent);
     box-shadow:
-      0 0 16px 3px rgb(243 150 229 / 0.45),
-      -3px 3px 0 #000;
+      0 0 16px 3px color-mix(in srgb, var(--accent-tertiary) 45%, transparent),
+      -3px 3px 0 var(--shadow-color);
   }
 
   .sidebar-collapsed .sidebar-toggle-btn[data-side="right"]:hover {
     box-shadow:
-      0 0 26px 6px rgb(243 150 229 / 0.65),
-      0 0 50px 10px rgb(243 150 229 / 0.35),
-      -4px 4px 0 #000;
-    background: #fff;
+      0 0 26px 6px color-mix(in srgb, var(--accent-tertiary) 65%, transparent),
+      0 0 50px 10px color-mix(in srgb, var(--accent-tertiary) 35%, transparent),
+      -4px 4px 0 var(--shadow-color);
+    background: var(--bg-card-alt);
   }
 
   /* Reposition tooltips in collapsed state */

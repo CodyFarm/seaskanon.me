@@ -121,34 +121,34 @@ const related = getRelatedPosts(post, relatedPosts, 3);
            Content sheet — overlaps the cover via negative margin,
            rounded top corners, page-background colour.
            ════════════════════════════════════════════════════════════════ -->
-      <div class="relative z-10 -mt-14 rounded-t-3xl bg-[#f2f2f2] px-4 pt-10 md:-mt-20 md:px-10 md:pt-14">
+      <div class="relative z-10 -mt-14 rounded-t-3xl bg-body px-4 pt-10 md:-mt-20 md:px-10 md:pt-14">
         <article class="mx-auto max-w-5xl">
           <!-- ── Separator: meta sits on top of a thin dark rule ── -->
           <div class="mb-10 md:mb-12">
-            <div class="mb-3 flex flex-wrap items-center gap-2 text-sm font-medium tracking-wide text-neutral-400">
+            <div class="mb-3 flex flex-wrap items-center gap-2 text-sm font-medium tracking-wide text-text-muted">
               <FormattedDate date={pubDate} />
-              <span aria-hidden="true" class="text-neutral-300">·</span>
+              <span aria-hidden="true" class="text-text-muted">·</span>
               <span>{readingTime.text}</span>
-              <span aria-hidden="true" class="text-neutral-300">·</span>
+              <span aria-hidden="true" class="text-text-muted">·</span>
               <span>{readingTime.words.toLocaleString()} words</span>
               {updatedDate && (
                 <>
-                  <span aria-hidden="true" class="text-neutral-300">·</span>
+                  <span aria-hidden="true" class="text-text-muted">·</span>
                   <span>Updated <FormattedDate date={updatedDate} /></span>
                 </>
               )}
             </div>
-            <hr class="border-t-2 border-neutral-900" />
+            <hr class="border-t-2 border-border-main" />
           </div>
 
           <!-- ── Title ── -->
-          <h1 class="text-5xl font-black leading-tight text-black md:text-7xl">
+          <h1 class="text-5xl font-black leading-tight text-text-main md:text-7xl">
             <span class={`font-kablamo ${firstLetter.className}`} style={`color: ${firstLetter.style}`}>{title.charAt(0)}</span>{
               title.slice(1)
             }
           </h1>
           <p
-            class="mt-4 max-w-3xl text-lg leading-8 text-neutral-500"
+            class="mt-4 max-w-3xl text-lg leading-8 text-text-muted"
             set:html={description}
           />
 
@@ -157,20 +157,20 @@ const related = getRelatedPosts(post, relatedPosts, 3);
             {effectiveCategory && (
               <a
                 href={`/writing/categories/${effectiveCategory.toLocaleLowerCase().replace(/\s+/g, "-")}/`}
-                class="rounded-full border border-neutral-300 bg-neutral-50 px-3 py-1 text-sm font-semibold text-neutral-500 transition-all duration-200 hover:border-ppink hover:text-ppink"
+                class="rounded-full border border-border-muted bg-card-soft px-3 py-1 text-sm font-semibold text-text-muted transition-all duration-200 hover:border-ppink hover:text-ppink"
               >
                 {effectiveCategory}
               </a>
             )}
             {series && (
-              <span class="rounded-full border border-neutral-300 bg-neutral-50 px-3 py-1 text-sm font-semibold text-neutral-500">
+              <span class="rounded-full border border-border-muted bg-card-soft px-3 py-1 text-sm font-semibold text-text-muted">
                 Series: {series}
               </span>
             )}
             {tags.map((tag) => (
               <a
                 href={`/writing/tags/${tag.toLocaleLowerCase().replace(/\s+/g, "-")}/`}
-                class="rounded-full border border-neutral-300 bg-neutral-50 px-3 py-1 text-sm font-semibold text-neutral-500 transition-all duration-200 hover:border-pgreen hover:text-pgreen"
+                class="rounded-full border border-border-muted bg-card-soft px-3 py-1 text-sm font-semibold text-text-muted transition-all duration-200 hover:border-pgreen hover:text-pgreen"
               >
                 #{tag}
               </a>
@@ -178,12 +178,12 @@ const related = getRelatedPosts(post, relatedPosts, 3);
           </div>
 
           <!-- ── Magazine rule before body (plain, no diamond) ── -->
-          <hr class="my-12 border-t border-neutral-300" />
+          <hr class="my-12 border-t border-border-muted" />
 
           <!-- ── Content grid: prose + sidebar ── -->
           <div class="grid gap-10 sidebar-grid sidebar-grid--right sidebar-collapsed">
             <!-- Prose — clean, no card -->
-            <div class="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-black prose-a:text-ppink prose-a:no-underline hover:prose-a:underline prose-blockquote:border-l-2 prose-blockquote:border-ppink prose-blockquote:font-normal prose-blockquote:not-italic prose-blockquote:text-neutral-600 prose-img:rounded-xl">
+            <div class="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-text-main prose-a:text-ppink prose-a:no-underline hover:prose-a:underline prose-blockquote:border-l-2 prose-blockquote:border-ppink prose-blockquote:font-normal prose-blockquote:not-italic prose-blockquote:text-text-muted prose-img:rounded-xl">
               <slot />
             </div>
 
@@ -195,20 +195,20 @@ const related = getRelatedPosts(post, relatedPosts, 3);
                 <div class="sidebar-inner flex flex-col gap-5">
                   <!-- ── Top section: scrolls away naturally (like Fuwari Profile) ── -->
                   <div id="sidebar-top" class="flex flex-col gap-5">
-                <div class="rounded-3xl border-[3px] border-black bg-[#F0FFFF] p-6 shadow-card">
-                  <span class="inline-block rounded-lg border-2 border-black bg-[#87CEFF] px-4 py-1.5 text-xl font-bold shadow-card1">
+                <div class="rounded-3xl border-[3px] border-border-main bg-about-card p-6 shadow-card">
+                  <span class="inline-block rounded-lg border-2 border-border-main bg-about-tag px-4 py-1.5 text-xl font-bold shadow-card1">
                     About this post
                   </span>
                   <dl class="mt-4 flex flex-col gap-3">
-                    <div class="flex items-center justify-between rounded-xl border-2 border-black bg-white px-3 py-2 text-sm font-semibold shadow-card1">
+                    <div class="flex items-center justify-between rounded-xl border-2 border-border-main bg-card px-3 py-2 text-sm font-semibold shadow-card1">
                       <dt class="text-pblack">Published</dt>
                       <dd><FormattedDate date={pubDate} /></dd>
                     </div>
-                    <div class="flex items-center justify-between rounded-xl border-2 border-black bg-white px-3 py-2 text-sm font-semibold shadow-card1">
+                    <div class="flex items-center justify-between rounded-xl border-2 border-border-main bg-card px-3 py-2 text-sm font-semibold shadow-card1">
                       <dt class="text-pblack">Reading time</dt>
                       <dd>{readingTime.text}</dd>
                     </div>
-                    <div class="flex items-center justify-between rounded-xl border-2 border-black bg-white px-3 py-2 text-sm font-semibold shadow-card1">
+                    <div class="flex items-center justify-between rounded-xl border-2 border-border-main bg-card px-3 py-2 text-sm font-semibold shadow-card1">
                       <dt class="text-pblack">Words</dt>
                       <dd>{readingTime.words.toLocaleString()}</dd>
                     </div>
@@ -242,27 +242,27 @@ const related = getRelatedPosts(post, relatedPosts, 3);
                 <!-- ── Related ── -->
                 {
                   related.length > 0 && (
-                    <div class="rounded-3xl border-[3px] border-black bg-[#F8F8FF] p-6 shadow-card">
-                      <span class="inline-block rounded-lg border-2 border-black bg-[#DCDCDC] px-4 py-1.5 text-lg font-black text-black shadow-card1">
+                    <div class="rounded-3xl border-[3px] border-border-main bg-related-card p-6 shadow-card">
+                      <span class="inline-block rounded-lg border-2 border-border-main bg-related-tag px-4 py-1.5 text-lg font-black text-text-main shadow-card1">
                         Related
                       </span>
                       <div class="mt-4 flex flex-col gap-2.5">
                         {related.map((p) => (
                           <a
                             href={`/writing/${p.id}/`}
-                            class="group flex items-center gap-3 rounded-xl border border-neutral-200 bg-neutral-50/50 p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-ppink hover:bg-white hover:shadow-md"
+                            class="group flex items-center gap-3 rounded-xl border border-border-muted bg-card-soft/50 p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-ppink hover:bg-card hover:shadow-md"
                           >
                             <span
-                              class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg text-sm font-black text-white shadow-sm"
+                              class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg text-sm font-black text-text-inverse shadow-sm"
                               style={`background-color: ${getFirstLetterColor(p.data.firstLetterColor).style}`}
                             >
                               {p.data.title.charAt(0).toUpperCase()}
                             </span>
                             <div class="min-w-0 flex-1">
-                              <p class="truncate text-sm font-semibold text-neutral-700 transition-colors duration-200 group-hover:text-ppink">
+                              <p class="truncate text-sm font-semibold text-text-main transition-colors duration-200 group-hover:text-ppink">
                                 {p.data.title}
                               </p>
-                              <p class="mt-0.5 text-xs text-neutral-400">
+                              <p class="mt-0.5 text-xs text-text-muted">
                                 <FormattedDate date={p.data.pubDate} />
                               </p>
                             </div>

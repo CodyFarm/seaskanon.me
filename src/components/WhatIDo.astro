@@ -23,10 +23,10 @@ const bgClasses = [
         const iconClass = bgClasses[index % bgClasses.length];
         const readingTime = getReadingTime(post);
         return (
-          <li class="w-72 text-left rounded-3xl border-[3px] border-black bg-white shadow-card group hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-hover transition px-4 py-6 flex flex-col gap-6">
+          <li class="w-72 text-left rounded-3xl border-[3px] border-border-main bg-card shadow-card group hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-hover transition px-4 py-6 flex flex-col gap-6">
             <a aria-label={post.data.title} href={`/writing/${post.id}/`} class="flex flex-col gap-4">
               <div
-                class={`${iconClass} text-4xl p-2 self-start border-1 border-black shadow-card1 group-hover:shadow-card transition`}
+                class={`${iconClass} text-4xl p-2 self-start border-1 border-border-main shadow-card1 group-hover:shadow-card transition`}
               >
                 <Icon name={post.data.icon ?? "web"} />
               </div>
@@ -41,7 +41,7 @@ const bgClasses = [
       })
     }
   </ul>
-  <a href="/writing" class="rounded-xl border-[3px] border-black bg-pyellow px-5 py-3 font-bold shadow-card transition hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-hover">
+  <a href="/writing" class="rounded-xl border-[3px] border-border-main bg-pyellow px-5 py-3 font-bold shadow-card transition hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-hover">
     Browse all writing
   </a>
 </section>

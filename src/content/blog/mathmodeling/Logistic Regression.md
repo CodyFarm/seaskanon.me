@@ -5,9 +5,11 @@ pubDate: 2026-07-12
 title: 深入分析逻辑回归
 description: Logistic回归虽然名字叫”回归” ，但却是一种分类学习方法。使用场景大概有两个：第一用来预测，第二寻找因变量的影响因素。
 categories: quote
-heroImage: blog/assets/Logistic Regression/logistic regression.webp
-firstLetterColor: blue
+heroImage: \src\content\blog\mathmodeling\assets\Logistic Regression\logistic regression.webp
+firstLetterColor: teal
 icon: "2"
+series: mathmodeling
+series_id: "2"
 ---
 
 Logistic回归虽然名字叫”回归” ，但却是一种分类学习方法。使用场景大概有两个：第一用来预测，第二寻找因变量的影响因素。 

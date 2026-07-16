@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "blog/Logistic Regression.md",
+                "file": "blog/mathmodeling/Logistic Regression.md",
                 "mode": "source",
                 "source": false
               },
@@ -179,8 +179,19 @@
               "icon": "lucide-list",
               "title": "third-post 的大纲"
             }
+          },
+          {
+            "id": "b7063ded97a195ea",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {},
+              "icon": "spreadsheet",
+              "title": "Advanced Tables"
+            }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
@@ -210,24 +221,33 @@
   },
   "active": "554559e6099d1e47",
   "lastOpenFiles": [
+    "blog/mathmodeling/assets/Logistic Regression/logistic regression.webp",
+    "blog/mathmodeling/Logistic Regression.md",
+    "blog/法西斯美学——遗落的艺术.md",
+    "blog/神经科学上理解强制教育和学校优化陷阱.md",
+    "blog/mathmodeling/LASSO回归.md",
+    "blog/mathmodeling/assets/LASSO回归.avif",
+    "blog/casual inference/LASSO回归.avif",
+    "blog/casual inference/LASSO回归.avif.crdownload",
+    "blog/mathmodeling/DecisionTree决策树.md",
+    "blog/casual inference/随机试验.md",
+    "blog/mathmodeling/assets/dicision tree.avif",
+    "blog/mathmodeling/assets/dicision tree.avif.crdownload",
+    "blog/mathmodeling/assets/Logistic Regression",
+    "blog/mathmodeling/assets",
+    "blog/whoIsThatguy.md",
+    "未命名.md",
     "blog/logistic regression.webp",
     "blog/casual inference/因果性导论.md",
-    "blog/LASSO回归.md",
-    "blog/法西斯美学——遗落的艺术.md",
-    "blog/Logistic Regression.md",
     "blog/casual inference/线性回归的惊人有效性.md",
     "blog/casual inference/因果模型图.md",
-    "blog/神经科学上理解强制教育和学校优化陷阱.md",
     "blog/AI与肉身现象学.md",
-    "blog/assets/Logistic Regression/logistic regression.webp",
     "blog/assets/Logistic Regression/file-20260712221038192.png",
     "blog/assets/Logistic Regression",
     "blog/assets",
     "blog/logistic regression.webp.crdownload",
-    "blog/whoIsThatguy.md",
     "010-templater/blog templater.md",
     "blog/casual inference/最危险的方程.md",
-    "blog/casual inference/随机试验.md",
     "blog/casual inference/assets/random dice.png",
     "blog/casual inference/因果性导论.md.tmp.41076.f11ba28f8f76",
     "010-templater/短篇文章阅读模板.md",
@@ -240,22 +260,12 @@
     "010-templater/问题模板.md",
     "blog/casual inference/随机试验.md.tmp.41420.049dfbcb47a9",
     "blog/casual inference/因果模型图.md.tmp.41420.bb48235af0c3",
-    "blog/casual inference/线性回归的惊人有效性.md.tmp.41420.1924c4c3c2f2",
-    "blog/casual inference/最危险的方程.md.tmp.41420.a4d7e7924050",
-    "blog/casual inference/因果性导论.md.tmp.41420.09c423a20da4",
     "blog/casual inference/assets/random dice.avif",
-    "blog/casual inference/assets/random dice.avif.crdownload",
     "blog/casual inference/assets/Pasted image 20260530170302.png",
     "blog/casual inference/assets/Pasted image 20260528184255.png",
-    "blog/casual inference/assets/Pasted image 20260528164559.png",
-    "blog/casual inference/assets/Pasted image 20260528164459.png",
-    "blog/casual inference/assets/Pasted image 20260528164443.png",
-    "blog/casual inference/assets/Pasted image 20260518221259.png",
     "blog/似然比检验的思想.md",
     "blog/方差分析.md",
     "blog/分布拟合检验.md",
-    "音乐剧.md",
-    "，.md",
     "未命名.canvas"
   ]
 }
