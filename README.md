@@ -39,7 +39,9 @@ Personal website of **Cody** — a mathematics student building a long-term digi
 - **KaTeX** — Mathematical typesetting
 - **Astro Icon** — SVG icon system
 - **Sharp** — Image optimization
-- **Vercel** — Deployment target
+- **GitHub Pages** — Deployment target
+
+> Note: the public site is deployed to GitHub Pages as a static build. The `/api/vocab/*` endpoints used by Vocab Studio require a Node-capable host and are not part of the Pages deployment.
 
 ### 🎨 Custom Theme System
 
