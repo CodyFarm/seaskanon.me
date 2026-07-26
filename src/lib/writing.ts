@@ -34,7 +34,10 @@ export function getPostCover(post: WritingPost) {
 
 /** Convert backslashes to forward slashes, collapse duplicate slashes,
  *  strip Windows drive letters, and extract /src/ or /public/ root from
- *  absolute paths so they match Vite glob keys. */
+ *  absolute paths so they match Vite glob keys.
+ *
+ *  Also recognises bare project-root-relative paths that start with
+ *  src/ or public/ and normalises them with a leading slash. */
 export function normalizeImagePath(raw: string | undefined): string | undefined {
   if (!raw) return undefined;
 
@@ -53,6 +56,7 @@ export function normalizeImagePath(raw: string | undefined): string | undefined 
     if (idx !== -1) normalized = normalized.slice(idx);
   }
 
+  // Normalise bare project-root-relative paths (e.g. public/img.webp → /public/img.webp)
   if (normalized.startsWith("src/") || normalized.startsWith("public/")) {
     normalized = "/" + normalized;
   }
@@ -75,7 +79,12 @@ function getPostBaseDir(post: WritingPost): string {
  *
  *  When post context is available, post-relative /assets/ and bare paths
  *  are resolved relative to the post's directory first, then fall back
- *  to content-root resolution. */
+ *  to project-root and finally content-root resolution.
+ *
+ *  Bare paths that become valid project-root paths when "/" is prepended
+ *  (e.g. public/img.webp → /public/img.webp) take precedence over
+ *  content-root resolution, so you can reference any project file
+ *  relative to the project root. */
 export function resolveHeroImagePath(
   raw: string | undefined,
   post?: WritingPost,
@@ -96,8 +105,14 @@ export function resolveHeroImagePath(
     if (normalized.startsWith("/assets/")) {
       return `/src/content/blog/${baseDir}${normalized}`.replace(/\/+/g, "/");
     }
-    // bare relative path -> /src/content/blog/<post-dir>/<path>
+    // bare relative path -> try project-root first, then post-relative
     if (!normalized.startsWith("/")) {
+      // 2a. Try project-root: prepend "/" and check if it maps to src/ or public/
+      const projectRoot = `/${normalized}`.replace(/\/+/g, "/");
+      if (projectRoot.startsWith("/src/") || projectRoot.startsWith("/public/")) {
+        return projectRoot;
+      }
+      // 2b. Fall back to post-relative
       return `/src/content/blog/${baseDir}/${normalized}`.replace(/\/+/g, "/");
     }
   }
@@ -107,6 +122,12 @@ export function resolveHeroImagePath(
   //    blog/…   → /src/content/blog/…
   if (normalized.startsWith("/")) {
     return `${CONTENT_ROOT}${normalized}`.replace(/\/+/g, "/");
+  }
+
+  // 4. Last resort: try project-root for bare paths (no post context)
+  const projectRoot = `/${normalized}`.replace(/\/+/g, "/");
+  if (projectRoot.startsWith("/src/") || projectRoot.startsWith("/public/")) {
+    return projectRoot;
   }
 
   return `${CONTENT_ROOT}/${normalized}`.replace(/\/+/g, "/");

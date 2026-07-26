@@ -1,1 +1,66 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="13" rx="3"/><path d="M8 7l-2-4"/><path d="M16 7l2-4"/><rect x="8" y="12" width="2.5" height="2.5" rx="0.5"/><rect x="13.5" y="12" width="2.5" height="2.5" rx="0.5"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 512 512">
+
+    <rect
+        x="40"
+        y="90"
+        width="432"
+        height="330"
+        rx="45"
+        ry="45"
+        fill="none"
+        stroke="#39435A"
+        stroke-width="18"/>
+
+    <!-- 天线 -->
+    <line x1="170" y1="35"
+          x2="220" y2="90"
+          stroke="#39435A"
+          stroke-width="18"
+          stroke-linecap="round"/>
+
+    <line x1="342" y1="35"
+          x2="292" y2="90"
+          stroke="#39435A"
+          stroke-width="18"
+          stroke-linecap="round"/>
+
+    <!-- 左眉 -->
+    <line x1="170" y1="215"
+          x2="225" y2="200"
+          stroke="#39435A"
+          stroke-width="18"
+          stroke-linecap="round"/>
+
+    <!-- 右眉 -->
+    <line x1="287" y1="200"
+          x2="342" y2="215"
+          stroke="#39435A"
+          stroke-width="18"
+          stroke-linecap="round"/>
+
+    <!-- 嘴 -->
+    <path
+        d="M210 285
+           Q225 315 245 295
+           Q255 285 265 295
+           Q285 315 300 285"
+        fill="none"
+        stroke="#39435A"
+        stroke-width="18"
+        stroke-linecap="round"/>
+
+    <!-- 支脚 -->
+    <line x1="120" y1="420"
+          x2="120" y2="455"
+          stroke="#39435A"
+          stroke-width="18"
+          stroke-linecap="round"/>
+
+    <line x1="392" y1="420"
+          x2="392" y2="455"
+          stroke="#39435A"
+          stroke-width="18"
+          stroke-linecap="round"/>
+
+</svg>

@@ -7,17 +7,15 @@
     /* ───────────────────────────────────────────────
        Semantic theme tokens (reference CSS variables)
        ─────────────────────────────────────────────── */
-    --color-bg-body: var(--bg-body);
-    --color-bg-card: var(--bg-card);
-    --color-bg-card-alt: var(--bg-card-alt);
-    --color-bg-card-soft: var(--bg-card-soft);
-    --color-bg-overlay: var(--bg-overlay);
+    --color-body: var(--bg-body);
 
     /* Card surface colors (used by bg-card / bg-card-alt / bg-card-soft) */
     --color-card: var(--bg-card);
     --color-card-alt: var(--bg-card-alt);
     --color-card-soft: var(--bg-card-soft);
     --color-banner-bg: var(--banner-bg);
+
+    --color-overlay: var(--bg-overlay);
 
     --color-text-main: var(--text-main);
     --color-text-muted: var(--text-muted);
@@ -701,7 +699,7 @@ blockquote.admonition.bdm-question > .bdm-title {
 
 .project-context {
     opacity: 0;
-    transition: opacity 450ms ease-out;
+    transition: opacity 450ms ease-out, transform 500ms ease-out;
 }
 
 .project-context-link[data-active] {

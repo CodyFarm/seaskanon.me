@@ -52,7 +52,7 @@ const isExternal = (href: string) => href.startsWith("http");
             data-title={project.title}
             data-color={project.color}
             aria-hidden="true"
-            style={`grid-column: ${ctx.col} / span ${ctx.colSpan || 1}; grid-row: ${ctx.row} / span ${ctx.rowSpan || 1}; --ctx-delay: ${i * 100}ms;`}
+            style={`grid-column: ${ctx.col} / span ${ctx.colSpan || 1}; grid-row: ${ctx.row} / span ${ctx.rowSpan || 1}; --ctx-delay: ${i * 100}ms; transform: translate(${ctx.tx || 0}px, ${ctx.ty || 0}px);`}
           >
             <img
               class="project-context"

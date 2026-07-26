@@ -225,9 +225,9 @@
       "targetLang": "zh-CN",
       "pos": [],
       "type": "sentence",
-      "count": 1,
+      "count": 2,
       "firstSeen": 1779955106847,
-      "lastSeen": 1779955106847
+      "lastSeen": 1784642540317
     },
     "v2|google|auto|zh-CN|了解你的晋升状况并不能让我进一步获知你掌握因果推断的可能性": {
       "sourceText": "了解你的晋升状况并不能让我进一步获知你掌握因果推断的可能性",
@@ -764,9 +764,9 @@
       "targetLang": "zh-CN",
       "pos": [],
       "type": "sentence",
-      "count": 3,
+      "count": 4,
       "firstSeen": 1780131072113,
-      "lastSeen": 1784079675477
+      "lastSeen": 1784530788014
     },
     "v2|google|auto|zh-CN|（markers、polyline、列表、时间/距离/预计游玩时长": {
       "sourceText": "（markers、polyline、列表、时间/距离/预计游玩时长",
@@ -2996,6 +2996,2138 @@
       "count": 1,
       "firstSeen": 1784080842297,
       "lastSeen": 1784080842297
+    },
+    "v2|google|auto|zh-CN|康德": {
+      "sourceText": "康德",
+      "targetText": "康德",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365140014,
+      "lastSeen": 1784365140014
+    },
+    "v2|google|auto|zh-CN|以彩色徽章展示在消息旁": {
+      "sourceText": "以彩色徽章展示在消息旁",
+      "targetText": "以彩色徽章展示在消息旁",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365157440,
+      "lastSeen": 1784365157440
+    },
+    "v2|google|auto|zh-CN|近代": {
+      "sourceText": "近代",
+      "targetText": "近代",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365183630,
+      "lastSeen": 1784365183630
+    },
+    "v2|google|auto|zh-CN|称、简介和专属配色标识。": {
+      "sourceText": "称、简介和专属配色标识。",
+      "targetText": "称、简介和专属配色标识。",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365194183,
+      "lastSeen": 1784365194183
+    },
+    "v2|google|auto|zh-CN|pdfjs-dist": {
+      "sourceText": "pdfjs-dist",
+      "targetText": "pdfjs-dist",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 2,
+      "firstSeen": 1784365307728,
+      "lastSeen": 1784365307934
+    },
+    "v2|google|auto|zh-CN|系统使用": {
+      "sourceText": "系统使用",
+      "targetText": "系统使用",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365311213,
+      "lastSeen": 1784365311213
+    },
+    "v2|google|auto|zh-CN|AI": {
+      "sourceText": "AI",
+      "targetText": "人工智能",
+      "sourceLang": "sm",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365314997,
+      "lastSeen": 1784365314997
+    },
+    "v2|google|auto|zh-CN|AI 可生成参考资料的内容概要（": {
+      "sourceText": "AI 可生成参考资料的内容概要（",
+      "targetText": "AI 可生成参考资料的内容概要（",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365315656,
+      "lastSeen": 1784365315656
+    },
+    "v2|google|auto|zh-CN|帮助快速理解上传材料的核心内容": {
+      "sourceText": "帮助快速理解上传材料的核心内容",
+      "targetText": "帮助快速理解上传材料的核心内容",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365322478,
+      "lastSeen": 1784365322478
+    },
+    "v2|google|auto|zh-CN|project01": {
+      "sourceText": "project01",
+      "targetText": "项目01",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365324679,
+      "lastSeen": 1784365324679
+    },
+    "v2|google|auto|zh-CN|系统会通过关键词加权评分算法从参考资料中检索最相关的段落，控制在 1000 字符以内——既提供上下文支撑，又不浪费 token 预算。": {
+      "sourceText": "系统会通过关键词加权评分算法从参考资料中检索最相关的段落，控制在 1000 字符以内——既提供上下文支撑，又不浪费 token 预算。",
+      "targetText": "系统会通过关键词加权评分算法从参考资料中检索最相关的段落，控制在 1000 字符以内——既提供上下文支撑，又不浪费 token 预算。",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365328353,
+      "lastSeen": 1784365328353
+    },
+    "v2|google|auto|zh-CN|辩论进行中，系统会通过关键词加权评分算法从参考资料中检索最相关的段落，控制在 1000 字符以内——既提供上下文支撑，又不浪费 token 预算。": {
+      "sourceText": "辩论进行中，系统会通过关键词加权评分算法从参考资料中检索最相关的段落，控制在 1000 字符以内——既提供上下文支撑，又不浪费 token 预算。",
+      "targetText": "辩论进行中，系统会通过关键词加权评分算法从参考资料中检索最相关的段落，控制在 1000 字符以内——既提供上下文支撑，又不浪费 token 预算。",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365330214,
+      "lastSeen": 1784365330214
+    },
+    "v2|google|auto|zh-CN|从参考资料中检索最相关的段落": {
+      "sourceText": "从参考资料中检索最相关的段落",
+      "targetText": "从参考资料中检索最相关的段落",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365344538,
+      "lastSeen": 1784365344538
+    },
+    "v2|google|auto|zh-CN|预算": {
+      "sourceText": "预算",
+      "targetText": "预算",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365345241,
+      "lastSeen": 1784365345241
+    },
+    "v2|google|auto|zh-CN|![辩论详情 - 关系标记与侧边栏](/images/projects/project01/app/c4.png)": {
+      "sourceText": "![辩论详情 - 关系标记与侧边栏](/images/projects/project01/app/c4.png)",
+      "targetText": "![辩论详情 - 关系标记与侧边栏](/images/projects/project01/app/c4.png)",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365376348,
+      "lastSeen": 1784365376348
+    },
+    "v2|google|auto|zh-CN|c4": {
+      "sourceText": "c4",
+      "targetText": "c4",
+      "sourceLang": "bg",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365391500,
+      "lastSeen": 1784365391500
+    },
+    "v2|google|auto|zh-CN|OpenAI": {
+      "sourceText": "OpenAI",
+      "targetText": "开放人工智能",
+      "sourceLang": "vi",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365417259,
+      "lastSeen": 1784365417259
+    },
+    "v2|google|auto|zh-CN|projects": {
+      "sourceText": "projects",
+      "targetText": "项目",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "名词",
+          "terms": [
+            "项目",
+            "工程",
+            "计划"
+          ]
+        },
+        {
+          "pos": "动词",
+          "terms": [
+            "投射",
+            "预测",
+            "计划"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784365419455,
+      "lastSeen": 1784365419455
+    },
+    "v2|google|auto|zh-CN|![辩论总结与下载](/images/projects/project01/app/e2.png)": {
+      "sourceText": "![辩论总结与下载](/images/projects/project01/app/e2.png)",
+      "targetText": "![辩论总结与下载](/images/projects/project01/app/e2.png)",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365429863,
+      "lastSeen": 1784365429863
+    },
+    "v2|google|auto|zh-CN|roundtable": {
+      "sourceText": "roundtable",
+      "targetText": "圆桌会议",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365437145,
+      "lastSeen": 1784365437145
+    },
+    "v2|google|auto|zh-CN|让苏格拉底和尼采在你的餐桌上争论正义的本质": {
+      "sourceText": "让苏格拉底和尼采在你的餐桌上争论正义的本质",
+      "targetText": "让苏格拉底和尼采在你的餐桌上争论正义的本质",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365438528,
+      "lastSeen": 1784365438528
+    },
+    "v2|google|auto|zh-CN|让苏格拉底和尼采在你的餐桌上争论正义的本质——立即体验": {
+      "sourceText": "让苏格拉底和尼采在你的餐桌上争论正义的本质——立即体验",
+      "targetText": "让苏格拉底和尼采在你的餐桌上争论正义的本质——立即体验",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365440873,
+      "lastSeen": 1784365440873
+    },
+    "v2|google|auto|zh-CN|世界全都在我们之中": {
+      "sourceText": "世界全都在我们之中",
+      "targetText": "世界全都在我们之中",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365577396,
+      "lastSeen": 1784365577396
+    },
+    "v2|google|auto|zh-CN|The": {
+      "sourceText": "The",
+      "targetText": "这",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "冠词",
+          "terms": [
+            "那个"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784365587504,
+      "lastSeen": 1784365587504
+    },
+    "v2|google|auto|zh-CN|whole": {
+      "sourceText": "whole",
+      "targetText": "所有的",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "形容词",
+          "terms": [
+            "整个",
+            "全",
+            "整体"
+          ]
+        },
+        {
+          "pos": "名词",
+          "terms": [
+            "合计"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784365588036,
+      "lastSeen": 1784365588036
+    },
+    "v2|google|auto|zh-CN|立即体验": {
+      "sourceText": "立即体验",
+      "targetText": "立即体验",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365590593,
+      "lastSeen": 1784365590593
+    },
+    "v2|google|auto|zh-CN|https": {
+      "sourceText": "https",
+      "targetText": "https",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365608352,
+      "lastSeen": 1784365608352
+    },
+    "v2|google|auto|zh-CN|存储": {
+      "sourceText": "存储",
+      "targetText": "存储",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365674170,
+      "lastSeen": 1784365674170
+    },
+    "v2|google|auto|zh-CN|![苏格拉底追问与思维导图](/images/projects/project01/app/c6.png)": {
+      "sourceText": "![苏格拉底追问与思维导图](/images/projects/project01/app/c6.png)",
+      "targetText": "![苏格拉底追问与思维导图](/images/projects/project01/app/c6.png)",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365700748,
+      "lastSeen": 1784365700748
+    },
+    "v2|google|auto|zh-CN|苏格拉底追问与思维导图": {
+      "sourceText": "苏格拉底追问与思维导图",
+      "targetText": "苏格拉底追问与思维导图",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365712059,
+      "lastSeen": 1784365712059
+    },
+    "v2|google|auto|zh-CN|你可以旁观": {
+      "sourceText": "你可以旁观",
+      "targetText": "你可以旁观",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365779674,
+      "lastSeen": 1784365779674
+    },
+    "v2|google|auto|zh-CN|参与讨论": {
+      "sourceText": "参与讨论",
+      "targetText": "参与讨论",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365780180,
+      "lastSeen": 1784365780180
+    },
+    "v2|google|auto|zh-CN|世界全都在我们之中，而我在完全在我自身之外（The whole world is within us, yet I am entirely outside of myself）——立即体验": {
+      "sourceText": "世界全都在我们之中，而我在完全在我自身之外（The whole world is within us, yet I am entirely outside of myself）——立即体验",
+      "targetText": "世界全都在我们之中，而我在完全在我自身之外（The whole world is within us, yet I am entirely outside of myself）——立即体验",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784365943649,
+      "lastSeen": 1784365943649
+    },
+    "v2|google|auto|zh-CN|邀请我们重新观看那些被习惯遮蔽的问题": {
+      "sourceText": "邀请我们重新观看那些被习惯遮蔽的问题",
+      "targetText": "邀请我们重新观看那些被习惯遮蔽的问题",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784366054278,
+      "lastSeen": 1784366054278
+    },
+    "v2|google|auto|zh-CN|邀请你来重新观看那些被习惯遮蔽的问题": {
+      "sourceText": "邀请你来重新观看那些被习惯遮蔽的问题",
+      "targetText": "邀请你来重新观看那些被习惯遮蔽的问题",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784366067390,
+      "lastSeen": 1784366067390
+    },
+    "v2|google|auto|zh-CN|邀请你来重新观看那些被遮蔽的问题": {
+      "sourceText": "邀请你来重新观看那些被遮蔽的问题",
+      "targetText": "邀请你来重新观看那些被遮蔽的问题",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784366078586,
+      "lastSeen": 1784366078586
+    },
+    "v2|google|auto|zh-CN|app": {
+      "sourceText": "app",
+      "targetText": "应用程序",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784366561323,
+      "lastSeen": 1784366561323
+    },
+    "v2|google|auto|zh-CN|PHILO-ROUND-TABLE-073": {
+      "sourceText": "PHILO-ROUND-TABLE-073",
+      "targetText": "斐洛圆桌-073",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784366720612,
+      "lastSeen": 1784366720612
+    },
+    "v2|google|auto|zh-CN|，请联系": {
+      "sourceText": "，请联系",
+      "targetText": "，请联系",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784366873506,
+      "lastSeen": 1784366873506
+    },
+    "v2|google|auto|zh-CN|（若邀请码都被注册，请联系）": {
+      "sourceText": "（若邀请码都被注册，请联系）",
+      "targetText": "（若邀请码都被注册，请联系）",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784366874935,
+      "lastSeen": 1784366874935
+    },
+    "v2|google|auto|zh-CN|（登录账号与否不影响本地功能使用。若想要本地存储记录请下载网页内容到本地使用）": {
+      "sourceText": "（登录账号与否不影响本地功能使用。若想要本地存储记录请下载网页内容到本地使用）",
+      "targetText": "（登录账号与否不影响本地功能使用。若想要本地存储记录请下载网页内容到本地使用）",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784366883183,
+      "lastSeen": 1784366883183
+    },
+    "v2|google|auto|zh-CN|若想要本地存储记录请下载网页内容到本地使用": {
+      "sourceText": "若想要本地存储记录请下载网页内容到本地使用",
+      "targetText": "若想要本地存储记录请下载网页内容到本地使用",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784366917162,
+      "lastSeen": 1784366917162
+    },
+    "v2|google|auto|zh-CN|登录账号与否不影响本地功能使用。若想要本地存储记录请下载网页内容到本地使用": {
+      "sourceText": "登录账号与否不影响本地功能使用。若想要本地存储记录请下载网页内容到本地使用",
+      "targetText": "登录账号与否不影响本地功能使用。若想要本地存储记录请下载网页内容到本地使用",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784366919291,
+      "lastSeen": 1784366919291
+    },
+    "v2|google|auto|zh-CN|响本地功能使用。若想要本地存储记录请下载网页内容到本地使用": {
+      "sourceText": "响本地功能使用。若想要本地存储记录请下载网页内容到本地使用",
+      "targetText": "响本地功能使用。若想要本地存储记录请下载网页内容到本地使用",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784366922451,
+      "lastSeen": 1784366922451
+    },
+    "v2|google|auto|zh-CN|登录账号与否不影响本地功能使用": {
+      "sourceText": "登录账号与否不影响本地功能使用",
+      "targetText": "登录账号与否不影响本地功能使用",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784367465990,
+      "lastSeen": 1784367465990
+    },
+    "v2|google|auto|zh-CN|PHILO-ROUND-TABLE-094": {
+      "sourceText": "PHILO-ROUND-TABLE-094",
+      "targetText": "斐洛圆桌-094",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784367479316,
+      "lastSeen": 1784367479316
+    },
+    "v2|google|auto|zh-CN|际际交交往往的的技技巧巧": {
+      "sourceText": "际际交交往往的的技技巧巧",
+      "targetText": "际际交交往往的的技技巧巧",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 2,
+      "firstSeen": 1784424614867,
+      "lastSeen": 1784424615168
+    },
+    "v2|google|auto|zh-CN|代代": {
+      "sourceText": "代代",
+      "targetText": "代代",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784424615640,
+      "lastSeen": 1784424615640
+    },
+    "v2|google|auto|zh-CN|teaching": {
+      "sourceText": "teaching",
+      "targetText": "教学",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "名词",
+          "terms": [
+            "教学",
+            "教",
+            "教导"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784424700494,
+      "lastSeen": 1784424700494
+    },
+    "v2|google|auto|zh-CN|immature": {
+      "sourceText": "immature",
+      "targetText": "不成熟的",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "形容词",
+          "terms": [
+            "幼小",
+            "发育未全的",
+            "未成熟的"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784424700799,
+      "lastSeen": 1784424700799
+    },
+    "v2|google|auto|zh-CN|socially": {
+      "sourceText": "socially",
+      "targetText": "社交上",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784424702549,
+      "lastSeen": 1784424702549
+    },
+    "v2|google|auto|zh-CN|punishment": {
+      "sourceText": "punishment",
+      "targetText": "惩罚",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "名词",
+          "terms": [
+            "惩罚",
+            "刑罚",
+            "刑"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784425842591,
+      "lastSeen": 1784425842591
+    },
+    "v2|google|auto|zh-CN|corporal": {
+      "sourceText": "corporal",
+      "targetText": "下士",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "名词",
+          "terms": [
+            "下士"
+          ]
+        },
+        {
+          "pos": "形容词",
+          "terms": [
+            "个人的",
+            "肉体的"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784425847500,
+      "lastSeen": 1784425847500
+    },
+    "v2|google|auto|zh-CN|vocational": {
+      "sourceText": "vocational",
+      "targetText": "职业",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "形容词",
+          "terms": [
+            "专业"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784425860389,
+      "lastSeen": 1784425860389
+    },
+    "v2|google|auto|zh-CN|compulsory": {
+      "sourceText": "compulsory",
+      "targetText": "强制性的",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "形容词",
+          "terms": [
+            "义务",
+            "必须"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784425861708,
+      "lastSeen": 1784425861708
+    },
+    "v2|google|auto|zh-CN|职业教育": {
+      "sourceText": "职业教育",
+      "targetText": "职业教育",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784425863153,
+      "lastSeen": 1784425863153
+    },
+    "v2|google|auto|zh-CN|model": {
+      "sourceText": "model",
+      "targetText": "模型",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "名词",
+          "terms": [
+            "模型",
+            "型号",
+            "型"
+          ]
+        },
+        {
+          "pos": "动词",
+          "terms": [
+            "模",
+            "造型",
+            "塑造"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784426100294,
+      "lastSeen": 1784426100294
+    },
+    "v2|google|auto|zh-CN|understanding": {
+      "sourceText": "understanding",
+      "targetText": "理解",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "名词",
+          "terms": [
+            "理解",
+            "认识",
+            "谅解"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784426101678,
+      "lastSeen": 1784426101678
+    },
+    "v2|google|auto|zh-CN|for": {
+      "sourceText": "for",
+      "targetText": "为了",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "介词",
+          "terms": [
+            "对于",
+            "为",
+            "于"
+          ]
+        },
+        {
+          "pos": "连词",
+          "terms": [
+            "因为"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784426113901,
+      "lastSeen": 1784426113901
+    },
+    "v2|google|auto|zh-CN|Copilot": {
+      "sourceText": "Copilot",
+      "targetText": "副驾驶",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784426117802,
+      "lastSeen": 1784426117802
+    },
+    "v2|google|auto|zh-CN|education": {
+      "sourceText": "education",
+      "targetText": "教育",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "名词",
+          "terms": [
+            "教育",
+            "教学",
+            "文化"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784426542336,
+      "lastSeen": 1784426542336
+    },
+    "v2|google|auto|zh-CN|个人辅导": {
+      "sourceText": "个人辅导",
+      "targetText": "个人辅导",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784426561854,
+      "lastSeen": 1784426561854
+    },
+    "v2|google|auto|zh-CN|wrong": {
+      "sourceText": "wrong",
+      "targetText": "错误的",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "形容词",
+          "terms": [
+            "错误",
+            "错",
+            "不对"
+          ]
+        },
+        {
+          "pos": "副词",
+          "terms": [
+            "错",
+            "邪恶"
+          ]
+        },
+        {
+          "pos": "名词",
+          "terms": [
+            "坏事",
+            "过失",
+            "冤"
+          ]
+        },
+        {
+          "pos": "动词",
+          "terms": [
+            "冤屈"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784426563623,
+      "lastSeen": 1784426563623
+    },
+    "v2|google|auto|zh-CN|and": {
+      "sourceText": "and",
+      "targetText": "和",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "连词",
+          "terms": [
+            "和",
+            "与",
+            "而"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784426568022,
+      "lastSeen": 1784426568022
+    },
+    "v2|google|auto|zh-CN|19": {
+      "sourceText": "19",
+      "targetText": "19",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784426568430,
+      "lastSeen": 1784426568430
+    },
+    "v2|google|auto|zh-CN|bitterness": {
+      "sourceText": "bitterness",
+      "targetText": "苦味",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "名词",
+          "terms": [
+            "苦味",
+            "苦",
+            "苦楚"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784426598822,
+      "lastSeen": 1784426598822
+    },
+    "v2|google|auto|zh-CN|31": {
+      "sourceText": "31",
+      "targetText": "31",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784436908290,
+      "lastSeen": 1784436908290
+    },
+    "v2|google|auto|zh-CN|hardship": {
+      "sourceText": "hardship",
+      "targetText": "困难",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "名词",
+          "terms": [
+            "困苦",
+            "苦",
+            "苦头"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784436909461,
+      "lastSeen": 1784436909461
+    },
+    "v2|google|auto|zh-CN|同辈的压力": {
+      "sourceText": "同辈的压力",
+      "targetText": "同辈的压力",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784437108679,
+      "lastSeen": 1784437108679
+    },
+    "v2|google|auto|zh-CN|- ， 是两套坐标\n-  是时钟偏差\n-  是旋转矩阵（传感器安装角度差异）\n-  是平移偏倚\n-  是随机噪声": {
+      "sourceText": "- ， 是两套坐标\n-  是时钟偏差\n-  是旋转矩阵（传感器安装角度差异）\n-  是平移偏倚\n-  是随机噪声",
+      "targetText": "- ， 是两套坐标\n-  是时钟偏差\n-  是旋转矩阵（传感器安装角度差异）\n-  是平移偏倚\n-  是随机噪声",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784530781037,
+      "lastSeen": 1784530781037
+    },
+    "v2|google|auto|zh-CN|- $p_1 = [x_1, y_1]^T$，$p_2 = [x_2, y_2]^T$ 是两套坐标\n- $\\Delta t$ 是时钟偏差\n- $R(\\theta)$ 是旋转矩阵（传感器安装角度差异）\n- $\\mathbf{b} = [b_x, b_y]^T$ 是平移偏倚\n- $\\varepsilon$ 是随机噪声": {
+      "sourceText": "- $p_1 = [x_1, y_1]^T$，$p_2 = [x_2, y_2]^T$ 是两套坐标\n- $\\Delta t$ 是时钟偏差\n- $R(\\theta)$ 是旋转矩阵（传感器安装角度差异）\n- $\\mathbf{b} = [b_x, b_y]^T$ 是平移偏倚\n- $\\varepsilon$ 是随机噪声",
+      "targetText": "- $p_1 = [x_1, y_1]^T$，$p_2 = [x_2, y_2]^T$ 是两套坐标\n- $\\Delta t$ 是时钟偏差\n- $R(\\theta)$ 是旋转矩阵（传感器安装角度差异）\n- $\\mathbf{b} = [b_x, b_y]^T$ 是平移偏倚\n- $\\varepsilon$ 是随机噪声",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784530783358,
+      "lastSeen": 1784530783358
+    },
+    "v2|google|auto|zh-CN|||第一问（附件1）|第二问（附件2）|\n|---|---|---|\n|数据质量|无噪声，坐标干净|含随机噪声|\n|系统间关系|仅时钟偏差 Δt|时钟偏差 Δt + 固定系统偏倚（平移+旋转）|\n|匹配方法|精确坐标匹配（6位小数）|需要鲁棒匹配|": {
+      "sourceText": "||第一问（附件1）|第二问（附件2）|\n|---|---|---|\n|数据质量|无噪声，坐标干净|含随机噪声|\n|系统间关系|仅时钟偏差 Δt|时钟偏差 Δt + 固定系统偏倚（平移+旋转）|\n|匹配方法|精确坐标匹配（6位小数）|需要鲁棒匹配|",
+      "targetText": "||第一问（附件1）|第二问（附件2）|\n|---|---|---|\n|数据质量|无噪声，坐标干净|含随机噪声|\n|系统间关系|仅时钟偏差 Δt|时钟偏差 Δt + 固定系统偏倚（平移+旋转）|\n|匹配方法|精确坐标匹配（6位小数）|需要鲁棒匹配|",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784531250134,
+      "lastSeen": 1784531250134
+    },
+    "v2|google|auto|zh-CN|可能存在刚体变换：": {
+      "sourceText": "可能存在刚体变换：",
+      "targetText": "可能存在刚体变换：",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784531273341,
+      "lastSeen": 1784531273341
+    },
+    "v2|google|auto|zh-CN|是平移偏倚": {
+      "sourceText": "是平移偏倚",
+      "targetText": "是平移偏倚",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784531287284,
+      "lastSeen": 1784531287284
+    },
+    "v2|google|auto|zh-CN|平移偏倚": {
+      "sourceText": "平移偏倚",
+      "targetText": "平移偏倚",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784531288227,
+      "lastSeen": 1784531288227
+    },
+    "v2|google|auto|zh-CN|-  是随机噪声": {
+      "sourceText": "-  是随机噪声",
+      "targetText": "-  是随机噪声",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784531288531,
+      "lastSeen": 1784531288531
+    },
+    "v2|google|auto|zh-CN|平": {
+      "sourceText": "平",
+      "targetText": "平",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784531289223,
+      "lastSeen": 1784531289223
+    },
+    "v2|google|auto|zh-CN|排除离群匹配": {
+      "sourceText": "排除离群匹配",
+      "targetText": "排除离群匹配",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784531294667,
+      "lastSeen": 1784531294667
+    },
+    "v2|google|auto|zh-CN|在统一时间轴下，对方式1的每个点，找方式2中时间最近的若干个点中空间距离最近的作为对应点\n2. 估计步：用匹配点对，通过最小二乘估计 ，更新变换参数": {
+      "sourceText": "在统一时间轴下，对方式1的每个点，找方式2中时间最近的若干个点中空间距离最近的作为对应点\n2. 估计步：用匹配点对，通过最小二乘估计 ，更新变换参数",
+      "targetText": "在统一时间轴下，对方式1的每个点，找方式2中时间最近的若干个点中空间距离最近的作为对应点\n2. 估计步：用匹配点对，通过最小二乘估计 ，更新变换参数",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784531303516,
+      "lastSeen": 1784531303516
+    },
+    "v2|google|auto|zh-CN|匹配步：在统一时间轴下，对方式1的每个点，找方式2中时间最近的若干个点中空间距离最近的作为对应点\n2. **估计步**：用匹配点对，通过最小二乘估计 $(Δx, Δy, θ)$，更新变换参数": {
+      "sourceText": "匹配步：在统一时间轴下，对方式1的每个点，找方式2中时间最近的若干个点中空间距离最近的作为对应点\n2. **估计步**：用匹配点对，通过最小二乘估计 $(Δx, Δy, θ)$，更新变换参数",
+      "targetText": "匹配步：在统一时间轴下，对方式1的每个点，找方式2中时间最近的若干个点中空间距离最近的作为对应点\n2. **估计步**：用匹配点对，通过最小二乘估计 $(Δx, Δy, θ)$，更新变换参数",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784531305536,
+      "lastSeen": 1784531305536
+    },
+    "v2|google|auto|zh-CN|1. 匹配步：在统一时间轴下，对方式1的每个点，找方式2中时间最近的若干个点中空间距离最近的作为对应点\n2. 估计步：用匹配点对，通过最小二乘估计 ，更新变换参数": {
+      "sourceText": "1. 匹配步：在统一时间轴下，对方式1的每个点，找方式2中时间最近的若干个点中空间距离最近的作为对应点\n2. 估计步：用匹配点对，通过最小二乘估计 ，更新变换参数",
+      "targetText": "1. 匹配步：在统一时间轴下，对方式1的每个点，找方式2中时间最近的若干个点中空间距离最近的作为对应点\n2. 估计步：用匹配点对，通过最小二乘估计 ，更新变换参数",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784531309601,
+      "lastSeen": 1784531309601
+    },
+    "v2|google|auto|zh-CN|阶段三：鲁棒处理": {
+      "sourceText": "阶段三：鲁棒处理",
+      "targetText": "阶段三：鲁棒处理",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784531312007,
+      "lastSeen": 1784531312007
+    },
+    "v2|google|auto|zh-CN|噪声可能产生误匹配，引入": {
+      "sourceText": "噪声可能产生误匹配，引入",
+      "targetText": "噪声可能产生误匹配，引入",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784531312854,
+      "lastSeen": 1784531312854
+    },
+    "v2|google|auto|zh-CN|RANSAC 随机采样一致性，排除离群匹配": {
+      "sourceText": "RANSAC 随机采样一致性，排除离群匹配",
+      "targetText": "RANSAC 随机采样一致性，排除离群匹配",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784531314634,
+      "lastSeen": 1784531314634
+    },
+    "v2|google|auto|zh-CN|或用 Huber 损失 代替平方损失，降低离群点权重": {
+      "sourceText": "或用 Huber 损失 代替平方损失，降低离群点权重",
+      "targetText": "或用 Huber 损失 代替平方损失，降低离群点权重",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784531316162,
+      "lastSeen": 1784531316162
+    },
+    "v2|google|auto|zh-CN|阶段四：平滑去噪": {
+      "sourceText": "阶段四：平滑去噪",
+      "targetText": "阶段四：平滑去噪",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784531317765,
+      "lastSeen": 1784531317765
+    },
+    "v2|google|auto|zh-CN|Q1 用的是插值样条（过所有节点），但 Q2 有噪声，应该用平滑样条（smoothing spline）或 Savitzky-Golay 滤波，在拟合残差和光滑性之间折中。": {
+      "sourceText": "Q1 用的是插值样条（过所有节点），但 Q2 有噪声，应该用平滑样条（smoothing spline）或 Savitzky-Golay 滤波，在拟合残差和光滑性之间折中。",
+      "targetText": "Q1 用的是插值样条（过所有节点），但 Q2 有噪声，应该用平滑样条（smoothing spline）或 Savitzky-Golay 滤波，在拟合残差和光滑性之间折中。",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784531319063,
+      "lastSeen": 1784531319063
+    },
+    "v2|google|auto|zh-CN|最近邻匹配": {
+      "sourceText": "最近邻匹配",
+      "targetText": "最近邻匹配",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784531361110,
+      "lastSeen": 1784531361110
+    },
+    "v2|google|auto|zh-CN|标建平滑样条   │": {
+      "sourceText": "标建平滑样条   │",
+      "targetText": "标建平滑样条   │",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784544378074,
+      "lastSeen": 1784544378074
+    },
+    "v2|google|auto|zh-CN|中等平滑，避免": {
+      "sourceText": "中等平滑，避免",
+      "targetText": "中等平滑，避免",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784544378667,
+      "lastSeen": 1784544378667
+    },
+    "v2|google|auto|zh-CN|避免过拟合": {
+      "sourceText": "避免过拟合",
+      "targetText": "避免过拟合",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784544379846,
+      "lastSeen": 1784544379846
+    },
+    "v2|google|auto|zh-CN|在未采样时刻也能估值": {
+      "sourceText": "在未采样时刻也能估值",
+      "targetText": "在未采样时刻也能估值",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784544381578,
+      "lastSeen": 1784544381578
+    },
+    "v2|google|auto|zh-CN|固定中等平滑": {
+      "sourceText": "固定中等平滑",
+      "targetText": "固定中等平滑",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784544733040,
+      "lastSeen": 1784544733040
+    },
+    "v2|google|auto|zh-CN|未采样时刻也能估值": {
+      "sourceText": "未采样时刻也能估值",
+      "targetText": "未采样时刻也能估值",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784544739116,
+      "lastSeen": 1784544739116
+    },
+    "v2|google|auto|zh-CN|：在未采样时刻也能估值": {
+      "sourceText": "：在未采样时刻也能估值",
+      "targetText": "：在未采样时刻也能估值",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784544743078,
+      "lastSeen": 1784544743078
+    },
+    "v2|google|auto|zh-CN|剖面网格联合估计": {
+      "sourceText": "剖面网格联合估计",
+      "targetText": "剖面网格联合估计",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784544746773,
+      "lastSeen": 1784544746773
+    },
+    "v2|google|auto|zh-CN|剖面网格联合估计 Δt̂, β̂": {
+      "sourceText": "剖面网格联合估计 Δt̂, β̂",
+      "targetText": "剖面网格联合估计 Δt̂, β̂",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784544752975,
+      "lastSeen": 1784544752975
+    },
+    "v2|google|auto|zh-CN|外层：粗→细 网格搜索 Δ": {
+      "sourceText": "外层：粗→细 网格搜索 Δ",
+      "targetText": "外层：粗→细 网格搜索 Δ",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784544759330,
+      "lastSeen": 1784544759330
+    },
+    "v2|google|auto|zh-CN|内层": {
+      "sourceText": "内层",
+      "targetText": "内层",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784544761336,
+      "lastSeen": 1784544761336
+    },
+    "v2|google|auto|zh-CN|内层：对每个 Δ，解析求 β̂(Δ)": {
+      "sourceText": "内层：对每个 Δ，解析求 β̂(Δ)",
+      "targetText": "内层：对每个 Δ，解析求 β̂(Δ)",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784544765188,
+      "lastSeen": 1784544765188
+    },
+    "v2|google|auto|zh-CN|析求 β̂(Δ)     │\n│           β̂ = mean(g₂ - g₁)          │": {
+      "sourceText": "析求 β̂(Δ)     │\n│           β̂ = mean(g₂ - g₁)          │",
+      "targetText": "枇求 β̂(Δ) │\n│ β̂ = 平均值(g2 - g₁) │",
+      "sourceLang": "el",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784544767789,
+      "lastSeen": 1784544767789
+    },
+    "v2|google|auto|zh-CN|Δ，解析求 β̂(Δ)     │\n│           β̂ = mean(g₂ - g₁)          │": {
+      "sourceText": "Δ，解析求 β̂(Δ)     │\n│           β̂ = mean(g₂ - g₁)          │",
+      "targetText": "Δ,构型 β̂(Δ) │\n│ β̂ = 平均值(g2 - g2) │",
+      "sourceLang": "ilo",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784544769758,
+      "lastSeen": 1784544769758
+    },
+    "v2|google|auto|zh-CN|，解析求 β̂(Δ)": {
+      "sourceText": "，解析求 β̂(Δ)",
+      "targetText": "，解析求 β̂(Δ)",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784544790204,
+      "lastSeen": 1784544790204
+    },
+    "v2|google|auto|zh-CN|ean(g₂ - g₁)": {
+      "sourceText": "ean(g₂ - g₁)",
+      "targetText": "均值(g2 - g₁)",
+      "sourceLang": "gd",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784544792949,
+      "lastSeen": 1784544792949
+    },
+    "v2|google|auto|zh-CN|：J(Δ) = mean": {
+      "sourceText": "：J(Δ) = mean",
+      "targetText": "：J(Δ) = 平均值",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784544796725,
+      "lastSeen": 1784544796725
+    },
+    "v2|google|auto|zh-CN|──────────────────────────────────┐\n│ 2. 剖面网格联合估计 Δt̂, β̂            │\n│    · 外层：粗→细 网格搜索 Δ          │\n│    · 内层：对每个 Δ，解析求 β̂(Δ)     │\n│           β̂ = mean(g₂ - g₁)          │\n│    · 目标：J(Δ) = mean(‖残差‖²)      │\n│    · 约束：共同区间 ≥ 80% 较短记录   │\n│    · 多低谷自动识别→分支独立细化     │\n└──────────────┬──────────────": {
+      "sourceText": "──────────────────────────────────┐\n│ 2. 剖面网格联合估计 Δt̂, β̂            │\n│    · 外层：粗→细 网格搜索 Δ          │\n│    · 内层：对每个 Δ，解析求 β̂(Δ)     │\n│           β̂ = mean(g₂ - g₁)          │\n│    · 目标：J(Δ) = mean(‖残差‖²)      │\n│    · 约束：共同区间 ≥ 80% 较短记录   │\n│    · 多低谷自动识别→分支独立细化     │\n└──────────────┬──────────────",
+      "targetText": "──────────────────────────────────┐\n│ 2. 剖面网格联合估计 Δt̂, β̂            │\n│    · 外层：粗→细 网格搜索 Δ          │\n│    · 内层：对每个 Δ，解析求 β̂(Δ)     │\n│           β̂ = mean(g₂ - g₁)          │\n│    · 目标：J(Δ) = mean(‖残差‖²)      │\n│    · 约束：共同区间 ≥ 80% 较短记录   │\n│    · 多低谷自动识别→分支独立细化     │\n└──────────────┬──────────────",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784545080148,
+      "lastSeen": 1784545080148
+    },
+    "v2|google|auto|zh-CN|多低谷自动识别": {
+      "sourceText": "多低谷自动识别",
+      "targetText": "多低谷自动识别",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784545092396,
+      "lastSeen": 1784545092396
+    },
+    "v2|google|auto|zh-CN|噪声方差估计": {
+      "sourceText": "噪声方差估计",
+      "targetText": "噪声方差估计",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784545111398,
+      "lastSeen": 1784545111398
+    },
+    "v2|google|auto|zh-CN|噪声方差估": {
+      "sourceText": "噪声方差估",
+      "targetText": "噪声方差估",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784545111820,
+      "lastSeen": 1784545111820
+    },
+    "v2|google|auto|zh-CN|──────────": {
+      "sourceText": "──────────",
+      "targetText": "──────────",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784545113291,
+      "lastSeen": 1784545113291
+    },
+    "v2|google|auto|zh-CN|│\n│    · 分传感器、分坐标估计 σ̂²": {
+      "sourceText": "│\n│    · 分传感器、分坐标估计 σ̂²",
+      "targetText": "│\n│    · 分传感器、分坐标估计 σ̂²",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784545297881,
+      "lastSeen": 1784545297881
+    },
+    "v2|google|auto|zh-CN|ω₁≈ω₂≈0.5": {
+      "sourceText": "ω₁≈ω₂≈0.5",
+      "targetText": "ω₁≈ω2≈0.5",
+      "sourceLang": "el",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784545303286,
+      "lastSeen": 1784545303286
+    },
+    "v2|google|auto|zh-CN|ₛq = 1/σ̂ₛq²": {
+      "sourceText": "ₛq = 1/σ̂ₛq²",
+      "targetText": "ₛq = 1/σ̂ₛq²",
+      "sourceLang": "yo",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784545303922,
+      "lastSeen": 1784545303922
+    },
+    "v2|google|auto|zh-CN|标估计 σ̂²": {
+      "sourceText": "标估计 σ̂²",
+      "targetText": "标估计 σ̂²",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784545306080,
+      "lastSeen": 1784545306080
+    },
+    "v2|google|auto|zh-CN|GCV": {
+      "sourceText": "GCV",
+      "targetText": "GCV",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784545314939,
+      "lastSeen": 1784545314939
+    },
+    "v2|google|auto|zh-CN|li": {
+      "sourceText": "li",
+      "targetText": "那",
+      "sourceLang": "mt",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784545317153,
+      "lastSeen": 1784545317153
+    },
+    "v2|google|auto|zh-CN|解": {
+      "sourceText": "解",
+      "targetText": "解",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784545317529,
+      "lastSeen": 1784545317529
+    },
+    "v2|google|auto|zh-CN|建初步融合轨迹": {
+      "sourceText": "建初步融合轨迹",
+      "targetText": "建初步融合轨迹",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784545338149,
+      "lastSeen": 1784545338149
+    },
+    "v2|google|auto|zh-CN|从全局权重中提取训练集对应的权重": {
+      "sourceText": "从全局权重中提取训练集对应的权重",
+      "targetText": "从全局权重中提取训练集对应的权重",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784551088178,
+      "lastSeen": 1784551088178
+    },
+    "v2|google|auto|zh-CN|GCV \n偏差多余\n系统误差\n残差\n从全局权重中提取训练集对应的权重": {
+      "sourceText": "GCV \n偏差多余\n系统误差\n残差\n从全局权重中提取训练集对应的权重",
+      "targetText": "GCV \n偏差多余\n系统误差\n残差\n从全局权重中提取训练集对应的权重",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784551097409,
+      "lastSeen": 1784551097409
+    },
+    "v2|google|auto|zh-CN|# -": {
+      "sourceText": "# -",
+      "targetText": "# -",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784631505566,
+      "lastSeen": 1784631505566
+    },
+    "v2|google|auto|zh-CN|##": {
+      "sourceText": "##",
+      "targetText": "##",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784631870424,
+      "lastSeen": 1784631870424
+    },
+    "v2|google|auto|zh-CN|--- 嵌套性自检\n 第4节 \"代理间距对Δt稳定性\"": {
+      "sourceText": "--- 嵌套性自检\n 第4节 \"代理间距对Δt稳定性\"",
+      "targetText": "--- 嵌套性自检\n第4节 \"代理间距对Δt稳定性\"",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784632258667,
+      "lastSeen": 1784632258667
+    },
+    "v2|google|auto|zh-CN|戴上一顶帽子变成拟合值": {
+      "sourceText": "戴上一顶帽子变成拟合值",
+      "targetText": "戴上一顶帽子变成拟合值",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784641493515,
+      "lastSeen": 1784641493515
+    },
+    "v2|google|auto|zh-CN|从而避免了": {
+      "sourceText": "从而避免了",
+      "targetText": "从而避免了",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784641510346,
+      "lastSeen": 1784641510346
+    },
+    "v2|google|auto|zh-CN|对于线性平滑器": {
+      "sourceText": "对于线性平滑器",
+      "targetText": "对于线性平滑器",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784641514119,
+      "lastSeen": 1784641514119
+    },
+    "v2|google|auto|zh-CN|B": {
+      "sourceText": "B",
+      "targetText": "乙",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784642540920,
+      "lastSeen": 1784642540920
+    },
+    "v2|google|auto|zh-CN|模型复杂到可以": {
+      "sourceText": "模型复杂到可以",
+      "targetText": "模型复杂到可以",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784642547381,
+      "lastSeen": 1784642547381
+    },
+    "v2|google|auto|zh-CN|残差再小也没用": {
+      "sourceText": "残差再小也没用",
+      "targetText": "残差再小也没用",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784642552743,
+      "lastSeen": 1784642552743
+    },
+    "v2|google|auto|zh-CN|追着每个噪声跑": {
+      "sourceText": "追着每个噪声跑",
+      "targetText": "追着每个噪声跑",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784642553397,
+      "lastSeen": 1784642553397
+    },
+    "v2|google|auto|zh-CN|观测空间到拟合空间的线性算子：": {
+      "sourceText": "观测空间到拟合空间的线性算子：",
+      "targetText": "观测空间到拟合空间的线性算子：",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784642682555,
+      "lastSeen": 1784642682555
+    },
+    "v2|google|auto|zh-CN|满足": {
+      "sourceText": "满足",
+      "targetText": "满足",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784642761100,
+      "lastSeen": 1784642761100
+    },
+    "v2|google|auto|zh-CN|这个方向几乎被压到零": {
+      "sourceText": "这个方向几乎被压到零",
+      "targetText": "这个方向几乎被压到零",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784642806978,
+      "lastSeen": 1784642806978
+    },
+    "v2|google|auto|zh-CN|（高频、噪声分量）": {
+      "sourceText": "（高频、噪声分量）",
+      "targetText": "（高频、噪声分量）",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784642809503,
+      "lastSeen": 1784642809503
+    },
+    "v2|google|auto|zh-CN|这个点几乎不需要": {
+      "sourceText": "这个点几乎不需要",
+      "targetText": "这个点几乎不需要",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784642900283,
+      "lastSeen": 1784642900283
+    },
+    "v2|google|auto|zh-CN|这意味着如果": {
+      "sourceText": "这意味着如果",
+      "targetText": "这意味着如果",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784642972898,
+      "lastSeen": 1784642972898
+    },
+    "v2|google|auto|zh-CN|不惩罚常数偏移和线性趋势": {
+      "sourceText": "不惩罚常数偏移和线性趋势",
+      "targetText": "不惩罚常数偏移和线性趋势",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784642976925,
+      "lastSeen": 1784642976925
+    },
+    "v2|google|auto|zh-CN|这是曲率惩罚只惩罚二阶导数": {
+      "sourceText": "这是曲率惩罚只惩罚二阶导数",
+      "targetText": "这是曲率惩罚只惩罚二阶导数",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784642979192,
+      "lastSeen": 1784642979192
+    },
+    "v2|google|auto|zh-CN|常数不会被平滑": {
+      "sourceText": "常数不会被平滑",
+      "targetText": "常数不会被平滑",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784642984738,
+      "lastSeen": 1784642984738
+    },
+    "v2|google|auto|zh-CN|全是同一个常数": {
+      "sourceText": "全是同一个常数",
+      "targetText": "全是同一个常数",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784642993697,
+      "lastSeen": 1784642993697
+    },
+    "v2|google|auto|zh-CN|逆方差加权B样条在第二问中的角色": {
+      "sourceText": "逆方差加权B样条在第二问中的角色",
+      "targetText": "逆方差加权B样条在第二问中的角色",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784646261815,
+      "lastSeen": 1784646261815
+    },
+    "v2|google|auto|zh-CN|\\hat{S}_x = \\arg\\min_f \\left{ \\underbrace{\\sum_i w_{1x}[x_{1,i}^c - f(t_{1,i})]^2}_{\\text{方式1的加权残差}} + \\underbrace{\\sum_j w_{2x}[x_{2,j}^c - f(\\tilde{t}_{2,j})]^2}_{\\text{方式2的加权残差}} + \\underbrace{\\vphantom{\\sum_i}\\lambda_x \\int [f''(t)]^2 dt}_{\\text{曲率惩罚}} \\right}": {
+      "sourceText": "\\hat{S}_x = \\arg\\min_f \\left{ \\underbrace{\\sum_i w_{1x}[x_{1,i}^c - f(t_{1,i})]^2}_{\\text{方式1的加权残差}} + \\underbrace{\\sum_j w_{2x}[x_{2,j}^c - f(\\tilde{t}_{2,j})]^2}_{\\text{方式2的加权残差}} + \\underbrace{\\vphantom{\\sum_i}\\lambda_x \\int [f''(t)]^2 dt}_{\\text{曲率惩罚}} \\right}",
+      "targetText": "\\hat{S}_x = \\arg\\min_f \\left{ \\underbrace{\\sum_i w_{1x}[x_{1,i}^c - f(t_{1,i})]^2}_{\\text{方式1的加权残差}} + \\underbrace{\\sum_j w_{2x}[x_{2,j}^c - f(\\tilde{t}_{2,j})]^2}_{\\text{方式2的加权残差}} + \\underbrace{\\vphantom{\\sum_i}\\lambda_x \\int [f''(t)]^2 dt}_{\\text{曲率惩罚}} \\right}",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784646278719,
+      "lastSeen": 1784646278719
+    },
+    "v2|google|auto|zh-CN|$": {
+      "sourceText": "$",
+      "targetText": "$",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784646285142,
+      "lastSeen": 1784646285142
+    },
+    "v2|google|auto|zh-CN|曲率惩罚": {
+      "sourceText": "曲率惩罚",
+      "targetText": "曲率惩罚",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784646287343,
+      "lastSeen": 1784646287343
+    },
+    "v2|google|auto|zh-CN|underbrace": {
+      "sourceText": "underbrace",
+      "targetText": "底托",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784646299915,
+      "lastSeen": 1784646299915
+    },
+    "v2|google|auto|zh-CN|两条已经对齐到同一时空参考系的带噪轨迹": {
+      "sourceText": "两条已经对齐到同一时空参考系的带噪轨迹",
+      "targetText": "两条已经对齐到同一时空参考系的带噪轨迹",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784646303880,
+      "lastSeen": 1784646303880
+    },
+    "v2|google|auto|zh-CN|空间校正": {
+      "sourceText": "空间校正",
+      "targetText": "空间校正",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784646315687,
+      "lastSeen": 1784646315687
+    },
+    "v2|google|auto|zh-CN|第二问已经完成了时间对齐（已估计）、空间校正（已分配），现在手上是两条已经对齐到同一时空参考系的带噪轨迹。问题是：怎么从这两条轨迹融合出一条唯一的10Hz轨迹？\n\n直接求平均不行——两个设备精度可能不同。随便用一条也不行——会浪费另一条的信息。这就是逆方差加权B样条登场的地方。": {
+      "sourceText": "第二问已经完成了时间对齐（已估计）、空间校正（已分配），现在手上是两条已经对齐到同一时空参考系的带噪轨迹。问题是：怎么从这两条轨迹融合出一条唯一的10Hz轨迹？\n\n直接求平均不行——两个设备精度可能不同。随便用一条也不行——会浪费另一条的信息。这就是逆方差加权B样条登场的地方。",
+      "targetText": "第二问已经完成了时间对齐（已估计）、空间校正（已分配），现在手上是两条已经对齐到同一时空参考系的带噪轨迹。问题是：怎么从这两条轨迹融合出一条唯一的10Hz轨迹？\n\n直接求平均不行——两个设备精度可能不同。随便用一条也不行——会浪费另一条的信息。这就是逆方差加权B样条登场的地方。",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784646336726,
+      "lastSeen": 1784646336726
+    },
+    "v2|google|auto|zh-CN|取中位数": {
+      "sourceText": "取中位数",
+      "targetText": "取中位数",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784688328505,
+      "lastSeen": 1784688328505
+    },
+    "v2|google|auto|zh-CN|两者不等，因为中位数和平方根不能交换顺序。正确做法是先合成二维距离（因": {
+      "sourceText": "两者不等，因为中位数和平方根不能交换顺序。正确做法是先合成二维距离（因",
+      "targetText": "两者不等，因为中位数和平方根不能交换顺序。正确做法是先合成二维距离（因",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784688421307,
+      "lastSeen": 1784688421307
+    },
+    "v2|google|auto|zh-CN|CV₂D": {
+      "sourceText": "CV₂D",
+      "targetText": "CV2D",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784688443847,
+      "lastSeen": 1784688443847
+    },
+    "v2|google|auto|zh-CN|CV₂D 就是把二维位置预测误差合在一起评估的一个综合指标。它的构造分两步：\n\n第一步：块内的二维合成\n\n对每个留出的时间块 ，分别算X和Y方向的预测RMSE：\n\n \n \n \n \n\n然后把它们按勾股关系合成这个块的二维误差：\n\n\n这一步在每个块内部是严格的——块内确实满足 。\n\n第二步：块间取中位数\n\n所有块的  算出来后，取中位数：\n\n\n一个关键细节\n\n在代码注释和文档里反复强调的一个点是：\n\n\n因为中位数不是线性运算。举个简单例子：\n\n\n块1: R_x=5, R_y=4 → R_2D = √(25+16) = 6.40\n块2: R_x=3, R_y=8 → R_2D = √(9+64)  = 8.54\n块3: R_x=7, R_y=2 → R_2D = √(49+4)  = 7.28\n\n\n\n但如果分别取X和Y的中位数再合成：\n\n\n\n两者不等，因为**中位数和平方根不能交换顺序**。正确做法是先合成二维距离（因为位置误差最终关心的是二维欧氏距离），再对各个块的中位数取鲁棒汇总。": {
+      "sourceText": "CV₂D 就是把二维位置预测误差合在一起评估的一个综合指标。它的构造分两步：\n\n第一步：块内的二维合成\n\n对每个留出的时间块 ，分别算X和Y方向的预测RMSE：\n\n \n \n \n \n\n然后把它们按勾股关系合成这个块的二维误差：\n\n\n这一步在每个块内部是严格的——块内确实满足 。\n\n第二步：块间取中位数\n\n所有块的  算出来后，取中位数：\n\n\n一个关键细节\n\n在代码注释和文档里反复强调的一个点是：\n\n\n因为中位数不是线性运算。举个简单例子：\n\n\n块1: R_x=5, R_y=4 → R_2D = √(25+16) = 6.40\n块2: R_x=3, R_y=8 → R_2D = √(9+64)  = 8.54\n块3: R_x=7, R_y=2 → R_2D = √(49+4)  = 7.28\n\n\n\n但如果分别取X和Y的中位数再合成：\n\n\n\n两者不等，因为**中位数和平方根不能交换顺序**。正确做法是先合成二维距离（因为位置误差最终关心的是二维欧氏距离），再对各个块的中位数取鲁棒汇总。",
+      "targetText": "CV₂D 就是把二维位置预测误差合在一起评估的一个综合指标。它的构造分两步：\n\n第一步：块内的二维合成\n\n对每个留出的时间块 ，分别算X和Y方向的预测RMSE：\n\n\n\n\n\n\n然后把它们按勾股关系合成这个块的二维误差：\n\n\n这一步在每个块内部是严格的——块内确实满足 。\n\n第二步：块间取中位数\n\n所有块的  算出来后，取中位数：\n\n\n一个关键细节\n\n在代码注释和文档里反复强调的一个点是：\n\n\n因为中位数不是线性运算。举个简单例子：\n\n\n块1: R_x=5, R_y=4 → R_2D = √(25+16) = 6.40\n块2: R_x=3, R_y=8 → R_2D = √(9+64)  = 8.54\n块3: R_x=7, R_y=2 → R_2D = √(49+4)  = 7.28\n\n\n\n但如果分别取X和Y的中位数再合成：\n\n\n\n两者不等，因为**中位数和平方根不能交换顺序**。正确做法是先合成二维距离（因为位置误差最终关心的是二维欧氏距离），再对各个块的中位数取鲁棒汇总。",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784688447463,
+      "lastSeen": 1784688447463
+    },
+    "v2|google|auto|zh-CN|如果对观测向量做正交变换": {
+      "sourceText": "如果对观测向量做正交变换",
+      "targetText": "如果对观测向量做正交变换",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784689402592,
+      "lastSeen": 1784689402592
+    },
+    "v2|google|auto|zh-CN|367": {
+      "sourceText": "367",
+      "targetText": "367",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784690099589,
+      "lastSeen": 1784690099589
+    },
+    "v2|google|auto|zh-CN|如果我们重做500次实验": {
+      "sourceText": "如果我们重做500次实验",
+      "targetText": "如果我们重做500次实验",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784690099591,
+      "lastSeen": 1784690099591
+    },
+    "v2|google|auto|zh-CN|CI": {
+      "sourceText": "CI",
+      "targetText": "那里",
+      "sourceLang": "it",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784690111692,
+      "lastSeen": 1784690111692
+    },
+    "v2|google|auto|zh-CN|s": {
+      "sourceText": "s",
+      "targetText": "s",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "缩写词",
+          "terms": [
+            "小号"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784690125914,
+      "lastSeen": 1784690125914
+    },
+    "v2|google|auto|zh-CN|364": {
+      "sourceText": "364",
+      "targetText": "364",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 2,
+      "firstSeen": 1784690157072,
+      "lastSeen": 1784690157269
+    },
+    "v2|google|auto|zh-CN|\\text{s}": {
+      "sourceText": "\\text{s}",
+      "targetText": "\\文本{s}",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [
+        {
+          "pos": "名词",
+          "terms": [
+            "文本",
+            "正文",
+            "课文"
+          ]
+        }
+      ],
+      "type": "word",
+      "count": 1,
+      "firstSeen": 1784690160182,
+      "lastSeen": 1784690160182
+    },
+    "v2|google|auto|zh-CN|368": {
+      "sourceText": "368",
+      "targetText": "368",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784690168965,
+      "lastSeen": 1784690168965
+    },
+    "v2|google|auto|zh-CN|\\Delta t": {
+      "sourceText": "\\Delta t",
+      "targetText": "\\Delta t",
+      "sourceLang": "en",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784690180576,
+      "lastSeen": 1784690180576
+    },
+    "v2|google|auto|zh-CN|这个区间的含义是": {
+      "sourceText": "这个区间的含义是",
+      "targetText": "这个区间的含义是",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784690196353,
+      "lastSeen": 1784690196353
+    },
+    "v2|google|auto|zh-CN|_": {
+      "sourceText": "_",
+      "targetText": "_",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784690197880,
+      "lastSeen": 1784690197880
+    },
+    "v2|google|auto|zh-CN|的估计精度约为": {
+      "sourceText": "的估计精度约为",
+      "targetText": "的估计精度约为",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784690207649,
+      "lastSeen": 1784690207649
+    },
+    "v2|google|auto|zh-CN|产生500个": {
+      "sourceText": "产生500个",
+      "targetText": "产生500个",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784690209642,
+      "lastSeen": 1784690209642
+    },
+    "v2|google|auto|zh-CN|本质上就是在问": {
+      "sourceText": "本质上就是在问",
+      "targetText": "本质上就是在问",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784691717425,
+      "lastSeen": 1784691717425
+    },
+    "v2|google|auto|zh-CN|每个对角元": {
+      "sourceText": "每个对角元",
+      "targetText": "每个对角元",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784695247658,
+      "lastSeen": 1784695247658
+    },
+    "v2|google|auto|zh-CN|个观测点在目标函数里的权重": {
+      "sourceText": "个观测点在目标函数里的权重",
+      "targetText": "个观测点在目标函数里的权重",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784695247912,
+      "lastSeen": 1784695247912
+    },
+    "v2|google|auto|zh-CN|IRLS每轮用当前的B样条拟合值算出残差": {
+      "sourceText": "IRLS每轮用当前的B样条拟合值算出残差",
+      "targetText": "IRLS每轮用当前的B样条拟合值算出残差",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 2,
+      "firstSeen": 1784695325267,
+      "lastSeen": 1784695325427
+    },
+    "v2|google|auto|zh-CN|残差小的点": {
+      "sourceText": "残差小的点",
+      "targetText": "残差小的点",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784695327126,
+      "lastSeen": 1784695327126
+    },
+    "v2|google|auto|zh-CN|残差大的点": {
+      "sourceText": "残差大的点",
+      "targetText": "残差大的点",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784695432215,
+      "lastSeen": 1784695432215
+    },
+    "v2|google|auto|zh-CN|映的是\"这台设备整体上我": {
+      "sourceText": "映的是\"这台设备整体上我",
+      "targetText": "映的是\"这台设备整体上我",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784695438310,
+      "lastSeen": 1784695438310
+    },
+    "v2|google|auto|zh-CN|这个在整个IRLS过程中是固定的": {
+      "sourceText": "这个在整个IRLS过程中是固定的",
+      "targetText": "这个在整个IRLS过程中是固定的",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784695440267,
+      "lastSeen": 1784695440267
+    },
+    "v2|google|auto|zh-CN|这台设备整体上我信多少": {
+      "sourceText": "这台设备整体上我信多少",
+      "targetText": "这台设备整体上我信多少",
+      "sourceLang": "zh-CN",
+      "targetLang": "zh-CN",
+      "pos": [],
+      "type": "sentence",
+      "count": 1,
+      "firstSeen": 1784695451219,
+      "lastSeen": 1784695451219
     }
   }
 }

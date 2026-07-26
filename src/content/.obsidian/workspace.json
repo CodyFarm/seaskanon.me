@@ -27,16 +27,30 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "blog/mathmodeling/Logistic Regression.md",
+                "file": "blog/roundtable tutorial.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Logistic Regression"
+              "title": "roundtable tutorial"
+            }
+          },
+          {
+            "id": "4d2298b3d82d1f1e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "未命名.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "未命名"
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -171,13 +185,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "blog/third-post.md",
+                "file": "blog/雅思写作常用写作词汇--教育类draft.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "third-post 的大纲"
+              "title": "雅思写作常用写作词汇--教育类draft 的大纲"
             }
           },
           {
@@ -191,7 +205,7 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -216,15 +230,28 @@
       "mouse-tooltip-translator:Open vocabulary list": false,
       "mouse-tooltip-translator:Translate page / Restore": false,
       "omnisearch:Omnisearch": false,
-      "templater-obsidian:Templater": false
+      "templater-obsidian:Templater": false,
+      "copilot:Open Copilot Chat": false
     }
   },
-  "active": "554559e6099d1e47",
+  "active": "4d2298b3d82d1f1e",
   "lastOpenFiles": [
-    "blog/mathmodeling/assets/Logistic Regression/logistic regression.webp",
-    "blog/mathmodeling/Logistic Regression.md",
-    "blog/法西斯美学——遗落的艺术.md",
+    "blog/whoIsThatguy.md",
+    "未命名.md",
+    "blog/雅思写作常用写作词汇--教育类draft.md",
+    "blog/vocab-test-exercise-练习册.md",
+    "blog/雅思写作常用写作词汇--教育类.md",
+    "blog/雅思写作常用写作词汇--教育类 draft.md",
+    "blog/雅思写作常用写作词汇--教育类 - 副本.md",
+    "copilot/copilot-custom-prompts/translation to English.md",
+    "copilot/copilot-custom-prompts",
+    "copilot",
+    "blog/雅思写作常用写作词汇.pdf",
+    "blog/roundtable tutorial.md",
     "blog/神经科学上理解强制教育和学校优化陷阱.md",
+    "blog/mathmodeling/Logistic Regression.md",
+    "blog/mathmodeling/assets/Logistic Regression/logistic regression.webp",
+    "blog/法西斯美学——遗落的艺术.md",
     "blog/mathmodeling/LASSO回归.md",
     "blog/mathmodeling/assets/LASSO回归.avif",
     "blog/casual inference/LASSO回归.avif",
@@ -235,8 +262,6 @@
     "blog/mathmodeling/assets/dicision tree.avif.crdownload",
     "blog/mathmodeling/assets/Logistic Regression",
     "blog/mathmodeling/assets",
-    "blog/whoIsThatguy.md",
-    "未命名.md",
     "blog/logistic regression.webp",
     "blog/casual inference/因果性导论.md",
     "blog/casual inference/线性回归的惊人有效性.md",
@@ -249,23 +274,14 @@
     "010-templater/blog templater.md",
     "blog/casual inference/最危险的方程.md",
     "blog/casual inference/assets/random dice.png",
-    "blog/casual inference/因果性导论.md.tmp.41076.f11ba28f8f76",
     "010-templater/短篇文章阅读模板.md",
     "010-templater/test.md",
     "010-templater/math content template.md",
     "010-templater/diary templater.md",
     "010-templater/book notes-《Conservatism-the fight for  a tradition》.md",
-    "010-templater/圣经模板/圣经学习目录模板.md",
-    "010-templater/圣经模板/圣经学习笔记模板.md",
-    "010-templater/问题模板.md",
-    "blog/casual inference/随机试验.md.tmp.41420.049dfbcb47a9",
-    "blog/casual inference/因果模型图.md.tmp.41420.bb48235af0c3",
     "blog/casual inference/assets/random dice.avif",
     "blog/casual inference/assets/Pasted image 20260530170302.png",
     "blog/casual inference/assets/Pasted image 20260528184255.png",
-    "blog/似然比检验的思想.md",
-    "blog/方差分析.md",
-    "blog/分布拟合检验.md",
     "未命名.canvas"
   ]
 }

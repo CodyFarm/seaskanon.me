@@ -25,19 +25,24 @@ const {
 } = Astro.props;
 
 const coverSource = rawPath ?? (post ? getPostCover(post) : undefined);
-const resolvedPath = resolveHeroImagePath(coverSource, post);
+// Normalise backslashes in the raw path early so resolveHeroImagePath receives clean input
+const normalisedSource = coverSource?.replace(/\\/g, "/").trim();
+const resolvedPath = resolveHeroImagePath(normalisedSource, post);
 const loader = resolvedPath ? getHeroImageLoader(resolvedPath) : undefined;
 
 let publicUrl: string | undefined;
 if (!loader && resolvedPath) {
+  // /public/… → strip prefix (Astro serves public/ files at root URL)
   if (resolvedPath.startsWith("/public/")) {
     publicUrl = resolvedPath.replace(/^\/public/, "");
   } else if (resolvedPath.endsWith(".svg")) {
+    // SVGs in src/ can be referenced directly
     publicUrl = resolvedPath;
   } else if (
     resolvedPath.startsWith("/") &&
     !resolvedPath.startsWith("/src/")
   ) {
+    // Root-relative paths that aren't in src/ (e.g. fallback public URLs)
     publicUrl = resolvedPath;
   }
 }

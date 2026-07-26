@@ -1,12 +1,16 @@
 ---
 const today = new Date();
 import { Icon } from "astro-icon/components";
+import ZhihuIcon from "@/components/blog/ZhihuIcon.astro";
 ---
 
 <footer
   class="flex flex-col items-center container mx-auto p-10 text-center gap-10 pb-40 text-text-main"
 >
   &copy; {today.getFullYear()} seasKanon. All rights reserved.
+  <p class="text-sm text-text-muted">
+    网站模板改编自 <a href="https://github.com/jramma/sorollaportfolio" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2">jramma 的 Sorolla Portfolio</a>。
+  </p>
   <div class="flex items-center gap-6 text-5xl">
     <a
       href="/"
@@ -16,7 +20,7 @@ import { Icon } from "astro-icon/components";
       <Icon name="web" />
     </a>
     <a
-      href="https://github.com/your-github"
+      href="https://github.com/CodyFarm/seaskanon.me"
       target="_blank"
       rel="noopener noreferrer"
       class="border-1 p-1 border-border-main rounded-full bg-pblue shadow-card hover:shadow-hover transition"
@@ -25,7 +29,7 @@ import { Icon } from "astro-icon/components";
       <Icon name="github" />
     </a>
     <a
-      href="https://www.bilibili.com/your-bilibili"
+      href="https://space.bilibili.com/1788482120?"
       target="_blank"
       rel="noopener noreferrer"
       class="border-1 p-1 border-border-main rounded-full bg-pgreen shadow-card hover:shadow-hover transition"
@@ -34,13 +38,13 @@ import { Icon } from "astro-icon/components";
       <Icon name="bilibili" />
     </a>
     <a
-      href="https://www.zhihu.com/your-zhihu"
+      href="https://www.zhihu.com/people/miao-he-zhi"
       target="_blank"
       rel="noopener noreferrer"
       class="border-1 p-1 border-border-main rounded-full bg-pyellow shadow-card hover:shadow-hover transition"
       aria-label="Zhihu Profile"
       >
-      <Icon name="zhihu" />
+      <ZhihuIcon />
     </a>
   </div>
 </footer>

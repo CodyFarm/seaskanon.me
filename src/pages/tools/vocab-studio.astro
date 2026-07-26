@@ -1,0 +1,993 @@
+---
+// Vocab Studio · 词汇笔记工作室
+// 管理员认证后才能使用的词汇笔记工具
+import BaseHead from "@/components/BaseHead.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <BaseHead
+      title="Vocab Studio · 词汇笔记工作室"
+      description="词汇笔记练习册生成与内容丰富工具"
+    />
+    <style>
+      /* ── Studio-specific styles ── */
+      .studio-container {
+        min-height: calc(100vh - 200px);
+      }
+
+      .studio-card {
+        background: var(--bg-card);
+        border: 3px solid var(--border-main);
+        border-radius: 1.5rem;
+        box-shadow: 4px 4px var(--shadow-color);
+      }
+
+      .studio-card--soft {
+        background: var(--bg-card-soft);
+        border: 2px solid var(--border-muted);
+        border-radius: 1rem;
+      }
+
+      .studio-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.625rem 1.5rem;
+        border: 2px solid var(--border-main);
+        border-radius: 0.75rem;
+        font-weight: 700;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 3px 3px var(--shadow-color);
+        background: var(--bg-card);
+        color: var(--text-main);
+      }
+
+      .studio-btn:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 6px 6px var(--shadow-color);
+      }
+
+      .studio-btn:active {
+        transform: translate(0, 0);
+        box-shadow: 1px 1px var(--shadow-color);
+      }
+
+      .studio-btn--primary {
+        background: var(--accent-primary);
+      }
+
+      .studio-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* Simple text-only buttons (logout, refresh, etc.) */
+      .studio-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.25rem 0.5rem;
+        border: none;
+        background: none;
+        color: var(--text-muted);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: color 0.15s ease;
+        border-radius: 0.35rem;
+      }
+
+      .studio-link:hover {
+        color: var(--accent-tertiary);
+        background: color-mix(in srgb, var(--accent-tertiary) 8%, transparent);
+      }
+
+      /* Light action buttons (generate, save) */
+      .studio-action {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.45rem 1rem;
+        border: 1.5px solid var(--border-muted);
+        border-radius: 0.6rem;
+        background: var(--bg-card-soft);
+        color: var(--text-main);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+
+      .studio-action:hover {
+        border-color: var(--accent-primary);
+        color: var(--text-main);
+      }
+
+      .studio-action--primary {
+        border-color: var(--accent-primary);
+        background: color-mix(in srgb, var(--accent-primary) 20%, var(--bg-card));
+      }
+
+      .studio-action--primary:hover {
+        background: color-mix(in srgb, var(--accent-primary) 35%, var(--bg-card));
+      }
+
+      .studio-action:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .studio-input {
+        width: 100%;
+        padding: 0.625rem 1rem;
+        border: 2px solid var(--border-main);
+        border-radius: 0.75rem;
+        background: var(--bg-card);
+        color: var(--text-main);
+        font-family: 'Alexandria', sans-serif;
+        box-shadow: 2px 2px var(--shadow-color);
+        transition: box-shadow 0.2s ease;
+      }
+
+      .studio-input:focus {
+        outline: none;
+        box-shadow: 4px 4px var(--accent-primary);
+      }
+
+      .studio-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        border: 2px solid var(--border-muted);
+        border-radius: 0.75rem;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        font-size: 0.875rem;
+        background: var(--bg-card);
+      }
+
+      .studio-checkbox:hover {
+        border-color: var(--accent-primary);
+        background: var(--bg-card-soft);
+      }
+
+      .studio-checkbox.checked {
+        border-color: var(--accent-primary);
+        background: color-mix(in srgb, var(--accent-primary) 15%, var(--bg-card));
+      }
+
+      .studio-checkbox input {
+        display: none;
+      }
+
+      .studio-checkbox .check-mark {
+        width: 1.25rem;
+        height: 1.25rem;
+        border: 2px solid var(--border-main);
+        border-radius: 0.35rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 0.75rem;
+        line-height: 1;
+      }
+
+      .studio-checkbox.checked .check-mark {
+        background: var(--accent-primary);
+      }
+
+      .studio-checkbox.checked .check-mark::after {
+        content: '✓';
+        font-weight: 900;
+        color: var(--text-main);
+      }
+
+      .studio-tab {
+        padding: 0.5rem 1.25rem;
+        border: 2px solid var(--border-main);
+        border-radius: 0.75rem 0.75rem 0 0;
+        font-weight: 700;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        background: var(--bg-card-soft);
+        color: var(--text-muted);
+        border-bottom: none;
+      }
+
+      .studio-tab.active {
+        background: var(--bg-card);
+        color: var(--text-main);
+        margin-bottom: -2px;
+      }
+
+      .studio-note-item {
+        padding: 0.55rem 0.75rem;
+        border: 2px solid var(--border-muted);
+        border-left: 4px solid transparent;
+        border-radius: 0.75rem;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        font-size: 0.8125rem;
+        background: var(--bg-card);
+      }
+
+      .studio-note-item:hover {
+        border-color: var(--accent-secondary);
+      }
+
+      .studio-note-item.active {
+        border-color: var(--accent-secondary) !important;
+        border-left: 5px solid var(--accent-secondary) !important;
+        background: #e8f4fd !important;
+        font-weight: 700;
+        box-shadow: 2px 2px 0 color-mix(in srgb, var(--accent-secondary) 40%, transparent);
+      }
+
+      .studio-preview {
+        max-height: 50vh;
+        overflow-y: auto;
+        padding: 1rem;
+        border: 2px solid var(--border-muted);
+        border-radius: 1rem;
+        background: var(--bg-card-soft);
+        font-size: 0.8125rem;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        font-family: 'Alexandria', monospace;
+      }
+
+      .studio-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg-body);
+      }
+
+      .studio-overlay.hidden {
+        display: none;
+      }
+
+      .studio-badge {
+        display: inline-block;
+        padding: 0.15rem 0.5rem;
+        border-radius: 0.35rem;
+        font-size: 0.7rem;
+        font-weight: 700;
+        background: var(--accent-secondary);
+        color: var(--text-main);
+      }
+
+      .studio-toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        max-width: 28rem;
+        padding: 0.75rem 1rem;
+        border: 3px solid var(--border-main);
+        border-radius: 1rem;
+        background: var(--bg-card);
+        box-shadow: 4px 4px var(--shadow-color);
+        font-weight: 700;
+        font-size: 0.875rem;
+        z-index: 200;
+        animation: slideUp 0.3s ease;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+
+      .studio-toast.success {
+        border-color: var(--accent-primary);
+      }
+
+      .studio-toast.error {
+        border-color: var(--accent-spot);
+      }
+
+      .studio-toast .toast-close {
+        flex-shrink: 0;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        line-height: 1;
+        color: var(--text-muted);
+        padding: 0;
+      }
+
+      .studio-toast .toast-close:hover {
+        color: var(--text-main);
+      }
+
+      @keyframes slideUp {
+        from { transform: translateY(100px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      .studio-spinner {
+        width: 1.25rem;
+        height: 1.25rem;
+        border: 3px solid var(--border-muted);
+        border-top-color: var(--accent-primary);
+        border-radius: 50%;
+        animation: spin 0.6s linear infinite;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main class="container mx-auto px-4 md:px-10 pt-12 pb-20">
+      <!-- ════════════════ Login Overlay ════════════════ -->
+      <div id="login-overlay" class="studio-overlay">
+        <div class="studio-card p-8 w-full max-w-md mx-4">
+          <h1 class="text-3xl font-black text-text-main mb-4">
+            🔤 Vocab Studio
+          </h1>
+          <p class="text-text-muted mb-8">词汇笔记工作室 · 管理员登录</p>
+          <form id="login-form" class="flex flex-col gap-6">
+            <input
+              id="login-password"
+              type="password"
+              class="studio-input"
+              placeholder="请输入管理员密码"
+              autocomplete="current-password"
+            />
+            <p id="login-error" class="text-sm text-[--accent-spot] hidden"></p>
+            <button type="submit" class="studio-action studio-action--primary justify-center text-base py-3">
+              🔑 进入工作室
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- ════════════════ Main Workspace (hidden until authenticated) ════════════════ -->
+      <div id="workspace" class="hidden">
+        <div class="flex items-center justify-between mb-10">
+          <div>
+            <h1 class="text-4xl font-black text-text-main">
+              🔤 Vocab Studio
+            </h1>
+            <p class="text-text-muted mt-2">词汇笔记工作室 — 生成练习册 & 丰富笔记内容</p>
+          </div>
+          <button id="logout-btn" class="studio-link">
+            🚪 退出
+          </button>
+        </div>
+
+        <div class="grid gap-8 sidebar-grid sidebar-grid--left">
+          <!-- ═════════ Left: Note List ═════════ -->
+          <aside class="flex flex-col gap-5">
+            <div class="studio-card p-5">
+              <div class="flex items-center justify-between mb-3">
+                <h2 class="text-lg font-black text-text-main">📋 笔记列表</h2>
+                <button id="refresh-notes-btn" class="studio-link" title="刷新列表">
+                  🔄 刷新
+                </button>
+              </div>
+              <input
+                id="notes-search"
+                type="text"
+                class="studio-input text-sm mb-3"
+                placeholder="🔍 搜索笔记..."
+              />
+              <div id="notes-list" class="flex flex-col gap-2.5 max-h-[55vh] overflow-y-auto">
+                <p class="text-sm text-text-muted">加载中...</p>
+              </div>
+              <div id="notes-count" class="mt-3 text-xs text-text-muted"></div>
+            </div>
+          </aside>
+
+          <!-- ═════════ Right: Workspace ═════════ -->
+          <div class="flex flex-col gap-5">
+            <!-- Tabs -->
+            <div class="flex border-b-2 border-border-main">
+              <button class="studio-tab active" data-tab="exercise">
+                🎯 生成练习册
+              </button>
+              <button class="studio-tab" data-tab="enrich">
+                ✨ 丰富笔记
+              </button>
+            </div>
+
+            <!-- ─── Tab 1: Exercise Builder ─── -->
+            <div id="tab-exercise" class="studio-card p-6 flex flex-col gap-5">
+              <p id="exercise-no-note" class="text-text-muted text-sm">
+                👈 请先从左侧选择一篇词汇笔记
+              </p>
+
+              <div id="exercise-content" class="hidden flex flex-col gap-6">
+                <!-- Question types -->
+                <div>
+                  <h3 class="text-sm font-black text-text-main mb-4">1. 选择题型（可多选）</h3>
+                  <div class="grid grid-cols-2 md:grid-cols-3 gap-3" id="exercise-types">
+                    <label class="studio-checkbox" data-type="en_to_cn">
+                      <span class="check-mark"></span>
+                      🇬🇧→🇨🇳 看英文写中文
+                    </label>
+                    <label class="studio-checkbox" data-type="cn_to_en">
+                      <span class="check-mark"></span>
+                      🇨🇳→🇬🇧 看中文写英文
+                    </label>
+                    <label class="studio-checkbox" data-type="fill_blank">
+                      <span class="check-mark"></span>
+                      ✍️ 短语填入例句
+                    </label>
+                    <label class="studio-checkbox" data-type="matching">
+                      <span class="check-mark"></span>
+                      🔗 连线匹配
+                    </label>
+                    <label class="studio-checkbox" data-type="multiple_choice">
+                      <span class="check-mark"></span>
+                      📝 选择释义
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Custom format -->
+                <div>
+                  <h3 class="text-sm font-black text-text-main mb-3">
+                    2. 自定义题型 <span class="text-text-muted font-normal">（可选）</span>
+                  </h3>
+                  <textarea
+                    id="exercise-custom"
+                    class="studio-input h-20 resize-y"
+                    placeholder="描述你想要的自定义题型，例如：&#10;请设计5道根据语境选择题，每道题给一个英文句子，让学生选择正确的短语填入。&#10;或者：请按雅思写作 Task 2 的题型，给每个短语出一个完整造句题。"
+                  ></textarea>
+                </div>
+
+                <!-- Generate -->
+                <button id="exercise-generate-btn" class="studio-action studio-action--primary py-2.5 text-base mt-3">
+                  🪄 生成练习册
+                </button>
+                <p id="exercise-status" class="text-sm text-text-muted hidden"></p>
+              </div>
+            </div>
+
+            <!-- ─── Tab 2: Enrich Builder ─── -->
+            <div id="tab-enrich" class="studio-card p-6 flex-col gap-5 hidden">
+              <p id="enrich-no-note" class="text-text-muted text-sm">
+                👈 请先从左侧选择一篇词汇笔记
+              </p>
+
+              <div id="enrich-content" class="hidden flex flex-col gap-6">
+                <!-- Enrichment options -->
+                <div>
+                  <h3 class="text-sm font-black text-text-main mb-4">选择要丰富的内容</h3>
+                  <div class="grid grid-cols-2 md:grid-cols-3 gap-3" id="enrich-options">
+                    <label class="studio-checkbox" data-option="examples">
+                      <span class="check-mark"></span>
+                      📝 增加例句
+                    </label>
+                    <label class="studio-checkbox" data-option="synonymsEn">
+                      <span class="check-mark"></span>
+                      🔤 英文同义表达
+                    </label>
+                    <label class="studio-checkbox" data-option="synonymsCn">
+                      <span class="check-mark"></span>
+                      🀄 中文同义表达
+                    </label>
+                    <label class="studio-checkbox" data-option="roots">
+                      <span class="check-mark"></span>
+                      🌱 词根词缀解释
+                    </label>
+                    <label class="studio-checkbox" data-option="categories">
+                      <span class="check-mark"></span>
+                      📂 分类记忆整理
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Generate -->
+                <button id="enrich-generate-btn" class="studio-action studio-action--primary py-2.5 text-base mt-3">
+                  🪄 生成丰富内容
+                </button>
+                <p id="enrich-status" class="text-sm text-text-muted hidden"></p>
+              </div>
+            </div>
+
+            <!-- ─── Preview Panel (shared) ─── -->
+            <div id="preview-panel" class="studio-card p-6 flex-col gap-5 hidden">
+              <div class="flex items-center justify-between">
+                <h2 class="text-lg font-black text-text-main">
+                  👁️ 预览结果
+                  <span id="preview-mode-badge" class="studio-badge ml-2"></span>
+                </h2>
+              </div>
+              <div id="preview-content" class="studio-preview">
+                <p class="text-text-muted">等待生成...</p>
+              </div>
+              <div class="flex gap-3 flex-wrap">
+                <button id="save-btn" class="studio-action studio-action--primary">
+                  💾 <span id="save-btn-label">保存</span>
+                </button>
+                <button id="copy-btn" class="studio-action">
+                  📋 复制内容
+                </button>
+                <button id="clear-preview-btn" class="studio-link">
+                  ✕ 清除预览
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toast container -->
+      <div id="toast-container"></div>
+    </main>
+    <Footer />
+    <CapsulePlayer />
+
+    <!-- ════════════════ Client Script ════════════════ -->
+    <script is:inline>
+    (function () {
+      if (window.__vocabStudioReady) return;
+      window.__vocabStudioReady = true;
+
+      // ── State ──
+      let selectedNote = null;
+      let currentMode = 'exercise'; // 'exercise' | 'enrich'
+      let generatedContent = null;
+      let generatedTitle = null;
+
+      // ── DOM refs ──
+      function $(id) { return document.getElementById(id); }
+      function $$(sel) { return document.querySelectorAll(sel); }
+
+      const loginOverlay = $('login-overlay');
+      const loginForm = $('login-form');
+      const loginPassword = $('login-password');
+      const loginError = $('login-error');
+      const workspace = $('workspace');
+
+      // ── Auth ──
+      async function checkAuth() {
+        try {
+          const res = await fetch('/api/vocab/list-notes');
+          if (res.ok) return true;
+        } catch (e) {}
+        return false;
+      }
+
+      async function tryLogin(password) {
+        try {
+          const res = await fetch('/api/vocab/auth', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password }),
+          });
+          return res.ok;
+        } catch (e) {
+          return false;
+        }
+      }
+
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const pw = loginPassword.value.trim();
+        if (!pw) return;
+
+        loginError.classList.add('hidden');
+        const ok = await tryLogin(pw);
+        if (ok) {
+          loginOverlay.classList.add('hidden');
+          workspace.classList.remove('hidden');
+          loadNotes();
+        } else {
+          loginError.textContent = '❌ 密码错误，请重试';
+          loginError.classList.remove('hidden');
+          loginPassword.value = '';
+          loginPassword.focus();
+        }
+      });
+
+      $('logout-btn').addEventListener('click', () => {
+        // Clear session cookie
+        document.cookie = 'vocab_session=; Path=/; Max-Age=0';
+        workspace.classList.add('hidden');
+        loginOverlay.classList.remove('hidden');
+        loginPassword.value = '';
+        selectedNote = null;
+        generatedContent = null;
+        updateUI();
+      });
+
+      // ── Notes ──
+      let allNotes = []; // full list from API
+
+      async function loadNotes() {
+        const listEl = $('notes-list');
+        const countEl = $('notes-count');
+        listEl.innerHTML = '<p class="text-sm text-text-muted">加载中...</p>';
+
+        try {
+          const res = await fetch('/api/vocab/list-notes');
+          if (!res.ok) {
+            workspace.classList.add('hidden');
+            loginOverlay.classList.remove('hidden');
+            return;
+          }
+          allNotes = await res.json();
+          if (allNotes.length === 0) {
+            listEl.innerHTML = '<p class="text-sm text-text-muted">未找到任何笔记文件</p>';
+            countEl.textContent = '';
+            return;
+          }
+          renderNotesList(allNotes);
+        } catch (e) {
+          listEl.innerHTML = '<p class="text-sm" style="color: var(--accent-spot)">加载失败</p>';
+        }
+      }
+
+      function renderNotesList(notes, keepSelection) {
+        const listEl = $('notes-list');
+        const countEl = $('notes-count');
+        const currentSlug = selectedNote ? selectedNote.slug : null;
+
+        if (notes.length === 0) {
+          listEl.innerHTML = '<p class="text-sm text-text-muted">无匹配结果</p>';
+          countEl.textContent = '';
+          return;
+        }
+
+        listEl.innerHTML = notes.map((n) => {
+          const selClass = (keepSelection && n.slug === currentSlug) ? ' active' : '';
+          const badge = n.isVocabNote
+            ? '<span class="studio-badge">词汇</span>'
+            : '<span class="text-xs text-text-muted">·</span>';
+          return `
+            <div class="studio-note-item${selClass}" data-slug="${n.slug}">
+              <div class="flex items-center justify-between gap-2">
+                <span class="font-semibold text-text-main truncate">${n.title}</span>
+                ${badge}
+              </div>
+              <div class="text-text-muted text-xs mt-0.5">
+                ${n.entryCount} 条 · ${n.englishWordCount} 英文词
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        // Click handlers
+        listEl.querySelectorAll('.studio-note-item').forEach((el) => {
+          el.addEventListener('click', () => {
+            listEl.querySelectorAll('.studio-note-item').forEach((e) => {
+              e.classList.remove('active');
+              e.style.borderLeftColor = '';
+              e.style.background = '';
+              e.style.fontWeight = '';
+            });
+            el.classList.add('active');
+            el.style.borderLeftColor = 'var(--accent-secondary)';
+            el.style.background = '#e8f4fd';
+            el.style.fontWeight = '700';
+            selectedNote = {
+              slug: el.dataset.slug,
+              title: el.querySelector('.font-semibold').textContent,
+            };
+            updateUI();
+          });
+        });
+
+        // Restore inline styles for kept selection
+        if (keepSelection && currentSlug) {
+          const activeEl = listEl.querySelector('.studio-note-item.active');
+          if (activeEl) {
+            activeEl.style.borderLeftColor = 'var(--accent-secondary)';
+            activeEl.style.background = '#e8f4fd';
+            activeEl.style.fontWeight = '700';
+          }
+        }
+
+        countEl.textContent = `共 ${allNotes.length} 篇（显示 ${notes.length} 篇）`;
+      }
+
+      // Search
+      const searchInput = $('notes-search');
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+        const q = e.target.value.trim().toLowerCase();
+        if (!q) {
+          // Default: show vocab notes first (≥15 English words)
+          renderNotesList(
+            allNotes.filter((n) => n.englishWordCount >= 15 || n.isVocabNote),
+            true
+          );
+        } else {
+          renderNotesList(
+            allNotes.filter((n) =>
+              n.title.toLowerCase().includes(q) ||
+              n.slug.toLowerCase().includes(q)
+            ),
+            true
+          );
+        }
+      });
+      } // end if (searchInput)
+
+      $('refresh-notes-btn').addEventListener('click', loadNotes);
+
+      // ── Tabs ──
+      $$('.studio-tab').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          $$('.studio-tab').forEach((t) => t.classList.remove('active'));
+          tab.classList.add('active');
+          currentMode = tab.dataset.tab;
+
+          $('tab-exercise').classList.toggle('hidden', currentMode !== 'exercise');
+          $('tab-exercise').classList.toggle('flex', currentMode === 'exercise');
+          $('tab-enrich').classList.toggle('hidden', currentMode !== 'enrich');
+          $('tab-enrich').classList.toggle('flex', currentMode === 'enrich');
+
+          updateUI();
+        });
+      });
+
+      // ── Checkbox toggles ──
+      document.addEventListener('click', (e) => {
+        const checkbox = e.target.closest('.studio-checkbox');
+        if (!checkbox) return;
+        checkbox.classList.toggle('checked');
+      });
+
+      // ── UI updates ──
+      function updateUI() {
+        const hasNote = !!selectedNote;
+
+        // Exercise tab
+        $('exercise-no-note').classList.toggle('hidden', hasNote);
+        $('exercise-content').classList.toggle('hidden', !hasNote);
+        if (!hasNote) $('exercise-content').classList.remove('flex');
+
+        // Enrich tab
+        $('enrich-no-note').classList.toggle('hidden', hasNote);
+        $('enrich-content').classList.toggle('hidden', !hasNote);
+        if (!hasNote) $('enrich-content').classList.remove('flex');
+      }
+
+      function getCheckedTypes() {
+        const checked = [];
+        $('exercise-types').querySelectorAll('.studio-checkbox.checked').forEach((cb) => {
+          checked.push(cb.dataset.type);
+        });
+        return checked;
+      }
+
+      function getCheckedEnrichOptions() {
+        const opts = {};
+        $('enrich-options').querySelectorAll('.studio-checkbox.checked').forEach((cb) => {
+          opts[cb.dataset.option] = true;
+        });
+        return opts;
+      }
+
+      function showPreview(content, mode, title) {
+        generatedContent = content;
+        generatedTitle = title;
+        $('preview-panel').classList.remove('hidden');
+        $('preview-panel').classList.add('flex');
+        $('preview-content').textContent = content;
+        $('preview-mode-badge').textContent = mode === 'exercise' ? '练习册' : '丰富笔记';
+        $('save-btn-label').textContent = mode === 'exercise' ? '保存为新博客' : '覆盖原文件';
+      }
+
+      function showToast(message, type) {
+        const container = $('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `studio-toast ${type}`;
+
+        const msgSpan = document.createElement('span');
+        msgSpan.textContent = message;
+        msgSpan.style.flex = '1';
+
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'toast-close';
+        closeBtn.innerHTML = '✕';
+        closeBtn.onclick = () => toast.remove();
+
+        toast.appendChild(msgSpan);
+        toast.appendChild(closeBtn);
+        container.appendChild(toast);
+
+        // Errors stay 15s, success 4s
+        const duration = type === 'error' ? 15000 : 4000;
+        toast._timer = setTimeout(() => toast.remove(), duration);
+        // Hover pauses the timer
+        toast.addEventListener('mouseenter', () => clearTimeout(toast._timer));
+        toast.addEventListener('mouseleave', () => {
+          toast._timer = setTimeout(() => toast.remove(), type === 'error' ? 8000 : 2000);
+        });
+      }
+
+      // ── Generate: Exercise ──
+      $('exercise-generate-btn').addEventListener('click', async () => {
+        const types = getCheckedTypes();
+        if (types.length === 0 && !$('exercise-custom').value.trim()) {
+          showToast('请至少选择一种题型或填写自定义题型', 'error');
+          return;
+        }
+
+        const btn = $('exercise-generate-btn');
+        const statusEl = $('exercise-status');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="studio-spinner"></span> 生成中...';
+        statusEl.classList.remove('hidden');
+        statusEl.textContent = '正在调用 AI 生成练习册，可能需要 10-30 秒...';
+
+        try {
+          const body = {
+            mode: 'exercise',
+            slug: selectedNote.slug,
+            types: types.length > 0 ? types : ['en_to_cn'],
+            customFormat: $('exercise-custom').value.trim() || undefined,
+          };
+
+          const res = await fetch('/api/vocab/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+          });
+
+          if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.error || '生成失败');
+          }
+
+          const data = await res.json();
+          showPreview(data.generated, 'exercise', data.title || selectedNote.title);
+          showToast('✅ 练习册生成成功！', 'success');
+        } catch (e) {
+          showToast(`❌ ${e.message}`, 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = '🪄 生成练习册';
+          statusEl.classList.add('hidden');
+        }
+      });
+
+      // ── Generate: Enrich ──
+      $('enrich-generate-btn').addEventListener('click', async () => {
+        const options = getCheckedEnrichOptions();
+        if (Object.keys(options).length === 0) {
+          showToast('请至少选择一种丰富内容', 'error');
+          return;
+        }
+
+        const btn = $('enrich-generate-btn');
+        const statusEl = $('enrich-status');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="studio-spinner"></span> 生成中...';
+        statusEl.classList.remove('hidden');
+        statusEl.textContent = '正在调用 AI 丰富笔记内容，可能需要 10-30 秒...';
+
+        try {
+          const body = {
+            mode: 'enrich',
+            slug: selectedNote.slug,
+            enrichOptions: options,
+          };
+
+          const res = await fetch('/api/vocab/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+          });
+
+          if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.error || '生成失败');
+          }
+
+          const data = await res.json();
+          showPreview(data.generated, 'enrich', data.title || selectedNote.title);
+          showToast('✅ 笔记内容生成成功！请预览确认后再保存', 'success');
+        } catch (e) {
+          showToast(`❌ ${e.message}`, 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = '🪄 生成丰富内容';
+          statusEl.classList.add('hidden');
+        }
+      });
+
+      // ── Save ──
+      $('save-btn').addEventListener('click', async () => {
+        if (!generatedContent) {
+          showToast('没有可保存的内容', 'error');
+          return;
+        }
+
+        const btn = $('save-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="studio-spinner"></span> 保存中...';
+
+        try {
+          const body = {
+            mode: currentMode,
+            slug: selectedNote.slug,
+            content: generatedContent,
+            title: generatedTitle,
+          };
+
+          const res = await fetch('/api/vocab/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+          });
+
+          if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.error || '保存失败');
+          }
+
+          const data = await res.json();
+          const label = currentMode === 'exercise' ? '练习册已保存为新博客' : '原文件已更新';
+          showToast(`✅ ${label}！文件: ${data.path}`, 'success');
+
+          if (currentMode === 'exercise') {
+            // Refresh notes list to include new file
+            loadNotes();
+          }
+        } catch (e) {
+          showToast(`❌ ${e.message}`, 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = `💾 <span id="save-btn-label">${currentMode === 'exercise' ? '保存为新博客' : '覆盖原文件'}</span>`;
+        }
+      });
+
+      // ── Copy ──
+      $('copy-btn').addEventListener('click', async () => {
+        if (!generatedContent) return;
+        try {
+          await navigator.clipboard.writeText(generatedContent);
+          showToast('📋 已复制到剪贴板', 'success');
+        } catch (e) {
+          showToast('复制失败，请手动选择复制', 'error');
+        }
+      });
+
+      // ── Clear preview ──
+      $('clear-preview-btn').addEventListener('click', () => {
+        generatedContent = null;
+        generatedTitle = null;
+        $('preview-panel').classList.add('hidden');
+        $('preview-panel').classList.remove('flex');
+        $('preview-content').textContent = '等待生成...';
+      });
+
+      // ── Init ──
+      async function init() {
+        const authed = await checkAuth();
+        if (authed) {
+          loginOverlay.classList.add('hidden');
+          workspace.classList.remove('hidden');
+          loadNotes();
+        }
+        updateUI();
+      }
+
+      init();
+    })();
+    </script>
+  </body>
+</html>
