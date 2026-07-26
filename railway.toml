@@ -6,4 +6,4 @@ builder = "nixpacks"
 buildCommand = "pnpm install --no-strict-peer-dependencies && pnpm build"
 
 [deploy]
-startCommand = "node dist/server/entry.mjs"
+startCommand = "node scripts/sync-blog.mjs && node dist/server/entry.mjs"
