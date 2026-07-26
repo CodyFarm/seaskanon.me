@@ -1,15 +1,18 @@
 ---
-export async function getStaticPaths() {
-  const { getPublishedWriting } = await import("@/lib/writing");
-  const posts = await getPublishedWriting();
+import { getPublishedWriting } from "@/lib/writing";
 
-  return posts.map((post) => ({
-    params: { slug: post.id },
-  }));
-}
-
-export const prerender = true;
+// Dynamic redirect — picks up runtime-created posts too
+export const prerender = false;
 
 const { slug } = Astro.params;
+if (!slug) return Astro.redirect("/writing");
+
+// Verify the post exists (optional, but prevents dead redirects)
+const posts = await getPublishedWriting();
+const exists = posts.some((p) => p.id === slug);
+if (!exists) {
+  // Could be a runtime post not yet indexed; redirect anyway.
+  // If it truly doesn't exist, /writing/[slug] will handle the 404.
+}
+
 return Astro.redirect(encodeURI(`/writing/${slug}/`), 308);
----

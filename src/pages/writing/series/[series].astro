@@ -13,24 +13,20 @@ import {
   getTagCounts,
   getWritingStats,
   matchesTaxonomySlug,
-  type TaxonomyCount,
   type WritingPost,
 } from "@/lib/writing";
 
-export async function getStaticPaths() {
-  const posts = await getPublishedWriting();
-  const series = getSeriesCounts(posts);
+// Dynamic SSR — supports runtime-created posts with new series
+export const prerender = false;
 
-  return series.map((item) => ({
-    params: { series: item.slug },
-    props: { series: item },
-  }));
-}
+const { series: seriesSlug } = Astro.params as { series: string };
 
-export const prerender = true;
-
-const { series } = Astro.props as { series: TaxonomyCount };
 const posts = await getPublishedWriting();
+const allSeries = getSeriesCounts(posts);
+const series = allSeries.find((s) => s.slug === seriesSlug);
+
+if (!series) return Astro.redirect("/writing");
+
 const filteredPosts = posts
   .filter((post: WritingPost) => matchesTaxonomySlug(post.data.series, series.slug))
   .sort((a, b) => {
@@ -41,7 +37,6 @@ const filteredPosts = posts
 const stats = getWritingStats(posts);
 const categories = getCategoryCounts(posts);
 const tags = getTagCounts(posts);
-const allSeries = getSeriesCounts(posts);
 const description = getTaxonomyDescription("series", series.slug);
 ---
 

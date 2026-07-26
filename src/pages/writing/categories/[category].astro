@@ -17,26 +17,22 @@ import {
   type WritingPost,
 } from "@/lib/writing";
 
-export async function getStaticPaths() {
-  const posts = await getPublishedWriting();
-  const categories = getCategoryCounts(posts);
+// Dynamic SSR — supports runtime-created posts with new categories
+export const prerender = false;
 
-  return categories.map((category) => ({
-    params: { category: category.slug },
-    props: { category },
-  }));
-}
+const { category: catSlug } = Astro.params as { category: string };
 
-export const prerender = true;
-
-const { category } = Astro.props as { category: TaxonomyCount };
 const posts = await getPublishedWriting();
+const categories = getCategoryCounts(posts);
+const category = categories.find((c) => c.slug === catSlug);
+
+if (!category) return Astro.redirect("/writing");
+
 const filteredPosts = posts.filter((post: WritingPost) =>
   matchesTaxonomySlug(post.data.category, category.slug) ||
   matchesTaxonomySlug(post.data.categories, category.slug)
 );
 const stats = getWritingStats(posts);
-const categories = getCategoryCounts(posts);
 const tags = getTagCounts(posts);
 const series = getSeriesCounts(posts);
 const description = getTaxonomyDescription("categories", category.slug);

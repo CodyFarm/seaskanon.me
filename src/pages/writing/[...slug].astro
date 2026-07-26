@@ -1,6 +1,5 @@
 ---
-import { type CollectionEntry } from "astro:content";
-import { render } from "astro:content";
+import { type CollectionEntry, getCollection, render } from "astro:content";
 import WritingPost from "@/layouts/WritingPost.astro";
 import {
   getPublishedWriting,
@@ -8,38 +7,113 @@ import {
   getTagCounts,
   getSeriesPosts,
 } from "@/lib/writing";
+import { resolveNotePath } from "@/lib/blog-dir";
+import { renderMarkdown } from "@/lib/markdown-utils";
+import fs from "node:fs";
 
-export async function getStaticPaths() {
-  const posts = await getPublishedWriting();
+// Fully dynamic SSR — picks up runtime-created posts from the filesystem
+export const prerender = false;
 
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: {
-      post,
-      allPosts: posts,
-      relatedPosts: posts.filter((candidate) => candidate.id !== post.id),
-    },
-  }));
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect("/404");
+
+// Try the content collection first
+const allPosts = await getPublishedWriting();
+let post = allPosts.find((p) => p.id === slug);
+
+// Fall back to direct filesystem read for runtime posts not yet in collection
+let isRuntime = false;
+if (!post) {
+  const filePath = resolveNotePath(slug);
+  if (fs.existsSync(filePath)) {
+    try {
+      const raw = fs.readFileSync(filePath, "utf-8");
+      // Re-use the same frontmatter parser logic
+      let data: Record<string, any> = { tags: [] };
+      let body = raw;
+      if (raw.startsWith("---")) {
+        const end = raw.indexOf("\n---", 3);
+        if (end !== -1) {
+          const fmText = raw.slice(4, end);
+          body = raw.slice(end + 4).trim();
+          let currentArrayKey = "";
+          for (const line of fmText.split("\n")) {
+            const trimmed = line.trim();
+            if (!trimmed) continue;
+            const arrayMatch = trimmed.match(/^-\s+(.+)$/);
+            if (arrayMatch && currentArrayKey) {
+              if (!data[currentArrayKey]) data[currentArrayKey] = [];
+              data[currentArrayKey].push(arrayMatch[1].trim());
+              continue;
+            }
+            const kvMatch = trimmed.match(/^(\w[\w-]*):\s*(.*)$/);
+            if (kvMatch) {
+              currentArrayKey = "";
+              const key = kvMatch[1];
+              let val: any = kvMatch[2].trim();
+              // Strip surrounding YAML quotes
+              if ((val.startsWith('"') && val.endsWith('"')) ||
+                  (val.startsWith("'") && val.endsWith("'"))) {
+                val = val.slice(1, -1);
+              }
+              if (val === "true") val = true;
+              else if (val === "false") val = false;
+              data[key] = val;
+              if (val === "" || val === undefined) currentArrayKey = key;
+            }
+          }
+        }
+      }
+      post = {
+        id: slug,
+        body,
+        collection: "blog",
+        data: {
+          title: data.title || slug,
+          description: data.description || "",
+          pubDate: data.pubDate ? new Date(data.pubDate) : new Date(),
+          updatedDate: data.updatedDate ? new Date(data.updatedDate) : undefined,
+          tags: data.tags || [],
+          category: data.category || data.categories,
+          series: data.series,
+          series_id: data.series_id,
+          draft: data.draft === true,
+          featured: data.featured === true,
+          icon: data.icon,
+          heroImage: data.heroImage || data.cover,
+          firstLetterColor: data.firstLetterColor,
+        },
+        filePath,
+      } as CollectionEntry<"blog">;
+      isRuntime = true;
+    } catch (e) {
+      console.error(`[writing] Failed to read runtime post ${slug}:`, e);
+    }
+  }
 }
 
-export const prerender = true;
+if (!post) return Astro.redirect("/404");
 
-type Props = {
-  post: CollectionEntry<"blog">;
-  allPosts: CollectionEntry<"blog">[];
-  relatedPosts: CollectionEntry<"blog">[];
-};
+// Related posts (exclude current)
+const relatedPosts = allPosts.filter((p) => p.id !== post!.id);
 
-const { post, allPosts, relatedPosts } = Astro.props;
-const { Content } = await render(post);
-
-// Compute taxonomy data for post sidebar modules
+// Taxonomy data for sidebar modules
 const allCategories = getCategoryCounts(allPosts);
 const allTags = getTagCounts(allPosts);
-const seriesPosts =
-  post.data.series
-    ? getSeriesPosts(allPosts, post.data.series)
-    : [];
+const seriesPosts = post.data.series
+  ? getSeriesPosts(allPosts, post.data.series)
+  : [];
+
+// Render content: use astro:content render() for stored posts,
+// custom markdown renderer for runtime posts
+let Content: any;
+let runtimeHtml = "";
+if (isRuntime) {
+  runtimeHtml = renderMarkdown(post.body || "");
+} else {
+  const rendered = await render(post);
+  Content = rendered.Content;
+}
 ---
 
 <WritingPost
@@ -49,5 +123,5 @@ const seriesPosts =
   allTags={allTags}
   seriesPosts={seriesPosts}
 >
-  <Content />
+  {isRuntime ? <article set:html={runtimeHtml} /> : <Content />}
 </WritingPost>

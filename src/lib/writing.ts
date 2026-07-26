@@ -1,5 +1,8 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import { posix as path } from "node:path";
+import nodePath from "node:path";
+import fs from "node:fs";
+import { getBlogDir, listMarkdownFiles } from "./blog-dir";
 
 export type WritingPost = CollectionEntry<"blog">;
 export type TaxonomyCount = {
@@ -12,8 +15,108 @@ const CJK_RE = /[㐀-鿿豈-﫿]/g;
 const WORD_RE = /[A-Za-z0-9]+(?:[-'][A-Za-z0-9]+)*/g;
 const CONTENT_ROOT = "/src/content";
 
+// ── Simple YAML-like frontmatter parser ──────────────────────────────
+
+function parsePostFrontmatter(content: string): {
+  data: Record<string, any>;
+  body: string;
+} {
+  if (!content.startsWith("---")) return { data: {}, body: content };
+  const end = content.indexOf("\n---", 3);
+  if (end === -1) return { data: {}, body: content };
+  const fmText = content.slice(4, end);
+  const body = content.slice(end + 4);
+
+  const data: Record<string, any> = { tags: [] };
+  let currentArrayKey = "";
+
+  for (const line of fmText.split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+
+    const arrayMatch = trimmed.match(/^-\s+(.+)$/);
+    if (arrayMatch && currentArrayKey) {
+      const val = arrayMatch[1].trim();
+      if (!data[currentArrayKey]) data[currentArrayKey] = [];
+      data[currentArrayKey].push(val);
+      continue;
+    }
+
+    const kvMatch = trimmed.match(/^(\w[\w-]*):\s*(.*)$/);
+    if (kvMatch) {
+      currentArrayKey = "";
+      const key = kvMatch[1];
+      let val: any = kvMatch[2].trim();
+      // Strip surrounding YAML quotes
+      if ((val.startsWith('"') && val.endsWith('"')) ||
+          (val.startsWith("'") && val.endsWith("'"))) {
+        val = val.slice(1, -1);
+      }
+      if (val === "true") val = true;
+      else if (val === "false") val = false;
+      data[key] = val;
+      if (val === "" || val === undefined) currentArrayKey = key;
+    }
+  }
+
+  return { data, body };
+}
+
 export async function getPublishedWriting() {
   const posts = await getCollection("blog");
+  const collectionIds = new Set(posts.map((p) => p.id));
+
+  // Scan filesystem for runtime-added posts not in the content store
+  try {
+    const files = listMarkdownFiles();
+    const blogDir = getBlogDir();
+
+    for (const filePath of files) {
+      const relPath = nodePath.relative(blogDir, filePath);
+      const id = relPath.replace(/\.md$/, "").replace(/\\/g, "/");
+
+      if (collectionIds.has(id)) continue;
+
+      try {
+        const raw = fs.readFileSync(filePath, "utf-8");
+        const { data: fm, body } = parsePostFrontmatter(raw);
+
+        const pubDate = fm.pubDate
+          ? new Date(fm.pubDate)
+          : new Date(fs.statSync(filePath).mtime);
+
+        posts.push({
+          id,
+          body,
+          collection: "blog",
+          data: {
+            title: fm.title || id,
+            description: fm.description || "",
+            pubDate,
+            updatedDate: fm.updatedDate ? new Date(fm.updatedDate) : undefined,
+            tags: fm.tags || [],
+            category: fm.category || fm.categories,
+            series: fm.series,
+            series_id: fm.series_id,
+            draft: fm.draft === true,
+            featured: fm.featured === true,
+            icon: fm.icon,
+            heroImage: fm.heroImage || fm.cover,
+            firstLetterColor: fm.firstLetterColor,
+          },
+          filePath,
+          // Marker: this post came from the filesystem, not the content store
+          _runtime: true,
+        } as any);
+
+        collectionIds.add(id);
+      } catch (err) {
+        console.error(`[writing] Error parsing ${filePath}:`, err);
+      }
+    }
+  } catch (err) {
+    console.error("[writing] Filesystem scan failed:", err);
+  }
 
   return sortByPubDateDesc(posts.filter((post) => !post.data.draft));
 }
