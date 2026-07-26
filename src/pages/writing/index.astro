@@ -24,6 +24,12 @@ const tags = getTagCounts(posts);
 const series = getSeriesCounts(posts);
 const pageSize = 8;
 const totalPages = Math.ceil(posts.length / pageSize);
+
+// Read the current page from the URL so that the server-rendered HTML
+// already shows the correct page-group — no flash even if the client-side
+// pagination script doesn't run during a View Transition navigation.
+const pageParam = parseInt(Astro.url.searchParams.get("page") || "1", 10);
+const currentPage = Number.isNaN(pageParam) ? 1 : Math.max(1, Math.min(pageParam, totalPages));
 ---
 
 <!doctype html>
@@ -48,7 +54,11 @@ const totalPages = Math.ceil(posts.length / pageSize);
             <>
               <div class="min-w-0 grid gap-8 md:grid-cols-2 md:gap-x-8 md:gap-y-10">
                 {Array.from({ length: totalPages }, (_, i) => (
-                  <div class="contents page-group" data-page={i + 1}>
+                  <div
+                    class="contents page-group"
+                    data-page={i + 1}
+                    style={i + 1 === currentPage ? "" : "display:none"}
+                  >
                     {posts
                       .slice(i * pageSize, (i + 1) * pageSize)
                       .map((post) => (

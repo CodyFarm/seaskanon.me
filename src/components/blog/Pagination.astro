@@ -50,78 +50,101 @@ const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
 <script is:inline>
   (function () {
-    const nav = document.querySelector(".pagination");
-    if (!nav) return;
+    function setupPagination() {
+      const nav = document.querySelector(".pagination");
+      if (!nav) return;
 
-    const totalPages = Number(nav.dataset.totalPages) || 1;
-    const groups = Array.from(document.querySelectorAll(".page-group"));
-    const prevBtn = nav.querySelector(".pagination-prev");
-    const nextBtn = nav.querySelector(".pagination-next");
-    const pageBtns = Array.from(nav.querySelectorAll(".pagination-page"));
-    const info = nav.querySelector(".pagination-info");
+      // Prevent double-initialisation when both inline execution
+      // and astro:page-load fire on the same navigation.
+      if (nav.dataset.paginationReady === "1") return;
+      nav.dataset.paginationReady = "1";
 
-    if (!groups.length) return;
+      const totalPages = Number(nav.dataset.totalPages) || 1;
+      const groups = Array.from(document.querySelectorAll(".page-group"));
+      const prevBtn = nav.querySelector(".pagination-prev");
+      const nextBtn = nav.querySelector(".pagination-next");
+      const pageBtns = Array.from(nav.querySelectorAll(".pagination-page"));
+      const info = nav.querySelector(".pagination-info");
 
-    function readPage() {
-      const params = new URLSearchParams(window.location.search);
-      const p = parseInt(params.get("page") || "1", 10);
-      return Number.isNaN(p) ? 1 : Math.max(1, Math.min(p, totalPages));
-    }
+      if (!groups.length) return;
 
-    function showPage(page) {
-      // Use inline style.display rather than classList toggling so
-      // "display: none" reliably overrides "display: contents" from
-      // the .contents utility class, regardless of CSS source order.
-      groups.forEach(function (g) {
-        const gp = Number(g.dataset.page);
-        g.style.display = gp === page ? "" : "none";
-      });
+      function readPage() {
+        const params = new URLSearchParams(window.location.search);
+        const p = parseInt(params.get("page") || "1", 10);
+        return Number.isNaN(p) ? 1 : Math.max(1, Math.min(p, totalPages));
+      }
+
+      function showPage(page) {
+        // Use inline style.display rather than classList toggling so
+        // "display: none" reliably overrides "display: contents" from
+        // the .contents utility class, regardless of CSS source order.
+        groups.forEach(function (g) {
+          const gp = Number(g.dataset.page);
+          g.style.display = gp === page ? "" : "none";
+        });
+
+        pageBtns.forEach(function (b) {
+          const bp = Number(b.dataset.page);
+          const active = bp === page;
+          b.classList.toggle("bg-pblack", active);
+          b.classList.toggle("text-text-inverse", active);
+          b.setAttribute("aria-current", active ? "page" : "false");
+        });
+
+        if (prevBtn) prevBtn.disabled = page === 1;
+        if (nextBtn) nextBtn.disabled = page === totalPages;
+
+        if (info) {
+          info.textContent = "Page " + page + " of " + totalPages;
+        }
+
+        const url = new URL(window.location.href);
+        if (page === 1) {
+          url.searchParams.delete("page");
+        } else {
+          url.searchParams.set("page", String(page));
+        }
+        window.history.replaceState({}, "", url);
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener("click", function () {
+          const p = readPage();
+          if (p > 1) showPage(p - 1);
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener("click", function () {
+          const p = readPage();
+          if (p < totalPages) showPage(p + 1);
+        });
+      }
 
       pageBtns.forEach(function (b) {
-        const bp = Number(b.dataset.page);
-        const active = bp === page;
-        b.classList.toggle("bg-pblack", active);
-        b.classList.toggle("text-text-inverse", active);
-        b.setAttribute("aria-current", active ? "page" : "false");
+        b.addEventListener("click", function () {
+          const p = Number(b.dataset.page);
+          showPage(p);
+        });
       });
 
-      if (prevBtn) prevBtn.disabled = page === 1;
-      if (nextBtn) nextBtn.disabled = page === totalPages;
-
-      if (info) {
-        info.textContent = "Page " + page + " of " + totalPages;
-      }
-
-      const url = new URL(window.location.href);
-      if (page === 1) {
-        url.searchParams.delete("page");
-      } else {
-        url.searchParams.set("page", String(page));
-      }
-      window.history.replaceState({}, "", url);
+      // Sync the DOM to the current URL (page may already be correct
+      // from server-rendered inline style, but buttons/info need updating).
+      showPage(readPage());
     }
 
-    if (prevBtn) {
-      prevBtn.addEventListener("click", function () {
-        const p = readPage();
-        if (p > 1) showPage(p - 1);
+    // Run immediately for initial page load / hard navigation.
+    setupPagination();
+
+    // Register a one-time listener for Astro view-transition navigations.
+    // When the inline script re-executes after a swap it will call
+    // setupPagination() directly; this listener is a safety net that
+    // catches the case where the inline script doesn't fire.
+    if (!window.__paginationListenerReady) {
+      window.__paginationListenerReady = true;
+      document.addEventListener("astro:page-load", function () {
+        setupPagination();
       });
     }
-
-    if (nextBtn) {
-      nextBtn.addEventListener("click", function () {
-        const p = readPage();
-        if (p < totalPages) showPage(p + 1);
-      });
-    }
-
-    pageBtns.forEach(function (b) {
-      b.addEventListener("click", function () {
-        const p = Number(b.dataset.page);
-        showPage(p);
-      });
-    });
-
-    showPage(readPage());
   })();
 </script>
