@@ -79,7 +79,7 @@ function proj(
   return {
     id: title,
     title,
-    href: "/blog/whoIsThatguy",
+    href: "/blog/whoisthatguy",
     cover: placeholderSvg(title, color),
     color,
     col,
