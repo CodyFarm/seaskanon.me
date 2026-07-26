@@ -64,7 +64,7 @@ const description = getTaxonomyDescription("series", series.slug);
 
       <div class="mx-auto grid max-w-6xl gap-8 sidebar-grid sidebar-grid--left">
         <Sidebar stats={stats} categories={categories} tags={tags} series={allSeries} activeSeries={series.slug} />
-        <section class="grid gap-6 md:grid-cols-2">
+        <section class="min-w-0 grid gap-8 md:grid-cols-2 md:gap-x-8 md:gap-y-10">
           {filteredPosts.map((post) => (
             <ArticleCard post={post} />
           ))}

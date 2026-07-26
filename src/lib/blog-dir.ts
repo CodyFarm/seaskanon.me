@@ -9,6 +9,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const CANDIDATES = [
+  path.resolve("/data/blog"),          // Railway persistent volume (survives redeploys)
   path.resolve("dist/content/blog"),  // production (postbuild copy)
   path.resolve("src/content/blog"),   // development & fallback
 ];

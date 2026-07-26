@@ -69,9 +69,12 @@ const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
     }
 
     function showPage(page) {
+      // Use inline style.display rather than classList toggling so
+      // "display: none" reliably overrides "display: contents" from
+      // the .contents utility class, regardless of CSS source order.
       groups.forEach(function (g) {
         const gp = Number(g.dataset.page);
-        g.classList.toggle("hidden", gp !== page);
+        g.style.display = gp === page ? "" : "none";
       });
 
       pageBtns.forEach(function (b) {
@@ -82,8 +85,8 @@ const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
         b.setAttribute("aria-current", active ? "page" : "false");
       });
 
-      prevBtn.disabled = page === 1;
-      nextBtn.disabled = page === totalPages;
+      if (prevBtn) prevBtn.disabled = page === 1;
+      if (nextBtn) nextBtn.disabled = page === totalPages;
 
       if (info) {
         info.textContent = "Page " + page + " of " + totalPages;
@@ -98,15 +101,19 @@ const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
       window.history.replaceState({}, "", url);
     }
 
-    prevBtn.addEventListener("click", function () {
-      const p = readPage();
-      if (p > 1) showPage(p - 1);
-    });
+    if (prevBtn) {
+      prevBtn.addEventListener("click", function () {
+        const p = readPage();
+        if (p > 1) showPage(p - 1);
+      });
+    }
 
-    nextBtn.addEventListener("click", function () {
-      const p = readPage();
-      if (p < totalPages) showPage(p + 1);
-    });
+    if (nextBtn) {
+      nextBtn.addEventListener("click", function () {
+        const p = readPage();
+        if (p < totalPages) showPage(p + 1);
+      });
+    }
 
     pageBtns.forEach(function (b) {
       b.addEventListener("click", function () {
