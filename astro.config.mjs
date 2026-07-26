@@ -279,7 +279,7 @@ function remarkMark() {
 
 export default defineConfig({
   site: "https://seaskanon.me",
-  output: "static",
+  output: "server",
   adapter: node({ mode: "standalone" }),
 
   integrations: [
