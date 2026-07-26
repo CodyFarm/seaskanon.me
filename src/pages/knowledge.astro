@@ -37,6 +37,33 @@ const areas = ["Computer Graphics", "Mathematical Modeling", "Operations Researc
             <li class="rounded-2xl border-2 border-border-main bg-pgreen px-4 py-3 font-bold shadow-card1">{area}</li>
           ))}
         </ul>
+
+        <!-- ── Tools ── -->
+        <div class="mt-10">
+          <h2 class="text-2xl font-black mb-5 flex items-center gap-2">
+            <span class="text-3xl">🔧</span> Tools
+          </h2>
+          <a
+            href="/tools/vocab-studio"
+            class="group block rounded-3xl border-[3px] border-border-main bg-pblue p-6 shadow-card transition-all duration-200 hover:shadow-hover hover:-translate-x-2 hover:-translate-y-2"
+          >
+            <div class="flex items-start justify-between gap-4 flex-wrap">
+              <div class="flex-1 min-w-0">
+                <h3 class="text-xl font-black flex items-center gap-2">
+                  🔤 Vocab Studio
+                  <span class="rounded-full border-2 border-border-main bg-pgreen px-2.5 py-0.5 text-xs font-bold">Ready</span>
+                </h3>
+                <p class="mt-2 leading-7 text-pblack">
+                  词汇笔记工作室 — 从你的 Obsidian 词汇笔记中生成练习册，或借助 AI 丰富词汇内容。支持看英文写中文、连线匹配、选择题等多种题型。
+                </p>
+              </div>
+              <span class="inline-flex items-center gap-2 rounded-2xl border-2 border-border-main bg-card px-4 py-2.5 font-bold shadow-card1 text-sm shrink-0 group-hover:bg-pgreen transition-colors duration-200">
+                进入工作室
+                <span class="text-lg leading-none transition-transform duration-200 group-hover:translate-x-1">→</span>
+              </span>
+            </div>
+          </a>
+        </div>
       </section>
     </main>
     <Footer />
