@@ -15,6 +15,7 @@ export const prerender = false;
 
 import { isAuthenticated, unauthorizedResponse } from "../../../lib/vocab-auth";
 import { parseVocabNote } from "../../../lib/vocab-parser";
+import { resolveNotePath } from "../../../lib/blog-dir";
 import {
   buildExercisePrompt,
   buildEnrichPrompt,
@@ -200,7 +201,7 @@ export async function POST({ request }: { request: Request }) {
     }
 
     // Read and parse the note
-    const filePath = path.resolve("src/content/blog", `${slug}.md`);
+    const filePath = resolveNotePath(slug);
     if (!fs.existsSync(filePath)) {
       return new Response(
         JSON.stringify({ error: `Note not found: ${slug}` }),

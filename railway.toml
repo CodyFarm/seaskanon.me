@@ -1,0 +1,9 @@
+# Railway deployment configuration for seaskanon.me
+# Astro SSR with @astrojs/node standalone mode
+
+[build]
+builder = "nixpacks"
+buildCommand = "pnpm install --no-strict-peer-dependencies && pnpm build"
+
+[deploy]
+startCommand = "node dist/server/entry.mjs"

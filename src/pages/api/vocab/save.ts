@@ -14,21 +14,14 @@ export const prerender = false;
 
 import { isAuthenticated, unauthorizedResponse } from "../../../lib/vocab-auth";
 import { parseVocabNote, buildMarkdown } from "../../../lib/vocab-parser";
+import { getBlogDir, resolveNotePath } from "../../../lib/blog-dir";
 import fs from "node:fs";
-import path from "node:path";
 
-const BLOG_DIR = path.resolve("src/content/blog");
+const BLOG_DIR = getBlogDir();
 
 /** 防止目录遍历攻击 */
 function safePath(slug: string): string {
-  // Normalize: only allow alphanumeric, Chinese chars, hyphens, underscores, slashes
-  const sanitized = slug.replace(/\.\./g, "").replace(/\\/g, "/");
-  const fullPath = path.resolve(BLOG_DIR, `${sanitized}.md`);
-  // Verify the resolved path stays within BLOG_DIR
-  if (!fullPath.startsWith(BLOG_DIR)) {
-    throw new Error("Invalid path: directory traversal detected");
-  }
-  return fullPath;
+  return resolveNotePath(slug);
 }
 
 export async function POST({ request }: { request: Request }) {

@@ -8,6 +8,7 @@
 export const prerender = false;
 
 import { isAuthenticated, unauthorizedResponse } from "../../../lib/vocab-auth";
+import { getBlogDir, listMarkdownFiles } from "../../../lib/blog-dir";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -23,8 +24,8 @@ interface NoteInfo {
 export async function GET({ request }: { request: Request }) {
   if (!isAuthenticated(request)) return unauthorizedResponse();
 
-  const blogDir = path.resolve("src/content/blog");
-  const files = listMarkdownFiles(blogDir);
+  const blogDir = getBlogDir();
+  const files = listMarkdownFiles();
 
   const notes: NoteInfo[] = [];
   for (const file of files) {
@@ -85,18 +86,4 @@ export async function GET({ request }: { request: Request }) {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });
-}
-
-function listMarkdownFiles(dir: string): string[] {
-  const results: string[] = [];
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      results.push(...listMarkdownFiles(fullPath));
-    } else if (entry.name.endsWith(".md")) {
-      results.push(fullPath);
-    }
-  }
-  return results;
 }
