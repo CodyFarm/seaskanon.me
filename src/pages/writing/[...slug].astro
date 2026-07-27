@@ -90,6 +90,9 @@ if (!post) {
       console.error(`[writing] Failed to read runtime post ${slug}:`, e);
     }
   }
+} else if ((post as any)._runtime) {
+  // Post was added by filesystem scan — not in content collection store
+  isRuntime = true;
 }
 
 if (!post) return Astro.redirect("/404");
