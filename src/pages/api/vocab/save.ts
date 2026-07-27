@@ -54,7 +54,6 @@ export async function POST({ request }: { request: Request }) {
       const parsed = parseVocabNote(original, slug);
 
       // LLM 返回的是完整的笔记内容（含标题等），我们只提取 body 部分
-      // 重新组合：原 frontmatter + LLM 生成的主体内容
       let bodyContent = content;
 
       // 如果 LLM 返回的内容包含 frontmatter，去除它
@@ -79,22 +78,37 @@ export async function POST({ request }: { request: Request }) {
       // ── 保存为新博客文章 ──
       const exerciseSlug = `${slug}-练习册`;
 
-      // Build frontmatter for the new blog post
+      // Refuse to overwrite an existing exercise workbook
+      if (fs.existsSync(resolveNotePath(exerciseSlug))) {
+        return new Response(
+          JSON.stringify({ error: `练习册已存在: ${exerciseSlug}` }),
+          { status: 409, headers: { "Content-Type": "application/json" } },
+        );
+      }
+
       const today = new Date().toISOString().split("T")[0];
-      const frontmatter = `---
+      const title = body.title || `${slug} 练习册`;
+
+      // Build the full markdown file — frontmatter MUST NOT have leading
+      // whitespace, so the template literal starts flush-left.
+      const fullContent =
+`---
 tags:
   - IELTS
 pubDate: ${today}
-title: ${body.title || slug + " 练习册"}
+title: ${title}
 description: 词汇练习册 — 自动生成
 categories: list
 series: IELTS writing vocabulary
 draft: false
----`;
+---
 
-      const fullContent = buildMarkdown(frontmatter, content);
-      const targetPath = safePath(exerciseSlug);
+${content}
+`;
+      const targetPath = resolveNotePath(exerciseSlug);
       fs.writeFileSync(targetPath, fullContent, "utf-8");
+
+      console.log(`[vocab save] exercise → ${targetPath} (${Buffer.byteLength(fullContent, "utf-8")} bytes)`);
 
       return new Response(
         JSON.stringify({
