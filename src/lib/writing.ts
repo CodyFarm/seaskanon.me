@@ -64,7 +64,17 @@ function parsePostFrontmatter(content: string): {
 
 export async function getPublishedWriting() {
   const posts = await getCollection("blog");
-  const collectionIds = new Set(posts.map((p) => p.id));
+
+  // Build a normalized ID set for deduplication.
+  // Astro's content collection slugifies paths (spaces→hyphens, lowercase),
+  // but filesystem paths keep original casing and spaces. Normalize both
+  // sides so the same file isn't counted twice.
+  const seenIds = new Set<string>();
+  for (const p of posts) {
+    seenIds.add(p.id);
+    // Also register the slugified version
+    seenIds.add(p.id.toLowerCase().replace(/\s+/g, "-"));
+  }
 
   // Scan filesystem for runtime-added posts not in the content store
   try {
@@ -73,9 +83,11 @@ export async function getPublishedWriting() {
 
     for (const filePath of files) {
       const relPath = nodePath.relative(blogDir, filePath);
-      const id = relPath.replace(/\.md$/, "").replace(/\\/g, "/");
+      const rawId = relPath.replace(/\.md$/, "").replace(/\\/g, "/");
+      const slugId = rawId.toLowerCase().replace(/\s+/g, "-");
 
-      if (collectionIds.has(id)) continue;
+      // Skip if this file is already in the collection (check both raw and slugified)
+      if (seenIds.has(rawId) || seenIds.has(slugId)) continue;
 
       try {
         const raw = fs.readFileSync(filePath, "utf-8");
@@ -86,11 +98,11 @@ export async function getPublishedWriting() {
           : new Date(fs.statSync(filePath).mtime);
 
         posts.push({
-          id,
+          id: rawId,
           body,
           collection: "blog",
           data: {
-            title: fm.title || id,
+            title: fm.title || rawId,
             description: fm.description || "",
             pubDate,
             updatedDate: fm.updatedDate ? new Date(fm.updatedDate) : undefined,
@@ -109,7 +121,8 @@ export async function getPublishedWriting() {
           _runtime: true,
         } as any);
 
-        collectionIds.add(id);
+        seenIds.add(rawId);
+        seenIds.add(slugId);
       } catch (err) {
         console.error(`[writing] Error parsing ${filePath}:`, err);
       }

@@ -1,8 +1,8 @@
 /**
  * GET /api/debug/blog-state
  *
- * Debug endpoint: shows what's on disk and in the content store.
- * Returns file listings from both locations so we can compare.
+ * Debug endpoint: shows what's on disk vs what getPublishedWriting() returns.
+ * Useful for diagnosing "new note doesn't appear" issues.
  */
 export const prerender = false;
 
@@ -13,49 +13,56 @@ import { getPublishedWriting } from "../../../lib/writing";
 
 export async function GET() {
   const blogDir = getBlogDir();
-  const realPath = (() => {
-    try { return fs.realpathSync(blogDir); } catch { return null; }
-  })();
-  const isSymlink = (() => {
-    try { return fs.lstatSync(blogDir).isSymbolicLink(); } catch { return false; }
-  })();
+  const realPath = (() => { try { return fs.realpathSync(blogDir); } catch { return null; }; })();
+  const isSymlink = (() => { try { return fs.lstatSync(blogDir).isSymbolicLink(); } catch { return false; }; })();
 
-  // Files on disk
-  const diskFiles = listMarkdownFiles().map((f) => path.relative(blogDir, f).replace(/\\/g, "/"));
+  // All files on disk (no slice limit)
+  const allDiskFiles = listMarkdownFiles().map((f) => path.relative(blogDir, f).replace(/\\/g, "/")).sort();
 
-  // Posts from getPublishedWriting (collection + filesystem merge)
+  // Posts from getPublishedWriting
   const posts = await getPublishedWriting();
   const postIds = posts.map((p) => p.id);
 
-  // Try reading one specific file to verify content
-  const sampleFile = diskFiles[0];
-  let sampleContent = "";
-  let sampleError = "";
-  if (sampleFile) {
-    try {
-      sampleContent = fs.readFileSync(path.join(blogDir, sampleFile), "utf-8").slice(0, 500);
-    } catch (e: any) {
-      sampleError = e.message;
+  // Files on disk NOT in the post list (should be empty if everything works)
+  const slugify = (s: string) => s.toLowerCase().replace(/\s+/g, "-");
+  const postIdSet = new Set(postIds.map(slugify));
+  const missing = allDiskFiles.filter((f) => {
+    const rawId = f.replace(/\.md$/, "");
+    return !postIdSet.has(slugify(rawId));
+  });
+
+  // Check volume contents directly too
+  let volumeFiles: string[] = [];
+  const volumeDir = "/data/blog";
+  try {
+    if (fs.existsSync(volumeDir)) {
+      volumeFiles = listFilesFlat(volumeDir).sort();
+    }
+  } catch {}
+
+  return new Response(JSON.stringify({
+    blogDir,
+    realPath,
+    isSymlink,
+    diskFileCount: allDiskFiles.length,
+    diskFiles: allDiskFiles,                          // ALL files, unsliced
+    postCount: postIds.length,
+    postIds,
+    diskNotInPosts: missing,                           // files on disk but missing from posts
+    volumeFileCount: volumeFiles.length,
+    volumeFiles: volumeFiles.slice(0, 30),
+  }, null, 2), { headers: { "Content-Type": "application/json" } });
+}
+
+function listFilesFlat(dir: string): string[] {
+  const results: string[] = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...listFilesFlat(full));
+    } else {
+      results.push(path.relative(dir, full).replace(/\\/g, "/"));
     }
   }
-
-  return new Response(
-    JSON.stringify(
-      {
-        blogDir,
-        realPath,
-        isSymlink,
-        diskFileCount: diskFiles.length,
-        diskFiles: diskFiles.slice(0, 20),
-        postCount: postIds.length,
-        postIds: postIds.slice(0, 20),
-        sampleFile,
-        sampleContent,
-        sampleError,
-      },
-      null,
-      2,
-    ),
-    { headers: { "Content-Type": "application/json" } },
-  );
+  return results;
 }
