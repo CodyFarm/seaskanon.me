@@ -1,0 +1,215 @@
+---
+/**
+ * Admin File Manager — browser-based blog file management.
+ * GET  → renders file list
+ * All actions delegate to existing debug API endpoints via client-side fetch.
+ */
+export const prerender = false;
+
+import { verifySessionToken } from "../../lib/vocab-auth";
+import { getBlogDir, listMarkdownFiles, resolveNotePath } from "../../lib/blog-dir";
+import fs from "node:fs";
+import path from "node:path";
+
+const SESSION_COOKIE = "vocab_session";
+const blogDir = getBlogDir();
+
+// ── Auth check ──
+const cookies = Astro.request.headers.get("cookie") || "";
+const match = cookies.match(new RegExp(`${SESSION_COOKIE}=([^;]+)`));
+const token = match?.[1];
+const authed = token ? verifySessionToken(token) : false;
+
+// ── Build file list ──
+interface FileInfo {
+  slug: string;
+  path: string;
+  sizeBytes: number;
+  modified: string;
+}
+let files: FileInfo[] = [];
+if (authed) {
+  files = listMarkdownFiles().map((fp) => {
+    const rel = path.relative(blogDir, fp).replace(/\\/g, "/");
+    const slug = rel.replace(/\.md$/, "");
+    const stat = fs.statSync(fp);
+    return {
+      slug,
+      path: rel,
+      sizeBytes: stat.size,
+      modified: stat.mtime.toISOString(),
+    };
+  }).sort((a, b) => a.slug.localeCompare(b.slug));
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>File Manager — seaskanon Admin</title>
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: system-ui, -apple-system, sans-serif; background: #f5f0eb; color: #2c2c2c; padding: 2rem; }
+      h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+      .controls { display: flex; gap: 0.5rem; margin: 1rem 0; flex-wrap: wrap; }
+      input, button { padding: 0.5rem 0.75rem; border: 2px solid #ccc; border-radius: 8px; font-size: 0.9rem; }
+      button { cursor: pointer; background: #fff; font-weight: 600; transition: all 0.15s; }
+      button:hover { border-color: #888; }
+      button.danger { background: #fee; border-color: #faa; color: #a22; }
+      button.danger:hover { background: #fdd; border-color: #f66; }
+      table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; border: 2px solid #ddd; }
+      th, td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+      th { background: #fafaf5; font-weight: 700; }
+      tr:hover td { background: #fafaf7; }
+      .slug { font-family: monospace; font-size: 0.85rem; max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .size { text-align: right; white-space: nowrap; }
+      .actions { display: flex; gap: 0.35rem; }
+      .actions button { font-size: 0.8rem; padding: 0.3rem 0.6rem; }
+      .msg { padding: 0.75rem; border-radius: 8px; margin: 1rem 0; font-weight: 600; display: none; }
+      .msg.success { background: #e6f7e6; border: 2px solid #8d8; color: #262; }
+      .msg.error { background: #fde8e8; border: 2px solid #f99; color: #822; }
+      .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; justify-content: center; align-items: center; }
+      .modal-overlay.active { display: flex; }
+      .modal { background: #fff; border-radius: 16px; padding: 1.5rem; max-width: 800px; width: 90%; max-height: 80vh; overflow-y: auto; }
+      .modal pre { background: #f8f8f5; padding: 1rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; font-size: 0.85rem; max-height: 50vh; overflow-y: auto; }
+      .modal .close { float: right; border: none; background: none; font-size: 1.5rem; cursor: pointer; }
+      .login-box { max-width: 360px; margin: 6rem auto; background: #fff; padding: 2rem; border-radius: 16px; border: 2px solid #ddd; text-align: center; }
+      .login-box input { width: 100%; margin: 0.5rem 0; }
+      .login-box button { width: 100%; }
+      .stats { font-size: 0.85rem; color: #666; margin-bottom: 0.5rem; }
+    </style>
+  </head>
+  <body>
+
+{!authed ? (
+  <div class="login-box">
+    <h1>🔐 Admin Login</h1>
+    <p style="margin:1rem 0;color:#666;">Enter the Vocab Studio admin password.</p>
+    <form id="login-form">
+      <input type="password" id="login-pw" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <div class="msg" id="login-msg"></div>
+  </div>
+) : (
+  <>
+    <h1>📁 Blog File Manager</h1>
+    <p class="stats">{files.length} files in <code>{blogDir}</code></p>
+
+    <div class="controls">
+      <input type="text" id="filter" placeholder="Filter slugs..." oninput="filterTable()" />
+      <button onclick="location.reload()">🔄 Refresh</button>
+      <a href="/tools/vocab-studio"><button>📝 Vocab Studio</button></a>
+    </div>
+
+    <div class="msg" id="action-msg"></div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Slug</th>
+          <th class="size">Size</th>
+          <th>Modified</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="file-tbody">
+        {files.map((f) => (
+          <tr data-slug={f.slug}>
+            <td class="slug" title={f.slug}>{f.slug}</td>
+            <td class="size">{formatSize(f.sizeBytes)}</td>
+            <td>{f.modified.slice(0, 19).replace("T", " ")}</td>
+            <td class="actions">
+              <button onclick={`viewFile('${f.slug}')`}>👁 View</button>
+              <button class="danger" onclick={`deleteFile('${f.slug}')`}>🗑 Delete</button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </>
+)}
+
+<!-- ── View modal ── -->
+<div class="modal-overlay" id="view-modal">
+  <div class="modal">
+    <button class="close" onclick="closeModal()">&times;</button>
+    <h2 id="view-title">File Content</h2>
+    <pre id="view-content">Loading...</pre>
+  </div>
+</div>
+
+<script>
+  // ── Login ──
+  document.getElementById('login-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const pw = document.getElementById('login-pw').value;
+    const resp = await fetch('/api/vocab/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw }),
+    });
+    const data = await resp.json();
+    const msg = document.getElementById('login-msg');
+    if (data.ok) { msg.className = 'msg success'; msg.textContent = 'Logged in! Reloading...'; msg.style.display = 'block'; setTimeout(() => location.reload(), 500); }
+    else { msg.className = 'msg error'; msg.textContent = data.error || 'Wrong password'; msg.style.display = 'block'; }
+  });
+
+  // ── View file ──
+  async function viewFile(slug) {
+    document.getElementById('view-title').textContent = slug + '.md';
+    document.getElementById('view-content').textContent = 'Loading...';
+    document.getElementById('view-modal').classList.add('active');
+    try {
+      const resp = await fetch('/api/debug/file-content?slug=' + encodeURIComponent(slug));
+      const data = await resp.json();
+      if (data.exists) {
+        document.getElementById('view-content').textContent = data.content;
+      } else {
+        document.getElementById('view-content').textContent = 'File not found.';
+      }
+    } catch (err) {
+      document.getElementById('view-content').textContent = 'Error: ' + err.message;
+    }
+  }
+
+  function closeModal() { document.getElementById('view-modal').classList.remove('active'); }
+  document.getElementById('view-modal')?.addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+  // ── Delete file ──
+  async function deleteFile(slug) {
+    if (!confirm('Delete ' + slug + '.md?\n\nThis cannot be undone.')) return;
+    const msg = document.getElementById('action-msg');
+    try {
+      const resp = await fetch('/api/debug/delete-file', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug }),
+      });
+      const data = await resp.json();
+      if (data.ok) {
+        msg.className = 'msg success'; msg.textContent = 'Deleted: ' + slug + '.md'; msg.style.display = 'block';
+        // Remove row
+        const row = document.querySelector(`tr[data-slug="${CSS.escape(slug)}"]`);
+        if (row) row.remove();
+      } else {
+        msg.className = 'msg error'; msg.textContent = data.error || 'Delete failed'; msg.style.display = 'block';
+      }
+    } catch (err) {
+      msg.className = 'msg error'; msg.textContent = 'Error: ' + err.message; msg.style.display = 'block';
+    }
+  }
+
+  // ── Filter ──
+  function filterTable() {
+    const q = document.getElementById('filter').value.toLowerCase();
+    document.querySelectorAll('#file-tbody tr').forEach(tr => {
+      tr.style.display = tr.dataset.slug?.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

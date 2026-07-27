@@ -189,6 +189,6 @@ const playlistJSON = JSON.stringify(tracks);
 
   // Initial render + color extraction
   updateUI();
-  if (firstTrack.cover) extractColor(firstTrack.cover);
+  if (playlist[0] && playlist[0].cover) extractColor(playlist[0].cover);
 })();
 </script>
