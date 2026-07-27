@@ -59,8 +59,8 @@ walk(SRC, DST);
 console.log(`[sync-blog] ${copied} new files copied, ${skipped} existing files preserved → ${DST}`);
 
 // ── Step 3: symlink src/content/blog → /data/blog ──
-// After the symlink is in place, Astro's getCollection("blog") and the
-// Vocab Studio API both read/write through src/content/blog → /data/blog.
+// After the symlink is in place, the Vocab Studio API and Astro content
+// collection both read/write through the same path → the persistent volume.
 
 try {
   const stat = fs.lstatSync(BLOG_DIR);
@@ -68,16 +68,17 @@ try {
     const target = fs.readlinkSync(BLOG_DIR);
     console.log(`[sync-blog] src/content/blog already symlinked → ${target}`);
   } else if (stat.isDirectory()) {
-    // Merge any remaining files from src/content/blog into the volume
-    // (these might be files added between build and deploy)
+    // Merge any files from src/content/blog into the volume
+    // (these are files added to the repo between deploys)
     walk(BLOG_DIR, DST);
     console.log(`[sync-blog] merged src/content/blog → ${DST}`);
 
-    // Rename the original directory as backup, then create the symlink
-    const bak = path.resolve(`src/content/blog.bak`);
-    fs.renameSync(BLOG_DIR, bak);
+    // Remove the original dir and replace with a symlink.
+    // Can't use renameSync on Railway (EXDEV on overlayfs),
+    // so we copy+delete instead. Content is already on the volume.
+    fs.rmSync(BLOG_DIR, { recursive: true, force: true });
     fs.symlinkSync(DST, BLOG_DIR, "dir");
-    console.log(`[sync-blog] symlinked src/content/blog → ${DST} (backup at src/content/blog.bak)`);
+    console.log(`[sync-blog] replaced src/content/blog → symlink to ${DST}`);
   }
 } catch (err) {
   // src/content/blog doesn't exist — create the symlink directly
