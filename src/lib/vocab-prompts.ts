@@ -48,7 +48,7 @@ export function buildExercisePrompt(
     .map((t) => `- ${typeDescriptions[t]}`);
 
   let customSection = "";
-  if (types.includes("custom") && customFormat) {
+  if (customFormat) {
     customSection = `
 ## 自定义题型
 用户指定的题型要求如下。请严格按照此要求出题：
@@ -58,7 +58,7 @@ ${customFormat}`;
   const system = `你是一位资深的雅思英语教师，正在为学生准备词汇练习材料。
 
 ## 任务
-根据提供的英语词汇表，生成一份完整的词汇练习册。练习册以 Markdown 格式输出。
+根据提供的英语词汇表，生成一份完整的词汇练习册。练习册以 Markdown 格式输出，题目要至少包括提供词汇的80%-100%。
 
 ## 题目类型
 ${typeLines.join("\n")}
