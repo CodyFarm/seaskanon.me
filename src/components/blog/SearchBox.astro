@@ -8,43 +8,34 @@
     class="mt-4 w-full rounded-2xl border-[3px] border-border-main px-4 py-3 text-text-main outline-none focus:-translate-y-0.5 focus:shadow-card"
     style="background-color: var(--search-bg, var(--bg-card-soft)); transition: background-color 2s ease;"
   />
-  <div id="writing-search-results" class="mt-4 hidden flex-col gap-3" aria-live="polite"></div>
 </section>
 
-<script>
-  type SearchItem = {
-    title: string;
-    description: string;
-    url: string;
-    category: string;
-    tags: string[];
-    text: string;
-  };
-
-  const input = document.querySelector<HTMLInputElement>("#writing-search");
-  const results = document.querySelector<HTMLDivElement>("#writing-search-results");
-  let index: SearchItem[] | undefined;
-
+<!-- is:inline + data-astro-rerun: Astro's view-transition router re-executes this
+     script on every navigation to /writing, so the input listener always attaches.
+     Without it, bundled scripts only run on the first full page load and the box
+     looks dead when arriving via the nav. IIFE keeps re-runs from redeclaring globals. -->
+<script is:inline data-astro-rerun>
+(function () {
   // ---- color-pick on hover (1s dwell) → pastel-lightness map → apply to search box ----
-  let mouseX = 0;
-  let mouseY = 0;
-  let hoverTimer: ReturnType<typeof setTimeout> | null = null;
-  let lastColorChange = 0;
-  const DWELL_MS = 1000;
-  const COOLDOWN_MS = 3000;
+  var mouseX = 0;
+  var mouseY = 0;
+  var hoverTimer = null;
+  var lastColorChange = 0;
+  var DWELL_MS = 1000;
+  var COOLDOWN_MS = 3000;
 
   // RGB ↔ HSL conversions
-  function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
+  function rgbToHsl(r, g, b) {
     r /= 255; g /= 255; b /= 255;
-    const max = Math.max(r, g, b);
-    const min = Math.min(r, g, b);
-    const L = (max + min) / 2;
+    var max = Math.max(r, g, b);
+    var min = Math.min(r, g, b);
+    var L = (max + min) / 2;
 
     if (max === min) return [0, 0, L];
 
-    const d = max - min;
-    const S = L > 0.5 ? d / (2 - max - min) : d / (max + min);
-    let H = 0;
+    var d = max - min;
+    var S = L > 0.5 ? d / (2 - max - min) : d / (max + min);
+    var H = 0;
     switch (max) {
       case r: H = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
       case g: H = ((b - r) / d + 2) / 6; break;
@@ -53,12 +44,12 @@
     return [H, S, L];
   }
 
-  function hslToRgb(h: number, s: number, l: number): [number, number, number] {
+  function hslToRgb(h, s, l) {
     if (s === 0) {
-      const v = Math.round(l * 255);
+      var v = Math.round(l * 255);
       return [v, v, v];
     }
-    const hue2rgb = (p: number, q: number, t: number): number => {
+    var hue2rgb = function (p, q, t) {
       if (t < 0) t += 1;
       if (t > 1) t -= 1;
       if (t < 1 / 6) return p + (q - p) * 6 * t;
@@ -66,50 +57,53 @@
       if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
       return p;
     };
-    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-    const p = 2 * l - q;
+    var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    var p = 2 * l - q;
     return [
       Math.round(hue2rgb(p, q, h + 1 / 3) * 255),
       Math.round(hue2rgb(p, q, h) * 255),
-      Math.round(hue2rgb(p, q, h - 1 / 3) * 255),
+      Math.round(hue2rgb(p, q, h - 1 / 3) * 255)
     ];
   }
 
   // Gamma-based lightness lift: dark → pastel-light, already-light → nearly unchanged
   // L' = L_min + (1 - L_min) × L^γ   (γ < 1 lifts darks, γ ≈ 1 keeps lights)
-  function toPastelLightness(L: number): number {
-    const L_MIN = 0.55;
-    const GAMMA = 0.45;
+  function toPastelLightness(L) {
+    var L_MIN = 0.55;
+    var GAMMA = 0.45;
     return L_MIN + (1 - L_MIN) * Math.pow(L, GAMMA);
   }
 
-  function isTransparent(color: string): boolean {
+  function isTransparent(color) {
     return !color || color === "transparent" || /rgba?\(\s*0[\s,]+0[\s,]+0[\s,]*0\s*\)/.test(color);
   }
 
-  function tryApplyColor(): void {
-    const now = Date.now();
+  function tryApplyColor() {
+    var now = Date.now();
     if (now - lastColorChange < COOLDOWN_MS) return;
 
-    let el = document.elementFromPoint(mouseX, mouseY);
+    var el = document.elementFromPoint(mouseX, mouseY);
     if (!el) return;
 
     // walk up DOM tree to find the first ancestor with a real background color
     while (el) {
-      const bg = getComputedStyle(el).backgroundColor;
+      var bg = getComputedStyle(el).backgroundColor;
       if (!isTransparent(bg)) {
-        const match = bg.match(/rgba?\((\d+)[,\s]+(\d+)[,\s]+(\d+)/);
+        var match = bg.match(/rgba?\((\d+)[,\s]+(\d+)[,\s]+(\d+)/);
         if (match) {
-          const r = parseInt(match[1]);
-          const g = parseInt(match[2]);
-          const b = parseInt(match[3]);
-          const [h, s, l] = rgbToHsl(r, g, b);
-          const L_new = toPastelLightness(l);
-          const satFactor = 0.4 + 0.6 * Math.pow(l, 0.3);
-          const S_new = Math.min(1, s * satFactor);
-          const [rr, gg, bb] = hslToRgb(h, S_new, L_new);
+          var r = parseInt(match[1]);
+          var g = parseInt(match[2]);
+          var b = parseInt(match[3]);
+          var hsl = rgbToHsl(r, g, b);
+          var L_new = toPastelLightness(hsl[2]);
+          var satFactor = 0.4 + 0.6 * Math.pow(hsl[2], 0.3);
+          var S_new = Math.min(1, hsl[1] * satFactor);
+          var rgb = hslToRgb(hsl[0], S_new, L_new);
 
-          document.documentElement.style.setProperty("--search-bg", `rgb(${rr}, ${gg}, ${bb})`);
+          document.documentElement.style.setProperty(
+            "--search-bg",
+            "rgb(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ")"
+          );
           lastColorChange = now;
         }
         return;
@@ -118,55 +112,114 @@
     }
   }
 
-  document.addEventListener("mousemove", (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+  // document-level listener survives view-transition swaps, so register it exactly once
+  if (!window.__searchBoxColorBound) {
+    window.__searchBoxColorBound = true;
+    document.addEventListener("mousemove", function (e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
 
-    if (hoverTimer) clearTimeout(hoverTimer);
-    hoverTimer = setTimeout(tryApplyColor, DWELL_MS);
-  });
-
-  async function loadIndex() {
-    if (index) return index;
-    const response = await fetch("/writing/search.json");
-    index = await response.json();
-    return index;
+      if (hoverTimer) clearTimeout(hoverTimer);
+      hoverTimer = setTimeout(tryApplyColor, DWELL_MS);
+    });
   }
 
-  function render(items: SearchItem[], query: string) {
-    if (!results) return;
+  function setupSearch() {
+    var input = document.querySelector("#writing-search");
+    if (!input || input.dataset.searchReady) return; // each navigation has a fresh input; guard is a safety net
+    input.dataset.searchReady = "1";
 
-    if (!query) {
-      results.classList.add("hidden");
-      results.innerHTML = "";
-      return;
+    var grid = document.querySelector("#writing-grid");
+    var cards = Array.from(document.querySelectorAll(".search-card"));
+    var groups = Array.from(document.querySelectorAll(".page-group"));
+    var nav = document.querySelector(".pagination");
+    var index;
+
+    function loadIndex() {
+      if (index) return Promise.resolve(index);
+      return fetch("/writing/search.json")
+        .then(function (response) { return response.json(); })
+        .then(function (data) { index = data; return data; });
     }
 
-    results.classList.remove("hidden");
-
-    if (items.length === 0) {
-      results.innerHTML = `<p class="rounded-2xl border-2 border-border-main bg-ppink p-3 text-sm shadow-card1">No writing matched “${query}”.</p>`;
-      return;
+    function readPage() {
+      var params = new URLSearchParams(window.location.search);
+      var p = parseInt(params.get("page") || "1", 10);
+      var total = Math.max(1, groups.length);
+      return Number.isNaN(p) ? 1 : Math.max(1, Math.min(p, total));
     }
 
-    results.innerHTML = items
-      .slice(0, 6)
-      .map((item) => `
-        <a href="${item.url}" class="block rounded-2xl border-2 border-border-main bg-pblue p-3 shadow-card1 transition hover:-translate-y-0.5 hover:shadow-card">
-          <span class="font-bold text-text-main">${item.title}</span>
-          <span class="mt-1 block text-sm text-pblack">${item.description}</span>
-        </a>
-      `)
-      .join("");
+    function computeMatches(data, query) {
+      if (!data) return [];
+      return query
+        ? data.filter(function (item) {
+            return (
+              item.title + " " +
+              item.description + " " +
+              item.category + " " +
+              item.tags.join(" ") + " " +
+              item.text
+            ).toLocaleLowerCase().includes(query);
+          })
+        : [];
+    }
+
+    function setGridEmptyMessage(query) {
+      if (!grid) return;
+      var existing = grid.querySelector(".search-empty");
+      if (existing) existing.remove();
+      if (query.length > 0) {
+        var el = document.createElement("p");
+        el.className = "search-empty col-span-full rounded-2xl border-2 border-border-main bg-ppink p-3 text-sm shadow-card1";
+        el.textContent = "No writing matched “" + query + "”.";
+        grid.appendChild(el);
+      }
+    }
+
+    function filterGrid(matches, query) {
+      var queryActive = query.length > 0;
+      var matched = new Set();
+      matches.forEach(function (m) { matched.add(m.url); });
+
+      var visible = 0;
+      cards.forEach(function (card) {
+        var show = !queryActive || matched.has(card.getAttribute("data-url"));
+        card.style.display = show ? "" : "none";
+        if (queryActive && show) visible++;
+      });
+
+      // searching → reveal every page-group so matches from all pages show;
+      // cleared → restore the pagination view for the current page
+      groups.forEach(function (g) {
+        g.style.display = queryActive ? "contents" : (Number(g.dataset.page) === readPage() ? "" : "none");
+      });
+
+      if (nav) nav.classList.toggle("hidden", queryActive);
+      setGridEmptyMessage(queryActive && visible === 0 ? query : "");
+    }
+
+    input.addEventListener("input", function () {
+      var query = input.value.trim().toLocaleLowerCase();
+      loadIndex()
+        .then(function (data) {
+          var matches = computeMatches(data, query);
+          filterGrid(matches, query);
+        })
+        .catch(function (err) {
+          console.error("[SearchBox] failed to load search index:", err);
+          setGridEmptyMessage(query.length ? query : "");
+        });
+    });
   }
 
-  input?.addEventListener("input", async () => {
-    const query = input.value.trim().toLocaleLowerCase();
-    const data = await loadIndex();
-    const matches = query
-      ? data.filter((item) => `${item.title} ${item.description} ${item.category} ${item.tags.join(" ")} ${item.text}`.toLocaleLowerCase().includes(query))
-      : [];
+  setupSearch();
 
-    render(matches, query);
-  });
+  // Safety net for view-transition navigations: astro:page-load fires after every
+  // swap. data-astro-rerun already re-runs this script on each navigation, but the
+  // listener is a second, independent re-init path (registered exactly once).
+  if (!window.__searchBoxPageLoadBound) {
+    window.__searchBoxPageLoadBound = true;
+    document.addEventListener("astro:page-load", setupSearch);
+  }
+})();
 </script>

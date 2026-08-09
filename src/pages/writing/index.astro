@@ -11,19 +11,23 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
 import {
   getCategoryCounts,
+  getPostUrl,
   getPublishedWriting,
   getSeriesCounts,
   getTagCounts,
   getWritingStats,
+  isVocabNote,
 } from "@/lib/writing";
 
 const posts = await getPublishedWriting();
-const stats = getWritingStats(posts);
-const categories = getCategoryCounts(posts);
-const tags = getTagCounts(posts);
-const series = getSeriesCounts(posts);
+const vocabPosts = posts.filter((post) => isVocabNote(post));
+const regularPosts = posts.filter((post) => !isVocabNote(post));
+const stats = getWritingStats(regularPosts);
+const categories = getCategoryCounts(regularPosts);
+const tags = getTagCounts(regularPosts);
+const series = getSeriesCounts(regularPosts);
 const pageSize = 8;
-const totalPages = Math.ceil(posts.length / pageSize);
+const totalPages = Math.max(1, Math.ceil(regularPosts.length / pageSize));
 
 // Read the current page from the URL so that the server-rendered HTML
 // already shows the correct page-group — no flash even if the client-side
@@ -50,19 +54,32 @@ const currentPage = Number.isNaN(pageParam) ? 1 : Math.max(1, Math.min(pageParam
         <Sidebar stats={stats} categories={categories} tags={tags} series={series} showToggle={false} />
         <section class="flex min-w-0 flex-col gap-8">
           <SearchBox />
-          {posts.length > 0 ? (
+          {vocabPosts.length > 0 && (
+            <a
+              href="/writing/vocab/"
+              class="flex items-center justify-between rounded-3xl border-[3px] border-border-main bg-vocab-bg px-6 py-4 shadow-card transition hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-hover"
+            >
+              <span class="font-semibold text-pblack">
+                IELTS 词汇 · {vocabPosts.length} 篇
+              </span>
+              <span class="text-sm font-semibold text-ppink">查看全部 →</span>
+            </a>
+          )}
+          {regularPosts.length > 0 ? (
             <>
-              <div class="min-w-0 grid gap-8 md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+              <div id="writing-grid" class="min-w-0 grid gap-8 md:grid-cols-2 md:gap-x-8 md:gap-y-10">
                 {Array.from({ length: totalPages }, (_, i) => (
                   <div
                     class="contents page-group"
                     data-page={i + 1}
                     style={i + 1 === currentPage ? "" : "display:none"}
                   >
-                    {posts
+                    {regularPosts
                       .slice(i * pageSize, (i + 1) * pageSize)
                       .map((post) => (
-                        <ArticleCard post={post} />
+                        <div class="contents search-card" data-url={getPostUrl(post)}>
+                          <ArticleCard post={post} />
+                        </div>
                       ))}
                   </div>
                 ))}

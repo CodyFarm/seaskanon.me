@@ -98,7 +98,7 @@ tags:
 pubDate: ${today}
 title: ${title}
 description: 词汇练习册 — 自动生成
-categories: list
+categories: vocab-studio
 series: IELTS writing vocabulary
 draft: false
 ---

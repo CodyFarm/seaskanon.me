@@ -43,10 +43,17 @@
     --color-series-header: var(--series-header);
     --color-series-bg: var(--series-bg);
     --color-series-button: var(--series-button-bg);
+    --color-vocab-bg: var(--vocab-bg);
     --color-about-card: var(--about-card);
     --color-about-tag: var(--about-tag);
     --color-related-card: var(--related-card);
     --color-related-tag: var(--related-tag);
+
+    /* Selected/highlighted state for buttons (e.g. active pagination page) */
+    --color-pagination-active: var(--pagination-active);
+
+    /* About page "S" avatar background */
+    --color-about-s: var(--about-s);
 
     /* Legacy brand aliases — now theme-aware */
     --color-pblue: var(--accent-secondary);
@@ -121,6 +128,7 @@
     --accent-dark: #9D859A;
     --highlight-bg: #F2CF96;
     --banner-bg: #F2CF96;
+    --vocab-bg: #FFF0F5;
 
     --category-banner: #AEFFAE;
     --category-header: #C1FFC1;
@@ -136,6 +144,9 @@
     --about-tag: #87CEFF;
     --related-card: #F8F8FF;
     --related-tag: #DCDCDC;
+
+    --pagination-active: #4E6273;
+    --about-s: #F396E5;
 
     --theme-name: "Default";
 }
@@ -164,12 +175,13 @@
     --accent-primary: #FFD048;
     --accent-secondary: #FF9A47;
     --accent-tertiary: #36D1C9;
-    --accent-quaternary: #0A66A0;
+    --accent-quaternary: #FFDEAD;
     --accent-gold: #D4AF6A;
     --accent-spot: #C84232;
     --accent-dark: #2A1F18;
     --highlight-bg: #FFD048;
     --banner-bg: #FFFCF0;
+    --vocab-bg: #CCF1EF;
 
     --category-banner: #E8F8C8;
     --category-header: #B8E8A8;
@@ -185,6 +197,9 @@
     --about-tag: #7FD8E8;
     --related-card: #F8F8FF;
     --related-tag: #D8D0C0;
+
+    --pagination-active: #2A1F18;
+    --about-s: #1E9C96;
 
     --theme-name: "敦煌鎏彩";
 }
@@ -219,6 +234,7 @@
     --accent-dark: #2B5A8C;
     --highlight-bg: #D4AF6A;
     --banner-bg: #FBF7F0;
+    --vocab-bg: #D8EAE1;
 
     --category-banner: #D8E8B8;
     --category-header: #A8C878;
@@ -234,6 +250,9 @@
     --about-tag: #98B8C8;
     --related-card: #F0E8DC;
     --related-tag: #C8B8A0;
+
+    --pagination-active: #8B6935;
+    --about-s: #3A8F6C;
 
     --theme-name: "盛唐暖调";
 }
@@ -268,6 +287,7 @@
     --accent-dark: #365E82;
     --highlight-bg: #A8C878;
     --banner-bg: #F7F4EE;
+    --vocab-bg: #F0DAD4;
 
     --category-banner: #C8D8C8;
     --category-header: #98B8A0;
@@ -283,6 +303,9 @@
     --about-tag: #88A8B0;
     --related-card: #F0EBE4;
     --related-tag: #C0B0A0;
+
+    --pagination-active: #6B5A4A;
+    --about-s: #9A4430;
 
     --theme-name: "北凉冷调";
 }

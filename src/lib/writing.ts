@@ -144,6 +144,29 @@ export function getPostUrl(post: WritingPost) {
   return `/writing/${post.id}/`;
 }
 
+export const VOCAB_CATEGORY = "vocab-studio";
+
+/** True if the post is a vocab note (categories: vocab-studio).
+ *
+ *  Must check BOTH fields: content-store posts carry the value in
+ *  `data.categories`, while runtime/filesystem posts are mapped into
+ *  `data.category` (see `getPublishedWriting` → `category: fm.category || fm.categories`). */
+export function isVocabNote(post: WritingPost): boolean {
+  return (
+    normalizeTaxonomy(post.data.category) === VOCAB_CATEGORY ||
+    normalizeTaxonomy(post.data.categories) === VOCAB_CATEGORY
+  );
+}
+
+/** Count numbered vocab entries in a note's body.
+ *  Mirrors the entry regex used by /api/vocab/list-notes. */
+export function getVocabEntryCount(post: WritingPost): number {
+  const re = /^(\d+)\.\s+(.+?)\s+([一-鿿（].+)$/gm; // fresh regex per call (avoids lastIndex bug)
+  let count = 0;
+  while (re.exec(post.body ?? "")) count++;
+  return count;
+}
+
 export function getPostCover(post: WritingPost) {
   return post.data.cover || post.data.heroImage;
 }

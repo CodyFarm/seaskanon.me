@@ -86,7 +86,7 @@ const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
         pageBtns.forEach(function (b) {
           const bp = Number(b.dataset.page);
           const active = bp === page;
-          b.classList.toggle("bg-pblack", active);
+          b.classList.toggle("bg-pagination-active", active);
           b.classList.toggle("text-text-inverse", active);
           b.setAttribute("aria-current", active ? "page" : "false");
         });

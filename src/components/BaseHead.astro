@@ -114,7 +114,7 @@ const { title, description, image = "/screenshot.webp" } = Astro.props;
   // Called on init and on every theme change.
   function syncBannerImages() {
     var current = document.documentElement.getAttribute('data-theme') || 'default';
-    var imgs = document.querySelectorAll('.page-banner__img');
+    var imgs = document.querySelectorAll('[data-banner-theme]');
     for (var i = 0; i < imgs.length; i++) {
       imgs[i].style.display = imgs[i].getAttribute('data-banner-theme') === current ? 'block' : 'none';
     }

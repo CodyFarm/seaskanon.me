@@ -49,19 +49,23 @@ export async function GET({ request }: { request: Request }) {
         englishWordCount += (englishPart.match(/[a-zA-Z]+/g) || []).length;
       }
 
-      // Extract title from frontmatter
+      // Extract frontmatter and title
       let title = slug;
+      let fm = "";
       if (content.startsWith("---")) {
         const fmEnd = content.indexOf("---", 4);
         if (fmEnd !== -1) {
-          const fm = content.slice(4, fmEnd);
+          fm = content.slice(4, fmEnd);
           const titleMatch = fm.match(/^title:\s*(.+)$/m);
           if (titleMatch) title = titleMatch[1].trim();
         }
       }
 
-      // Consider it a vocab note if ≥5 entries with at least 15 English words
-      const isVocabNote = entryCount >= 5 && englishWordCount >= 15;
+      // Vocab note if it carries the explicit category, or matches the
+      // numbered-entry heuristic (fallback for older notes).
+      const isVocabNote =
+        /^categories:\s*vocab-studio\s*$/m.test(fm) ||
+        (entryCount >= 5 && englishWordCount >= 15);
 
       notes.push({
         slug,
