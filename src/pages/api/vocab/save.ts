@@ -14,7 +14,7 @@ export const prerender = false;
 
 import { isAuthenticated, unauthorizedResponse } from "../../../lib/vocab-auth";
 import { parseVocabNote, buildMarkdown } from "../../../lib/vocab-parser";
-import { getBlogDir, resolveNotePath } from "../../../lib/blog-dir";
+import { getBlogDir, resolveNotePath, sanitizeSlug } from "../../../lib/blog-dir";
 import fs from "node:fs";
 
 const BLOG_DIR = getBlogDir();
@@ -76,7 +76,14 @@ export async function POST({ request }: { request: Request }) {
       );
     } else if (mode === "exercise") {
       // ── 保存为新博客文章 ──
-      const exerciseSlug = `${slug}-练习册`;
+      const cleanSlug = sanitizeSlug(slug);
+      if (!cleanSlug) {
+        return new Response(
+          JSON.stringify({ error: "Invalid slug (empty after sanitization)" }),
+          { status: 400, headers: { "Content-Type": "application/json" } },
+        );
+      }
+      const exerciseSlug = `${cleanSlug}-练习册`;
 
       // Refuse to overwrite an existing exercise workbook
       if (fs.existsSync(resolveNotePath(exerciseSlug))) {
@@ -87,7 +94,7 @@ export async function POST({ request }: { request: Request }) {
       }
 
       const today = new Date().toISOString().split("T")[0];
-      const title = body.title || `${slug} 练习册`;
+      const title = body.title || `${cleanSlug} 练习册`;
 
       // Build the full markdown file — frontmatter MUST NOT have leading
       // whitespace, so the template literal starts flush-left.

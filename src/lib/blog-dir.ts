@@ -44,6 +44,14 @@ export function resolveNotePath(slug: string): string {
   return normalized;
 }
 
+/** Sanitize a string for use as a filename slug (Windows-safe). */
+export function sanitizeSlug(slug: string): string {
+  return slug
+    .replace(/[/\\:*?"<>|]/g, "") // strip OS-illegal filename chars
+    .replace(/\s+/g, "-") // collapse whitespace into single dashes
+    .trim();
+}
+
 /** List all .md files recursively under the blog directory. */
 export function listMarkdownFiles(): string[] {
   const dir = getBlogDir();

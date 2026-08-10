@@ -18,11 +18,18 @@ import { parseVocabNote } from "../../../lib/vocab-parser";
 import { resolveNotePath } from "../../../lib/blog-dir";
 import {
   buildExercisePrompt,
+  buildExercisePromptFromText,
   buildEnrichPrompt,
   type EnrichOptions,
 } from "../../../lib/vocab-prompts";
 import fs from "node:fs";
 import path from "node:path";
+
+/** Count English word tokens in a string using a character-based regex. */
+function countEnglishWords(text: string): number {
+  const matches = text.match(/[A-Za-z]+/g);
+  return matches ? matches.length : 0;
+}
 
 // ── LLM Client ──
 
@@ -105,7 +112,11 @@ async function callAnthropic(
 
   const body = {
     model: config.model,
-    max_tokens: 4096,
+    // Generous cap: reasoning-capable models spend many tokens "thinking"
+    // before the final content (4096 got fully consumed by reasoning on
+    // larger inputs, leaving content empty). Claude's max output is 64000;
+    // 32768 gives plenty of headroom for reasoning + long workbooks.
+    max_tokens: 32768,
     system: systemMsg?.content || "",
     messages: chatMessages,
   };
@@ -136,7 +147,10 @@ async function callOpenAICompatible(
   const body = {
     model: config.model,
     messages,
-    max_tokens: 4096,
+    // Generous cap (billed on actual output, not the cap). Reasoning models
+    // can exhaust small budgets on "thinking" alone for long inputs; DeepSeek
+    // accepts up to 131072, so 65536 gives 8x headroom for big workbooks.
+    max_tokens: 65536,
     temperature: 0.7,
   };
 
@@ -186,63 +200,100 @@ async function callOpenAICompatible(
 
 // ── Main POST handler ──
 
+function json(obj: unknown, status = 200): Response {
+  return new Response(JSON.stringify(obj), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
 export async function POST({ request }: { request: Request }) {
   if (!isAuthenticated(request)) return unauthorizedResponse();
 
   try {
     const body = await request.json();
-    const { mode, slug, types, customFormat, enrichOptions } = body;
+    const { mode, slug, types, customFormat, enrichOptions, text, title } = body;
 
-    if (!mode || !slug) {
-      return new Response(
-        JSON.stringify({ error: "Missing required fields: mode, slug" }),
-        { status: 400, headers: { "Content-Type": "application/json" } },
-      );
+    if (!mode) {
+      return json({ error: "Missing required field: mode" }, 400);
     }
 
-    // Read and parse the note
-    const filePath = resolveNotePath(slug);
-    if (!fs.existsSync(filePath)) {
-      return new Response(
-        JSON.stringify({ error: `Note not found: ${slug}` }),
-        { status: 404, headers: { "Content-Type": "application/json" } },
-      );
-    }
-
-    const markdown = fs.readFileSync(filePath, "utf-8");
-    const parsed = parseVocabNote(markdown, slug);
-
-    if (parsed.entries.length === 0) {
-      return new Response(
-        JSON.stringify({ error: "No vocabulary entries found in this note" }),
-        { status: 400, headers: { "Content-Type": "application/json" } },
-      );
-    }
-
-    // Get LLM config
     const llmConfig = getLLMConfig();
 
-    // Build prompt and call LLM
+    // ── analyze: test the LLM connection + count English words locally ──
+    if (mode === "analyze") {
+      if (!text || !text.trim()) {
+        return json({ error: "Missing required field: text" }, 400);
+      }
+      const wordCount = countEnglishWords(text);
+      try {
+        // Minimal call to verify the configured LLM provider works.
+        await callLLM(
+          [{ role: "user", content: "Reply with exactly: OK" }],
+          llmConfig,
+        );
+        return json({ wordCount, connected: true }, 200);
+      } catch (err: any) {
+        return json(
+          { wordCount, connected: false, error: err.message || "Connection failed" },
+          200,
+        );
+      }
+    }
+
+    // ── build prompt from the right source ──
     let system: string;
     let user: string;
+    let responseTitle: string;
+    let entryCount: number | null = null;
 
-    if (mode === "exercise") {
-      const prompt = buildExercisePrompt(
-        parsed.entries,
+    if (mode === "exercise" && text?.trim()) {
+      // Paste-text path: LLM extracts vocab + builds the workbook in one call.
+      const p = buildExercisePromptFromText(
+        text,
         types || ["en_to_cn", "fill_blank"],
         customFormat,
       );
-      system = prompt.system;
-      user = prompt.user;
-    } else if (mode === "enrich") {
-      const prompt = buildEnrichPrompt(parsed.entries, enrichOptions || {});
-      system = prompt.system;
-      user = prompt.user;
+      system = p.system;
+      user = p.user;
+      responseTitle = title || "粘贴文本词汇";
     } else {
-      return new Response(
-        JSON.stringify({ error: "Invalid mode. Use 'exercise' or 'enrich'" }),
-        { status: 400, headers: { "Content-Type": "application/json" } },
-      );
+      // File-based path: exercise-from-note, and enrich (always reads the file)
+      if (!slug) {
+        return json({ error: "Missing required field: slug" }, 400);
+      }
+      const filePath = resolveNotePath(slug);
+      if (!fs.existsSync(filePath)) {
+        return json({ error: `Note not found: ${slug}` }, 404);
+      }
+      const parsed = parseVocabNote(fs.readFileSync(filePath, "utf-8"), slug);
+      if (parsed.entries.length === 0) {
+        return json(
+          { error: "No vocabulary entries found in this note" },
+          400,
+        );
+      }
+
+      if (mode === "exercise") {
+        const p = buildExercisePrompt(
+          parsed.entries,
+          types || ["en_to_cn", "fill_blank"],
+          customFormat,
+        );
+        system = p.system;
+        user = p.user;
+      } else if (mode === "enrich") {
+        const p = buildEnrichPrompt(parsed.entries, enrichOptions || {});
+        system = p.system;
+        user = p.user;
+      } else {
+        return json(
+          { error: "Invalid mode. Use 'analyze', 'exercise', or 'enrich'" },
+          400,
+        );
+      }
+      responseTitle = parsed.title;
+      entryCount = parsed.entries.length;
     }
 
     const generated = await callLLM(
@@ -253,24 +304,25 @@ export async function POST({ request }: { request: Request }) {
       llmConfig,
     );
 
-    return new Response(
-      JSON.stringify({
-        generated,
-        slug,
-        mode,
-        title: parsed.title,
-        entryCount: parsed.entries.length,
-      }),
+    // Paste-text mode: derive the workbook title from the generated heading
+    // `# 练习册：{主题}` so the client can name the saved file without a prompt.
+    if (mode === "exercise" && text?.trim()) {
+      const themeMatch = generated.match(/^#\s*练习册[:：]\s*(.+)$/m);
+      if (themeMatch) responseTitle = themeMatch[1].replace(/[*_`]/g, "").trim();
+    }
+
+    return json(
       {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
+        generated,
+        slug: slug || null,
+        mode,
+        title: responseTitle,
+        entryCount,
       },
+      200,
     );
   } catch (err: any) {
     console.error("[vocab generate]", err);
-    return new Response(
-      JSON.stringify({ error: err.message || "Generation failed" }),
-      { status: 500, headers: { "Content-Type": "application/json" } },
-    );
+    return json({ error: err.message || "Generation failed" }, 500);
   }
 }

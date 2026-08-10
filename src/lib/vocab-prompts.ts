@@ -26,21 +26,17 @@ function vocabListText(entries: VocabEntry[]): string {
 
 // ── Exercise prompt builders ──
 
-export function buildExercisePrompt(
-  entries: VocabEntry[],
-  types: string[],
-  customFormat?: string,
-): { system: string; user: string } {
-  const vocabText = vocabListText(entries);
+/** Shared 题型 section for exercise prompts (used by both note and text flows). */
+function buildExerciseTypeSection(types: string[], customFormat?: string): string {
   const typeDescriptions: Record<string, string> = {
-    en_to_cn: "**看英文写中文**：给出英文短语，要求学生写出对应的中文释义。",
-    cn_to_en: "**看中文写英文**：给出中文释义，要求学生写出对应的英文短语。",
+    en_to_cn: "**看英文写中文**：给出英文短语，要求学生写出对应的中文释义。需要包含笔记里的所有单词和短语。",
+    cn_to_en: "**看中文写英文**：给出中文释义，要求学生写出对应的英文短语。需要包含笔记里的所有单词和短语。",
     fill_blank:
-      "**短语填入例句**：为每个短语设计一个包含空格的例句，学生从词表中选择正确的短语填入。",
+      "**短语填入例句**：为每个短语设计一个包含空格的例句，学生从词表中选择正确的短语填入。可供选择的单词/短语和答案里的单词/短语顺序要不同。需要包含笔记里的所有单词和短语。",
     matching:
-      "**连线匹配**：左列英文短语，右列中文释义（打乱顺序），学生连线匹配。",
+      "**连线匹配**：左列英文短语，右列中文释义（打乱顺序），学生连线匹配。需要包含笔记里的所有单词和短语。",
     multiple_choice:
-      "**选择释义**：给英文短语，设计4个中文选项（含1个正确答案和3个干扰项）。",
+      "**选择释义**：给英文短语，设计4个中文选项（含1个正确答案和3个干扰项）。需要包含笔记里的所有单词和短语。",
   };
 
   const typeLines = types
@@ -55,30 +51,67 @@ export function buildExercisePrompt(
 ${customFormat}`;
   }
 
+  return `${typeLines.join("\n")}\n${customSection}`;
+}
+
+const EXERCISE_FORMAT_RULES = `## 输出格式要求
+1. 用 Markdown 标题 "# 练习册：{主题}" 开头
+2. 每个题型一个 "## " 二级标题。每个题型下分割成寄到子题目，子题目的数量保持在5-10题
+3. 对于每个子题目，子题目的练习部分在前，答案部分在后（用 "## 📋 参考答案" 分隔）
+4. 答案要完整准确，不需要给解析
+5. 如果是多题型，每个题型都选择一部分单词，保证所有题型的题目覆盖到所有单词
+6. 对于连线题，用 Markdown 表格呈现
+
+## 输出语言
+题目说明和框架使用中文，英文短语和例句保持英文。`;
+
+export function buildExercisePrompt(
+  entries: VocabEntry[],
+  types: string[],
+  customFormat?: string,
+): { system: string; user: string } {
+  const vocabText = vocabListText(entries);
+
   const system = `你是一位资深的雅思英语教师，正在为学生准备词汇练习材料。
 
 ## 任务
 根据提供的英语词汇表，生成一份完整的词汇练习册。练习册以 Markdown 格式输出，题目要至少包括提供词汇的80%-100%。
 
 ## 题目类型
-${typeLines.join("\n")}
-${customSection}
-
-## 输出格式要求
-1. 用 Markdown 标题 "# 练习册：{主题}" 开头
-2. 每个题型一个 "## " 二级标题
-3. 练习部分在前，答案部分在后（用 "## 📋 参考答案" 分隔）
-4. 答案要完整准确
-5. 题目数量：每种题型覆盖约 30% 的词汇（随机选取），词汇多的可分批出题
-6. 对于连线题，用 Markdown 表格呈现
-
-## 输出语言
-题目说明和框架使用中文，英文短语和例句保持英文。`;
+${buildExerciseTypeSection(types, customFormat)}
+${EXERCISE_FORMAT_RULES}`;
 
   const user = `## 词汇表
 ${vocabText}
 
 请根据以上词汇表，生成练习册。`;
+
+  return { system, user };
+}
+
+/**
+ * Exercise prompt variant for the paste-text flow: the LLM extracts the core
+ * vocabulary from the pasted text and builds the workbook around it in a
+ * single call (no separate analyze/extract step).
+ */
+export function buildExercisePromptFromText(
+  text: string,
+  types: string[],
+  customFormat?: string,
+): { system: string; user: string } {
+  const system = `你是一位资深的雅思英语教师，正在为学生准备词汇练习材料。
+
+## 任务
+阅读用户粘贴的文本，先从文本中提取核心英语词汇短语（单词、短语、搭配），然后根据这些词汇生成一份完整的词汇练习册。练习册以 Markdown 格式输出，题目要至少覆盖所提取词汇的80%-100%。
+
+## 题目类型
+${buildExerciseTypeSection(types, customFormat)}
+${EXERCISE_FORMAT_RULES}`;
+
+  const user = `## 粘贴文本
+${text}
+
+请先提取文本中的核心英语词汇，然后根据这些词汇生成练习册。`;
 
   return { system, user };
 }

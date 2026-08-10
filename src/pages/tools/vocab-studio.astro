@@ -410,9 +410,37 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
 
             <!-- ─── Tab 1: Exercise Builder ─── -->
             <div id="tab-exercise" class="studio-card p-6 flex flex-col gap-5">
+              <!-- Source toggle: from-note vs from-pasted-text -->
+              <div class="flex gap-2">
+                <button id="src-note-btn" class="studio-action studio-action--primary">
+                  📋 从笔记
+                </button>
+                <button id="src-paste-btn" class="studio-action">
+                  📝 从粘贴文本
+                </button>
+              </div>
+
               <p id="exercise-no-note" class="text-text-muted text-sm">
                 👈 请先从左侧选择一篇词汇笔记
               </p>
+
+              <!-- Paste-text source panel -->
+              <div id="exercise-paste-panel" class="hidden flex-col gap-3">
+                <textarea
+                  id="paste-textarea"
+                  class="studio-input h-40 resize-y"
+                  placeholder="粘贴任意英文文本，AI 将统计英文单词数量并测试模型连接...&#10;例如：一篇文章、一个词表、或任意包含英语短语的内容"
+                ></textarea>
+                <button id="paste-analyze-btn" class="studio-action studio-action--primary self-start">
+                  🔍 分析词汇
+                </button>
+                <div id="paste-result" class="hidden flex-col gap-2">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span id="paste-count" class="studio-badge"></span>
+                    <span id="paste-conn" class="text-xs font-semibold"></span>
+                  </div>
+                </div>
+              </div>
 
               <div id="exercise-content" class="hidden flex flex-col gap-6">
                 <!-- Question types -->
@@ -548,6 +576,9 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
       let currentMode = 'exercise'; // 'exercise' | 'enrich'
       let generatedContent = null;
       let generatedTitle = null;
+      let exerciseSource = 'note'; // 'note' | 'paste' (exercise tab only)
+      let pasteWordCount = 0;
+      let pasteAnalyzed = false; // true after a successful (connected) analyze
 
       // ── DOM refs ──
       function $(id) { return document.getElementById(id); }
@@ -752,13 +783,26 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
       // ── UI updates ──
       function updateUI() {
         const hasNote = !!selectedNote;
+        const isPaste = exerciseSource === 'paste';
+        const pasteReady = pasteAnalyzed;
 
-        // Exercise tab
-        $('exercise-no-note').classList.toggle('hidden', hasNote);
-        $('exercise-content').classList.toggle('hidden', !hasNote);
-        if (!hasNote) $('exercise-content').classList.remove('flex');
+        // source toggle highlight
+        $('src-note-btn').classList.toggle('studio-action--primary', !isPaste);
+        $('src-paste-btn').classList.toggle('studio-action--primary', isPaste);
 
-        // Enrich tab
+        // note-source prompt: only in note source when no note selected
+        $('exercise-no-note').classList.toggle('hidden', isPaste || hasNote);
+
+        // paste panel: only in paste source
+        $('exercise-paste-panel').classList.toggle('hidden', !isPaste);
+        $('exercise-paste-panel').classList.toggle('flex', isPaste);
+
+        // exercise form: note source needs a note; paste source needs entries analyzed
+        const showForm = (!isPaste && hasNote) || (isPaste && pasteReady);
+        $('exercise-content').classList.toggle('hidden', !showForm);
+        if (!showForm) $('exercise-content').classList.remove('flex');
+
+        // Enrich tab (unaffected by exerciseSource)
         $('enrich-no-note').classList.toggle('hidden', hasNote);
         $('enrich-content').classList.toggle('hidden', !hasNote);
         if (!hasNote) $('enrich-content').classList.remove('flex');
@@ -818,11 +862,93 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
         });
       }
 
+      // ── Exercise source toggle + paste-text analyze ──
+      function sanitizeClientSlug(s) {
+        return (s || '')
+          .replace(/[/\\:*?"<>|]/g, '')
+          .replace(/\s+/g, '-')
+          .trim();
+      }
+
+      function switchExerciseSource(src) {
+        if (exerciseSource === src) return;
+        exerciseSource = src;
+        // Clear stale preview so a prior generation can't be saved under the
+        // wrong source/mode.
+        generatedContent = null;
+        generatedTitle = null;
+        $('preview-panel').classList.add('hidden');
+        $('preview-panel').classList.remove('flex');
+        $('preview-content').textContent = '等待生成...';
+        updateUI();
+      }
+
+      $('src-note-btn').addEventListener('click', () => switchExerciseSource('note'));
+      $('src-paste-btn').addEventListener('click', () => switchExerciseSource('paste'));
+
+      $('paste-analyze-btn').addEventListener('click', async () => {
+        const text = $('paste-textarea').value.trim();
+        if (!text) {
+          showToast('请先粘贴文本', 'error');
+          return;
+        }
+        const btn = $('paste-analyze-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="studio-spinner"></span> 分析中...';
+        try {
+          const res = await fetch('/api/vocab/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ mode: 'analyze', text }),
+          });
+          if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.error || '分析失败');
+          }
+          const data = await res.json();
+          pasteWordCount = data.wordCount || 0;
+          pasteAnalyzed = !!data.connected;
+          $('paste-count').textContent = `共 ${pasteWordCount} 个英文单词`;
+          const connEl = $('paste-conn');
+          if (data.connected) {
+            connEl.textContent = '· ✅ 模型连接正常';
+            connEl.style.color = '';
+          } else {
+            connEl.textContent = `· ⚠️ 模型连接失败：${data.error || '未知错误'}`;
+            connEl.style.color = 'var(--accent-spot)';
+          }
+          $('paste-result').classList.remove('hidden');
+          $('paste-result').classList.add('flex');
+          // Clear any stale preview from a previous generation.
+          generatedContent = null;
+          generatedTitle = null;
+          $('preview-panel').classList.add('hidden');
+          $('preview-panel').classList.remove('flex');
+          $('preview-content').textContent = '等待生成...';
+          updateUI();
+          if (data.connected) {
+            showToast(`✅ 模型连接正常，共 ${pasteWordCount} 个英文单词`, 'success');
+          } else {
+            showToast(`⚠️ 模型连接失败：${data.error || '未知错误'}`, 'error');
+          }
+        } catch (e) {
+          showToast(`❌ ${e.message}`, 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = '🔍 分析词汇';
+        }
+      });
+
       // ── Generate: Exercise ──
       $('exercise-generate-btn').addEventListener('click', async () => {
         const types = getCheckedTypes();
         if (types.length === 0 && !$('exercise-custom').value.trim()) {
           showToast('请至少选择一种题型或填写自定义题型', 'error');
+          return;
+        }
+        const isPaste = exerciseSource === 'paste';
+        if (isPaste && !pasteAnalyzed) {
+          showToast('请先点击「分析词汇」并确认模型连接正常', 'error');
           return;
         }
 
@@ -834,12 +960,19 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
         statusEl.textContent = '正在调用 AI 生成练习册，可能需要 10-30 秒...';
 
         try {
-          const body = {
-            mode: 'exercise',
-            slug: selectedNote.slug,
-            types: types.length > 0 ? types : ['en_to_cn'],
-            customFormat: $('exercise-custom').value.trim() || undefined,
-          };
+          const body = isPaste
+            ? {
+                mode: 'exercise',
+                text: $('paste-textarea').value.trim(),
+                types: types.length > 0 ? types : ['en_to_cn'],
+                customFormat: $('exercise-custom').value.trim() || undefined,
+              }
+            : {
+                mode: 'exercise',
+                slug: selectedNote.slug,
+                types: types.length > 0 ? types : ['en_to_cn'],
+                customFormat: $('exercise-custom').value.trim() || undefined,
+              };
 
           const res = await fetch('/api/vocab/generate', {
             method: 'POST',
@@ -853,7 +986,8 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
           }
 
           const data = await res.json();
-          showPreview(data.generated, 'exercise', data.title || selectedNote.title);
+          const previewTitle = data.title || (isPaste ? '粘贴文本词汇' : selectedNote.title);
+          showPreview(data.generated, 'exercise', previewTitle);
           showToast('✅ 练习册生成成功！', 'success');
         } catch (e) {
           showToast(`❌ ${e.message}`, 'error');
@@ -921,11 +1055,19 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
         btn.innerHTML = '<span class="studio-spinner"></span> 保存中...';
 
         try {
+          const usePaste = (currentMode === 'exercise' && exerciseSource === 'paste');
+          const slug = usePaste
+            ? sanitizeClientSlug(generatedTitle || '粘贴文本词汇')
+            : (selectedNote ? selectedNote.slug : null);
+          if (!slug) {
+            showToast('请先选择笔记或在粘贴模式下分析词汇', 'error');
+            return;
+          }
           const body = {
             mode: currentMode,
-            slug: selectedNote.slug,
+            slug,
             content: generatedContent,
-            title: generatedTitle,
+            title: usePaste ? (generatedTitle || '粘贴文本词汇') : generatedTitle,
           };
 
           const res = await fetch('/api/vocab/save', {
