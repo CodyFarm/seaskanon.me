@@ -532,17 +532,30 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
               </div>
             </div>
 
-            <!-- ─── Preview Panel (shared) ─── -->
-            <div id="preview-panel" class="studio-card p-6 flex-col gap-5 hidden">
+              <!-- ─── Preview Panel (shared) ─── -->
+              <div id="preview-panel" class="studio-card p-6 flex-col gap-5 hidden">
               <div class="flex items-center justify-between">
                 <h2 class="text-lg font-black text-text-main">
                   👁️ 预览结果
                   <span id="preview-mode-badge" class="studio-badge ml-2"></span>
                 </h2>
               </div>
-              <div id="preview-content" class="studio-preview">
-                <p class="text-text-muted">等待生成...</p>
+              <div class="flex flex-col gap-1.5">
+                <label for="preview-filename" class="text-xs font-semibold text-text-muted">
+                  文件名（.md 会自动添加，可直接编辑）
+                </label>
+                <input
+                  id="preview-filename"
+                  class="studio-input text-sm"
+                  placeholder="例如：雅思写作常用写作词汇--教育类-练习册"
+                />
               </div>
+              <textarea
+                id="preview-content"
+                class="studio-preview w-full resize-y"
+                rows="16"
+                placeholder="生成的内容，可直接编辑..."
+              ></textarea>
               <div class="flex gap-3 flex-wrap">
                 <button id="save-btn" class="studio-action studio-action--primary">
                   💾 <span id="save-btn-label">保存</span>
@@ -574,7 +587,6 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
       // ── State ──
       let selectedNote = null;
       let currentMode = 'exercise'; // 'exercise' | 'enrich'
-      let generatedContent = null;
       let generatedTitle = null;
       let exerciseSource = 'note'; // 'note' | 'paste' (exercise tab only)
       let pasteWordCount = 0;
@@ -638,7 +650,10 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
         loginOverlay.classList.remove('hidden');
         loginPassword.value = '';
         selectedNote = null;
-        generatedContent = null;
+        $('preview-content').value = '';
+        $('preview-filename').value = '';
+        $('preview-panel').classList.add('hidden');
+        $('preview-panel').classList.remove('flex');
         updateUI();
       });
 
@@ -824,14 +839,24 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
         return opts;
       }
 
+      function defaultFilename(mode) {
+        if (mode === 'enrich') {
+          return selectedNote ? selectedNote.slug : '';
+        }
+        const base = exerciseSource === 'paste'
+          ? (generatedTitle || '粘贴文本词汇')
+          : (selectedNote ? selectedNote.slug : '');
+        return base ? `${base}-练习册` : '';
+      }
+
       function showPreview(content, mode, title) {
-        generatedContent = content;
         generatedTitle = title;
+        $('preview-content').value = content;
+        $('preview-filename').value = defaultFilename(mode);
         $('preview-panel').classList.remove('hidden');
         $('preview-panel').classList.add('flex');
-        $('preview-content').textContent = content;
         $('preview-mode-badge').textContent = mode === 'exercise' ? '练习册' : '丰富笔记';
-        $('save-btn-label').textContent = mode === 'exercise' ? '保存为新博客' : '覆盖原文件';
+        $('save-btn-label').textContent = '保存';
       }
 
       function showToast(message, type) {
@@ -875,11 +900,11 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
         exerciseSource = src;
         // Clear stale preview so a prior generation can't be saved under the
         // wrong source/mode.
-        generatedContent = null;
         generatedTitle = null;
         $('preview-panel').classList.add('hidden');
         $('preview-panel').classList.remove('flex');
-        $('preview-content').textContent = '等待生成...';
+        $('preview-content').value = '';
+        $('preview-filename').value = '';
         updateUI();
       }
 
@@ -920,11 +945,11 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
           $('paste-result').classList.remove('hidden');
           $('paste-result').classList.add('flex');
           // Clear any stale preview from a previous generation.
-          generatedContent = null;
           generatedTitle = null;
           $('preview-panel').classList.add('hidden');
           $('preview-panel').classList.remove('flex');
-          $('preview-content').textContent = '等待生成...';
+          $('preview-content').value = '';
+          $('preview-filename').value = '';
           updateUI();
           if (data.connected) {
             showToast(`✅ 模型连接正常，共 ${pasteWordCount} 个英文单词`, 'success');
@@ -1045,8 +1070,14 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
 
       // ── Save ──
       $('save-btn').addEventListener('click', async () => {
-        if (!generatedContent) {
+        const content = $('preview-content').value;
+        if (!content || !content.trim()) {
           showToast('没有可保存的内容', 'error');
+          return;
+        }
+        const filename = $('preview-filename').value.trim();
+        if (!filename) {
+          showToast('文件名不能为空', 'error');
           return;
         }
 
@@ -1055,19 +1086,12 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
         btn.innerHTML = '<span class="studio-spinner"></span> 保存中...';
 
         try {
-          const usePaste = (currentMode === 'exercise' && exerciseSource === 'paste');
-          const slug = usePaste
-            ? sanitizeClientSlug(generatedTitle || '粘贴文本词汇')
-            : (selectedNote ? selectedNote.slug : null);
-          if (!slug) {
-            showToast('请先选择笔记或在粘贴模式下分析词汇', 'error');
-            return;
-          }
           const body = {
             mode: currentMode,
-            slug,
-            content: generatedContent,
-            title: usePaste ? (generatedTitle || '粘贴文本词汇') : generatedTitle,
+            slug: sanitizeClientSlug(filename),
+            originalSlug: (currentMode === 'enrich' && selectedNote) ? selectedNote.slug : undefined,
+            content,
+            title: generatedTitle || filename,
           };
 
           const res = await fetch('/api/vocab/save', {
@@ -1082,26 +1106,23 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
           }
 
           const data = await res.json();
-          const label = currentMode === 'exercise' ? '练习册已保存为新博客' : '原文件已更新';
-          showToast(`✅ ${label}！文件: ${data.path}`, 'success');
-
-          if (currentMode === 'exercise') {
-            // Refresh notes list to include new file
-            loadNotes();
-          }
+          showToast(`✅ 保存成功！文件: ${data.path}`, 'success');
+          // Refresh notes list to include the new/updated file
+          loadNotes();
         } catch (e) {
           showToast(`❌ ${e.message}`, 'error');
         } finally {
           btn.disabled = false;
-          btn.innerHTML = `💾 <span id="save-btn-label">${currentMode === 'exercise' ? '保存为新博客' : '覆盖原文件'}</span>`;
+          btn.innerHTML = `💾 <span id="save-btn-label">保存</span>`;
         }
       });
 
       // ── Copy ──
       $('copy-btn').addEventListener('click', async () => {
-        if (!generatedContent) return;
+        const content = $('preview-content').value;
+        if (!content) return;
         try {
-          await navigator.clipboard.writeText(generatedContent);
+          await navigator.clipboard.writeText(content);
           showToast('📋 已复制到剪贴板', 'success');
         } catch (e) {
           showToast('复制失败，请手动选择复制', 'error');
@@ -1110,11 +1131,11 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
 
       // ── Clear preview ──
       $('clear-preview-btn').addEventListener('click', () => {
-        generatedContent = null;
         generatedTitle = null;
+        $('preview-content').value = '';
+        $('preview-filename').value = '';
         $('preview-panel').classList.add('hidden');
         $('preview-panel').classList.remove('flex');
-        $('preview-content').textContent = '等待生成...';
       });
 
       // ── Init ──

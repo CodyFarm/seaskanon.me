@@ -24,7 +24,7 @@ const { categories, activeSlug } = Astro.props;
             href={`/writing/categories/${cat.slug}/`}
             class:list={[
               "flex items-center justify-between rounded-xl border-2 border-border-main px-3 py-2 text-sm font-semibold shadow-card1 transition hover:-translate-y-0.5 hover:shadow-card",
-              cat.slug === activeSlug ? "bg-card-soft" : "bg-card-soft",
+              cat.slug === activeSlug ? "bg-card" : "bg-card",
             ]}
           >
             <span class="text-text-main">{cat.name}</span>

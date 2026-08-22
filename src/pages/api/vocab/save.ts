@@ -24,34 +24,68 @@ function safePath(slug: string): string {
   return resolveNotePath(slug);
 }
 
+function json(obj: unknown, status = 200): Response {
+  return new Response(JSON.stringify(obj), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
 export async function POST({ request }: { request: Request }) {
   if (!isAuthenticated(request)) return unauthorizedResponse();
 
   try {
     const body = await request.json();
-    const { mode, slug, content } = body;
+    const { mode, slug, content, title, originalSlug } = body;
 
     if (!mode || !slug || !content) {
-      return new Response(
-        JSON.stringify({ error: "Missing required fields: mode, slug, content" }),
-        { status: 400, headers: { "Content-Type": "application/json" } },
+      return json(
+        { error: "Missing required fields: mode, slug, content" },
+        400,
       );
     }
 
     if (mode === "enrich") {
-      // ── 直接覆盖原文件 ──
-      const targetPath = safePath(slug);
+      // ── 覆盖原笔记，或（改名时）另存为新文件 ──
+      const cleanSlug = sanitizeSlug(slug);
+      if (!cleanSlug) return json({ error: "Invalid slug (empty after sanitization)" }, 400);
+      const targetPath = safePath(cleanSlug);
+      const origSlug = originalSlug ? sanitizeSlug(originalSlug) : cleanSlug;
 
-      if (!fs.existsSync(targetPath)) {
-        return new Response(
-          JSON.stringify({ error: `Original note not found: ${slug}` }),
-          { status: 404, headers: { "Content-Type": "application/json" } },
-        );
+      let frontmatter: string;
+      if (cleanSlug === origSlug) {
+        // 未改名：覆盖原文件，保留原 frontmatter
+        if (!fs.existsSync(targetPath)) {
+          return json({ error: `Original note not found: ${cleanSlug}` }, 404);
+        }
+        frontmatter = parseVocabNote(
+          fs.readFileSync(targetPath, "utf-8"),
+          cleanSlug,
+        ).frontmatter;
+      } else {
+        // 改名：另存为新文件，拒绝覆盖其他已存在的文件
+        if (fs.existsSync(targetPath)) {
+          return json({ error: `文件已存在: ${cleanSlug}` }, 409);
+        }
+        const origPath = safePath(origSlug);
+        if (fs.existsSync(origPath)) {
+          // 原文件还在 → 复用其 frontmatter
+          frontmatter = parseVocabNote(
+            fs.readFileSync(origPath, "utf-8"),
+            origSlug,
+          ).frontmatter;
+        } else {
+          // 原文件已不存在 → 生成最小 frontmatter
+          const today = new Date().toISOString().split("T")[0];
+          const t = title || cleanSlug;
+          frontmatter = `---
+pubDate: ${today}
+title: ${t}
+categories: vocab-studio
+draft: false
+---`;
+        }
       }
-
-      // 读取原文件的 frontmatter
-      const original = fs.readFileSync(targetPath, "utf-8");
-      const parsed = parseVocabNote(original, slug);
 
       // LLM 返回的是完整的笔记内容（含标题等），我们只提取 body 部分
       let bodyContent = content;
@@ -67,34 +101,23 @@ export async function POST({ request }: { request: Request }) {
       // 如果 LLM 返回的内容以 # 标题开头，去除它
       bodyContent = bodyContent.replace(/^#\s+.+?\n+/m, "").trim();
 
-      const finalMarkdown = buildMarkdown(parsed.frontmatter, bodyContent);
+      const finalMarkdown = buildMarkdown(frontmatter, bodyContent);
       fs.writeFileSync(targetPath, finalMarkdown, "utf-8");
 
-      return new Response(
-        JSON.stringify({ ok: true, path: `${slug}.md`, mode: "enrich" }),
-        { status: 200, headers: { "Content-Type": "application/json" } },
-      );
+      return json({ ok: true, path: `${cleanSlug}.md`, mode: "enrich" }, 200);
     } else if (mode === "exercise") {
-      // ── 保存为新博客文章 ──
+      // ── 保存为新博客文章（slug 即完整文件名，客户端可自由改名）──
       const cleanSlug = sanitizeSlug(slug);
-      if (!cleanSlug) {
-        return new Response(
-          JSON.stringify({ error: "Invalid slug (empty after sanitization)" }),
-          { status: 400, headers: { "Content-Type": "application/json" } },
-        );
-      }
-      const exerciseSlug = `${cleanSlug}-练习册`;
+      if (!cleanSlug) return json({ error: "Invalid slug (empty after sanitization)" }, 400);
+      const targetPath = safePath(cleanSlug);
 
-      // Refuse to overwrite an existing exercise workbook
-      if (fs.existsSync(resolveNotePath(exerciseSlug))) {
-        return new Response(
-          JSON.stringify({ error: `练习册已存在: ${exerciseSlug}` }),
-          { status: 409, headers: { "Content-Type": "application/json" } },
-        );
+      // Refuse to overwrite an existing file
+      if (fs.existsSync(targetPath)) {
+        return json({ error: `文件已存在: ${cleanSlug}` }, 409);
       }
 
       const today = new Date().toISOString().split("T")[0];
-      const title = body.title || `${cleanSlug} 练习册`;
+      const t = title || cleanSlug;
 
       // Build the full markdown file — frontmatter MUST NOT have leading
       // whitespace, so the template literal starts flush-left.
@@ -103,7 +126,7 @@ export async function POST({ request }: { request: Request }) {
 tags:
   - IELTS
 pubDate: ${today}
-title: ${title}
+title: ${t}
 description: 词汇练习册 — 自动生成
 categories: vocab-studio
 series: IELTS writing vocabulary
@@ -112,30 +135,16 @@ draft: false
 
 ${content}
 `;
-      const targetPath = resolveNotePath(exerciseSlug);
       fs.writeFileSync(targetPath, fullContent, "utf-8");
 
       console.log(`[vocab save] exercise → ${targetPath} (${Buffer.byteLength(fullContent, "utf-8")} bytes)`);
 
-      return new Response(
-        JSON.stringify({
-          ok: true,
-          path: `${exerciseSlug}.md`,
-          mode: "exercise",
-        }),
-        { status: 200, headers: { "Content-Type": "application/json" } },
-      );
+      return json({ ok: true, path: `${cleanSlug}.md`, mode: "exercise" }, 200);
     } else {
-      return new Response(
-        JSON.stringify({ error: "Invalid mode. Use 'exercise' or 'enrich'" }),
-        { status: 400, headers: { "Content-Type": "application/json" } },
-      );
+      return json({ error: "Invalid mode. Use 'exercise' or 'enrich'" }, 400);
     }
   } catch (err: any) {
     console.error("[vocab save]", err);
-    return new Response(
-      JSON.stringify({ error: err.message || "Save failed" }),
-      { status: 500, headers: { "Content-Type": "application/json" } },
-    );
+    return json({ error: err.message || "Save failed" }, 500);
   }
 }
