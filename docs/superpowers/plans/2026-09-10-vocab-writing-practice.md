@@ -20,7 +20,7 @@
 - 真实词库和临时文件加入 gitignore，不提交到 Git，不放在 src/data。
 - 默认不自动重试付费请求，按钮可手动重试。为新接口提供 60 秒超时。
 - 实现前后运行 pnpm build；函数与接口用离线模型 stub 验证，真模型调用单独记录是否完成。
-- 原工作区已有两处精神分析文章变动，开发提交不得包含这些内容。
+- 实施前检查 git status，开发提交不得包含与本功能无关的现有修改。
 - 只修改本仓库；不改 ref-project 或 PhilosopherRoundtable。使用双引号、两空格、分号和已有 @/ 别名。
 
 ## 文件职责
@@ -39,6 +39,11 @@
 | src/lib/vocab/writingService.ts | 出题、批改与时间保存协调 |
 | src/lib/vocab/practiceToken.ts | 时间保存重试令牌 |
 | src/lib/vocab/http.ts | 新接口认证、同源检查、输入大小和错误映射 |
+| src/lib/vocab/candidates.ts | 源文本解析、模型补全、候选校验与查重 |
+| src/pages/api/vocab/library/candidates.ts | 只读候选提取 |
+| src/pages/api/vocab/library/import.ts | 审核后批量入库 |
+| src/components/vocab/CandidateReview.astro | 可勾选、可编辑的审核清单 |
+| src/scripts/vocab/candidates.ts | 源快照、审核与入库交互 |
 | src/pages/api/vocab/library.ts | 词库 CRUD |
 | src/pages/api/vocab/library/practice.ts | 批改时间保存重试 |
 | src/pages/api/vocab/writing/task.ts | 任务生成 |
@@ -230,7 +235,43 @@ assert.equal(hasWordForm("Compulsory education matters.", "compulsory"), true);
 - [ ] 结果允许逐词采纳建议，PATCH 使用最新 revision；单词已经更名或删除时显示跳过。显示存储重试状态，下一题不隐式接受等级建议。
 - [ ] 手动走通修改重交、查看参考标记、窄屏布局、键盘提交、刷新恢复、断网重试和两标签页冲突；提交任务文件。
 
-## Task 8：集成验收与交付
+## Task 8：笔记候选词审核入库
+
+**Files:** candidates.ts 服务端与客户端、library/candidates.ts、library/import.ts、CandidateReview.astro；修改 libraryStore.ts、types.ts、session.ts、vocab-studio.astro；测试 tests/vocab/candidates.test.ts、tests/vocab/import.test.ts。
+
+**Interfaces:** `extractCandidates(text: string, scope: "entries" | "expanded", deps): Promise<CandidateBatch>`，deps 包含 store 与 complete；`CandidateBatch = { sourceHash: string; scope: "entries" | "expanded"; candidates: Candidate[]; revision: string }`，`Candidate = { entry: EditableEntry; evidence: string; existing: boolean }`。store 新增 `importReviewed(items: ImportItem[], expectedRevision: string)`，`ImportItem = { action: "create" | "updateMeanings"; entry: EditableEntry }`，返回 `{ created: string[]; updated: string[]; revision: string }`。客户端 `initCandidates(root: HTMLElement)` 返回 `{ open(text: string, label: string): void; reset(): void }`。
+
+- [ ] 编写默认条目提取测试：原文含条目、子条目、例句，entries 不提取例句额外单词；无条目返回空清单而非自动扩展。expanded 候选必须有真实来源片段。校验模型新增未请求词形、超 100 项、伪造 existing 标记被拒绝或由服务器重算。
+- [ ] 用临时 store 编写批量导入失败测试：一个非法项使全批不变，旧 revision 返回冲突，两个并发请求不丢词；加入日期来自固定时钟，lastPracticedAt 为 null。
+
+```ts
+const before = await store.read();
+await assert.rejects(() => store.importReviewed([
+  { action: "create", entry: validEntry },
+  { action: "create", entry: { ...validEntry, word: "other", mastery: 6 } },
+], before.revision));
+assert.deepEqual(await store.read(), before);
+```
+
+- [ ] 运行 `pnpm exec tsx --test tests/vocab/candidates.test.ts tests/vocab/import.test.ts`，确认未实现时失败。
+- [ ] 默认复用 vocab-parser.ts 的编号条目与子条目，补全词性和双语释义；扫描模式单独 prompt；记录 text+scope 摘要，返回前核对 evidence、词形与重复 key。独立提取失败不影响原 generate/save 的成功状态。
+- [ ] 实现两条新 API，复用现有认证与输入限制；正文 20,000 字符、最多 100 候选。importReviewed 整批置于 store 队列，更新释义只应用 partOfSpeech、meaningZh、meaningEn，不更新已有词时间或等级。
+
+```ts
+const after = await store.read();
+const prior = before.entries.find((e) => e.word === existingWord)!;
+const updated = after.entries.find((e) => e.word === existingWord)!;
+assert.equal(updated.addedAt, prior.addedAt);
+assert.equal(updated.lastPracticedAt, prior.lastPracticedAt);
+assert.equal(updated.mastery, prior.mastery);
+```
+
+- [ ] 审核组件默认空选，提供“勾选全部新词”；新词默认等级 1；已有词默认跳过，明确选择更新释义后显示字段差异。取消、提取和关闭不调用 import API。
+- [ ] 对已有笔记、粘贴源、练习册源、丰富笔记当前预览/保存结果增加按钮；传入准确来源快照和标签，不扫描选择题干扰项作为默认来源。文本修改使旧候选过期，确认前要求重新提取。
+- [ ] sessionStorage 保存候选审核输入，退出清理；409 保留字段编辑、刷新重复状态后再确认；丢失成功响应时 GET 核对，不自动重发为更新。
+- [ ] 运行两个测试文件；手动验证不勾选不能入库、取消无写入、选择两项仅入两项、重复不新增、已有释义更新保留时间等级。提交该任务文件。
+
+## Task 9：集成验收与交付
 
 **Files:** docs/vocab-studio-operations.md；仅修复验收发现的相关代码。
 
@@ -242,7 +283,7 @@ pnpm exec tsx --test $vocabTestFiles
 pnpm build
 ```
 
-- [ ] 启动 pnpm dev，在管理员认证后依次验证旧生成练习册、丰富笔记、新词库、新短写作；离线 stub 测试成功不能替代真实 provider 结果，真实调用未运行须写明。
+- [ ] 启动 pnpm dev，在管理员认证后依次验证旧生成练习册、丰富笔记、笔记候选词审核、新词库、新短写作；离线 stub 测试成功不能替代真实 provider 结果，真实调用未运行须写明。
 - [ ] 使用临时 VOCAB_DATA_DIR 验证写入、服务器重启、读取；验证生产无路径配置时错误明确。不能为测试覆盖真实词库。
 - [ ] 按规格第 9 节记录验收结果与桌面/移动端截图位置，包含模型与存储失败状态。
 - [ ] `git diff --check`；只暂存本功能文件，检查 staged diff 不含 `.env`、`.local/`、dist 或现有文章改动。
@@ -253,12 +294,13 @@ pnpm build
 | 规格 | 任务 |
 | --- | --- |
 | 最小数据与五档掌握 | 1、3、6 |
-| 文件路径、并发、revision、损坏保护 | 2、3、8 |
-| 可视化维护和旧页签兼容 | 3、7、8 |
+| 文件路径、并发、revision、损坏保护 | 2、3、9 |
+| 可视化维护和旧页签兼容 | 3、7、8、9 |
 | 新词/复习词混合与少词处理 | 4、5 |
 | AI 复用、任务和错误输出 | 5 |
 | 证据批改、评分限制、时间保存 | 6 |
 | 草稿恢复、修改重交、词形提示 | 7 |
-| 浏览器回归和生产持久化条件 | 8 |
+| 笔记提取、审核、查重和批量入库 | 8 |
+| 浏览器回归和生产持久化条件 | 9 |
 
-执行顺序 1→2→3→4→5→6→7→8。本轮交付为设计与计划，任务复选框保持未完成状态；这些不是已经实现的功能。
+执行顺序 1→2→3→4→5→6→7→8→9。本轮交付为设计与计划，任务复选框保持未完成状态；这些不是已经实现的功能。
