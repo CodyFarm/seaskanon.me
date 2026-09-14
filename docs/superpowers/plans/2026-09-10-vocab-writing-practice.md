@@ -235,6 +235,16 @@ assert.equal(hasWordForm("Compulsory education matters.", "compulsory"), true);
 - [ ] 结果允许逐词采纳建议，PATCH 使用最新 revision；单词已经更名或删除时显示跳过。显示存储重试状态，下一题不隐式接受等级建议。
 - [ ] 手动走通修改重交、查看参考标记、窄屏布局、键盘提交、刷新恢复、断网重试和两标签页冲突；提交任务文件。
 
+### Task 7A：写作平台学习体验约束
+
+**Files:** WritingPractice.astro、scripts/vocab/writing.ts、session.ts、text.ts、tests/vocab/writingExperience.test.ts。
+
+- [ ] 为四种段落功能配置题面与成功标准；每轮只选择一个功能，任务卡准备阶段不渲染参考段。
+- [ ] 编辑器只提供词数、目标词出现提示、词义查看、撤销/重做、草稿保存；实现最多三次中文结构提示，提示不生成英文句子且不改变批改上下文。
+- [ ] 结果页固定按优先修改点、目标词、四维参考、逐句反馈、修改稿、参考段顺序渲染；参考段默认折叠，关闭参考段配置时保持其他反馈。
+- [ ] 复写动作创建空白新草稿而非复制 AI 改进稿；同一 taskId 使用新 submissionId；practice 仅在“完成本轮”执行一次，重复点击幂等。
+- [ ] 增加 aria-live、键盘焦点、非颜色状态文本、375px 单列布局测试清单；作文原文不得进入客户端日志和服务端日志。
+
 ## Task 8：笔记候选词审核入库
 
 **Files:** candidates.ts 服务端与客户端、library/candidates.ts、library/import.ts、CandidateReview.astro；修改 libraryStore.ts、types.ts、session.ts、vocab-studio.astro；测试 tests/vocab/candidates.test.ts、tests/vocab/import.test.ts。
@@ -301,6 +311,7 @@ pnpm build
 | 证据批改、评分限制、时间保存 | 6 |
 | 草稿恢复、修改重交、词形提示 | 7 |
 | 笔记提取、审核、查重和批量入库 | 8 |
+| 写作平台节奏、复写和无障碍 | 7A |
 | 浏览器回归和生产持久化条件 | 9 |
 
 执行顺序 1→2→3→4→5→6→7→8→9。本轮交付为设计与计划，任务复选框保持未完成状态；这些不是已经实现的功能。
