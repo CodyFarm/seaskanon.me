@@ -545,6 +545,12 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
               <div id="library-list" class="flex flex-col gap-2"><p class="text-sm text-text-muted">加载中...</p></div>
             </div>
 
+            <div id="selection-confirm" class="studio-card p-6 flex-col gap-4 hidden">
+              <div><h2 class="text-lg font-black text-text-main">✅ 确认本次使用的词汇</h2><p class="text-sm text-text-muted">生成内容前请检查词形、释义和掌握等级。这里的修改只影响本次生成，不会改动词汇库。</p></div>
+              <div id="selection-confirm-list" class="flex flex-col gap-2"></div>
+              <div class="flex gap-3"><button id="selection-confirm-btn" type="button" class="studio-action studio-action--primary">确认并生成</button><button id="selection-cancel-btn" type="button" class="studio-action">返回修改</button></div>
+            </div>
+
               <!-- ─── Preview Panel (shared) ─── -->
               <div id="preview-panel" class="studio-card p-6 flex-col gap-5 hidden">
               <div class="flex items-center justify-between">
@@ -605,6 +611,7 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
       let pasteWordCount = 0;
       let pasteAnalyzed = false; // true after a successful (connected) analyze
       let libraryEntries = [], libraryRevision = '', libraryEditing = null;
+      let selectionConfirmed = false;
 
       // ── DOM refs ──
       function $(id) { return document.getElementById(id); }
@@ -649,6 +656,7 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
           loginOverlay.classList.add('hidden');
           workspace.classList.remove('hidden');
           loadNotes();
+          loadLibrary();
         } else {
           loginError.textContent = '❌ 密码错误，请重试';
           loginError.classList.remove('hidden');
@@ -811,6 +819,9 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
       $('library-search').addEventListener('input', renderLibrary); $('library-mastery').addEventListener('change', renderLibrary); $('library-add-btn').addEventListener('click', () => { libraryEditing = null; $('library-form').classList.remove('hidden'); $('library-form').classList.add('flex'); ['word','pos','zh','en'].forEach(k => $('library-' + k).value = ''); $('library-level').value = '1'; }); $('library-cancel-btn').addEventListener('click', () => $('library-form').classList.add('hidden'));
       $('library-list').addEventListener('click', async (event) => { const edit = event.target.closest('[data-edit-word]'); const del = event.target.closest('[data-delete-word]'); if (edit) { const e = libraryEntries.find(x => x.word === edit.dataset.editWord); if (!e) return; libraryEditing = e.word; $('library-form').classList.remove('hidden'); $('library-form').classList.add('flex'); $('library-word').value=e.word; $('library-pos').value=e.partOfSpeech; $('library-zh').value=e.meaningZh; $('library-en').value=e.meaningEn; $('library-level').value=e.mastery; } if (del && confirm(`确定删除 ${del.dataset.deleteWord}？`)) { const res = await fetch('/api/vocab/library',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({word:del.dataset.deleteWord,expectedRevision:libraryRevision})}); if (!res.ok) { alert('删除失败，请刷新后重试'); } await loadLibrary(); } });
       $('library-form').addEventListener('submit', async (event) => { event.preventDefault(); const entry={word:$('library-word').value,partOfSpeech:$('library-pos').value,meaningZh:$('library-zh').value,meaningEn:$('library-en').value,mastery:Number($('library-level').value)}; const body=libraryEditing?{originalWord:libraryEditing,patch:entry,expectedRevision:libraryRevision}:{entry,expectedRevision:libraryRevision}; const res=await fetch('/api/vocab/library',{method:libraryEditing?'PATCH':'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}); if(!res.ok){$('library-form-error').textContent='保存失败，请检查字段或刷新后重试';$('library-form-error').classList.remove('hidden');return;} $('library-form').classList.add('hidden'); await loadLibrary(); });
+      function openSelectionConfirm() { const words = libraryEntries.slice().sort((a,b)=>a.mastery-b.mastery).slice(0,5); if (!words.length) { alert('词汇库为空，请先添加词汇'); return false; } $('selection-confirm-list').innerHTML = words.map((e,i)=>`<label class="studio-checkbox checked"><input type="checkbox" checked data-selection-word="${e.word}"><span class="check-mark"></span><span><strong>${e.word}</strong> <span class="studio-badge">等级 ${e.mastery}</span><span class="text-xs text-text-muted"> · ${e.partOfSpeech} · ${e.meaningZh} · ${e.meaningEn}</span></span></label>`).join(''); $('selection-confirm').classList.remove('hidden'); $('selection-confirm').classList.add('flex'); return true; }
+      $('selection-cancel-btn').addEventListener('click', () => { $('selection-confirm').classList.add('hidden'); selectionConfirmed=false; });
+      $('selection-confirm-btn').addEventListener('click', () => { const checked=[...$('selection-confirm-list').querySelectorAll('input:checked')]; if(!checked.length){alert('请至少选择一个词汇');return;} selectionConfirmed=true; $('selection-confirm').classList.add('hidden'); $('selection-confirm').classList.remove('flex'); $('exercise-generate-btn').click(); });
 
       // ── Checkbox toggles ──
       document.addEventListener('click', (e) => {
@@ -990,6 +1001,8 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
 
       // ── Generate: Exercise ──
       $('exercise-generate-btn').addEventListener('click', async () => {
+        if (!selectionConfirmed) { openSelectionConfirm(); return; }
+        selectionConfirmed = false;
         const types = getCheckedTypes();
         if (types.length === 0 && !$('exercise-custom').value.trim()) {
           showToast('请至少选择一种题型或填写自定义题型', 'error');
@@ -1133,6 +1146,7 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
           showToast(`✅ 保存成功！文件: ${data.path}`, 'success');
           // Refresh notes list to include the new/updated file
           loadNotes();
+          loadLibrary();
         } catch (e) {
           showToast(`❌ ${e.message}`, 'error');
         } finally {
