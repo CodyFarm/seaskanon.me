@@ -33,6 +33,8 @@
 | src/lib/vocab/libraryRules.ts | 规范化、业务校验、五档定义 |
 | src/lib/vocab/libraryStore.ts | 路径、读写队列、revision、原子替换 |
 | src/lib/vocab/selectWritingWords.ts | 确定性选词 |
+| src/components/vocab/VocabSelection.astro | 共享筛选条件与读取确认清单 |
+| src/scripts/vocab/selection.ts | 筛选器、确认清单和跨页签提交 |
 | src/lib/vocab/llmClient.ts | 从 generate.ts 抽取 provider 适配 |
 | src/lib/vocab/writingContracts.ts | 任务与批改 JSON 的运行时校验 |
 | src/lib/vocab/writingPrompts.ts | IELTS 风格出题与批改提示 |
@@ -171,6 +173,16 @@ assert.ok(selected.some((e) => e.mastery >= 4));
 - [ ] 运行 `pnpm exec tsx --test tests/vocab/selectWritingWords.test.ts` 验证失败。
 - [ ] 实现按新词→低掌握→熟词角色选择；候选移除已选 key，缺位全库补足；从未练习优先，之后按旧时间与等级排序，最后 key 稳定排序。
 - [ ] 固定时钟运行全部选词用例，通过后提交任务文件。不要加入隐藏的随机性或长期评分字段。
+
+### Task 4A：共享筛选器与读取确认清单
+
+**Files:** selectWritingWords.ts、VocabSelection.astro、scripts/vocab/selection.ts、vocab-studio.astro、练习册生成与 WritingPractice 组件；tests/vocab/selection.test.ts。
+
+- [ ] 定义共享筛选输入：关键词、掌握等级、加入时间、最近练习时间、组合预设、数量和手选词；写作与练习册生成均调用同一 `selectWritingWords`。
+- [ ] 实现读取确认清单：展示每个词的词形、词性、双语释义、加入时间、最近练习时间、掌握等级；用户可编辑清单内字段，但只能影响当前任务快照。
+- [ ] 未点击“确认并生成”不得调用写作 task API 或练习册 generate API；取消、返回和刷新保留筛选条件但清空未确认快照。
+- [ ] 生成练习册流程改为“筛选 → 读取确认 → 生成”，写作流程同样改为“筛选 → 读取确认 → 出题”；已有从笔记直接生成的入口仍先走候选写入审核，避免把笔记条目误当作已确认读取。
+- [ ] 测试数量边界、过滤无结果、编辑词义不污染词库、双页签共享规则和取消不发请求；运行 `pnpm exec tsx --test tests/vocab/selection.test.ts`。
 
 ## Task 5：复用 LLM 与生成任务
 
