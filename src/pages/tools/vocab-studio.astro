@@ -409,6 +409,9 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
               <button class="studio-tab" data-tab="library">
                 📚 词汇库
               </button>
+              <button class="studio-tab" data-tab="writing">
+                ✍️ 短写作
+              </button>
             </div>
 
             <!-- ─── Tab 1: Exercise Builder ─── -->
@@ -545,6 +548,13 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
               <div id="library-list" class="flex flex-col gap-2"><p class="text-sm text-text-muted">加载中...</p></div>
             </div>
 
+            <div id="tab-writing" class="studio-card p-6 flex-col gap-5 hidden">
+              <h2 class="text-lg font-black text-text-main">✍️ 短写作练习</h2>
+              <div id="writing-config" class="flex flex-col gap-3"><input id="writing-topic" class="studio-input" placeholder="主题（可选，例如：education）" /><div class="flex gap-2 flex-wrap"><select id="writing-type" class="studio-input"><option value="opinion">观点段</option><option value="reason">原因段</option><option value="example">例证段</option><option value="concession">让步段</option></select><select id="writing-mix" class="studio-input"><option value="balanced">均衡词汇</option><option value="review">巩固优先</option><option value="new">新词优先</option></select></div><button id="writing-start" type="button" class="studio-action studio-action--primary">生成短写作任务</button></div>
+              <div id="writing-task" class="hidden flex flex-col gap-3"><p id="writing-instruction" class="font-semibold"></p><ul id="writing-hints" class="text-sm text-text-muted"></ul><div id="writing-words" class="flex gap-2 flex-wrap"></div><textarea id="writing-text" class="studio-input h-56 resize-y" placeholder="写 80–140 词的一个段落..."></textarea><div class="flex items-center justify-between"><span id="writing-count" class="text-sm text-text-muted">0 词</span><button id="writing-submit" type="button" class="studio-action studio-action--primary">提交批改</button></div></div>
+              <div id="writing-result" class="hidden flex flex-col gap-3"><h3 class="font-black">批改结果</h3><p id="writing-comment"></p><div id="writing-feedback" class="text-sm"></div><button id="writing-again" type="button" class="studio-action">再写一遍</button></div>
+            </div>
+
             <div id="selection-confirm" class="studio-card p-6 flex-col gap-4 hidden">
               <div><h2 class="text-lg font-black text-text-main">✅ 确认本次使用的词汇</h2><p class="text-sm text-text-muted">生成内容前请检查词形、释义和掌握等级。这里的修改只影响本次生成，不会改动词汇库。</p></div>
               <div id="selection-confirm-list" class="flex flex-col gap-2"></div>
@@ -612,6 +622,7 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
       let pasteAnalyzed = false; // true after a successful (connected) analyze
       let libraryEntries = [], libraryRevision = '', libraryEditing = null;
       let selectionConfirmed = false;
+      let writingTask = null;
 
       // ── DOM refs ──
       function $(id) { return document.getElementById(id); }
@@ -807,6 +818,8 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
           $('tab-enrich').classList.toggle('flex', currentMode === 'enrich');
           $('tab-library').classList.toggle('hidden', currentMode !== 'library');
           $('tab-library').classList.toggle('flex', currentMode === 'library');
+          $('tab-writing').classList.toggle('hidden', currentMode !== 'writing');
+          $('tab-writing').classList.toggle('flex', currentMode === 'writing');
 
           if (currentMode === 'library') loadLibrary();
 
@@ -819,6 +832,10 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
       $('library-search').addEventListener('input', renderLibrary); $('library-mastery').addEventListener('change', renderLibrary); $('library-add-btn').addEventListener('click', () => { libraryEditing = null; $('library-form').classList.remove('hidden'); $('library-form').classList.add('flex'); ['word','pos','zh','en'].forEach(k => $('library-' + k).value = ''); $('library-level').value = '1'; }); $('library-cancel-btn').addEventListener('click', () => $('library-form').classList.add('hidden'));
       $('library-list').addEventListener('click', async (event) => { const edit = event.target.closest('[data-edit-word]'); const del = event.target.closest('[data-delete-word]'); if (edit) { const e = libraryEntries.find(x => x.word === edit.dataset.editWord); if (!e) return; libraryEditing = e.word; $('library-form').classList.remove('hidden'); $('library-form').classList.add('flex'); $('library-word').value=e.word; $('library-pos').value=e.partOfSpeech; $('library-zh').value=e.meaningZh; $('library-en').value=e.meaningEn; $('library-level').value=e.mastery; } if (del && confirm(`确定删除 ${del.dataset.deleteWord}？`)) { const res = await fetch('/api/vocab/library',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({word:del.dataset.deleteWord,expectedRevision:libraryRevision})}); if (!res.ok) { alert('删除失败，请刷新后重试'); } await loadLibrary(); } });
       $('library-form').addEventListener('submit', async (event) => { event.preventDefault(); const entry={word:$('library-word').value,partOfSpeech:$('library-pos').value,meaningZh:$('library-zh').value,meaningEn:$('library-en').value,mastery:Number($('library-level').value)}; const body=libraryEditing?{originalWord:libraryEditing,patch:entry,expectedRevision:libraryRevision}:{entry,expectedRevision:libraryRevision}; const res=await fetch('/api/vocab/library',{method:libraryEditing?'PATCH':'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}); if(!res.ok){$('library-form-error').textContent='保存失败，请检查字段或刷新后重试';$('library-form-error').classList.remove('hidden');return;} $('library-form').classList.add('hidden'); await loadLibrary(); });
+      $('writing-start').addEventListener('click', async () => { const res=await fetch('/api/vocab/writing/task',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topic:$('writing-topic').value,paragraphType:$('writing-type').value,mix:$('writing-mix').value,targetCount:5})}); if(!res.ok){alert('词汇库至少需要 3 个词');return;} const data=await res.json(); writingTask=data.task; $('writing-instruction').textContent=writingTask.instruction; $('writing-hints').innerHTML=writingTask.structureHints.map(h=>`<li>${h}</li>`).join(''); $('writing-words').innerHTML=writingTask.targetWords.map(w=>`<span class="studio-badge">${w.word} · ${w.meaningZh}</span>`).join(''); $('writing-config').classList.add('hidden'); $('writing-task').classList.remove('hidden'); $('writing-task').classList.add('flex'); });
+      $('writing-text').addEventListener('input', () => { $('writing-count').textContent = `${($('writing-text').value.match(/[A-Za-z]+(?:['-][A-Za-z]+)*/g)||[]).length} 词`; });
+      $('writing-submit').addEventListener('click', async () => { const text=$('writing-text').value.trim(); if(!text){alert('请先写一段文字');return;} const res=await fetch('/api/vocab/writing/grade',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({task:writingTask,text})}); const data=await res.json(); if(!res.ok){alert(data.error||'批改失败');return;} $('writing-comment').textContent=data.feedback.overallComment; $('writing-feedback').innerHTML=data.feedback.targetWordUsage.map(u=>`<p><strong>${u.word}</strong>：${u.status === 'not_used' ? '未使用' : '已出现'} ${u.comment}</p>`).join(''); $('writing-task').classList.add('hidden'); $('writing-result').classList.remove('hidden'); $('writing-result').classList.add('flex'); });
+      $('writing-again').addEventListener('click', () => { $('writing-text').value=''; $('writing-result').classList.add('hidden'); $('writing-task').classList.remove('hidden'); $('writing-task').classList.add('flex'); });
       function openSelectionConfirm() { const words = libraryEntries.slice().sort((a,b)=>a.mastery-b.mastery).slice(0,5); if (!words.length) { alert('词汇库为空，请先添加词汇'); return false; } $('selection-confirm-list').innerHTML = words.map((e,i)=>`<label class="studio-checkbox checked"><input type="checkbox" checked data-selection-word="${e.word}"><span class="check-mark"></span><span><strong>${e.word}</strong> <span class="studio-badge">等级 ${e.mastery}</span><span class="text-xs text-text-muted"> · ${e.partOfSpeech} · ${e.meaningZh} · ${e.meaningEn}</span></span></label>`).join(''); $('selection-confirm').classList.remove('hidden'); $('selection-confirm').classList.add('flex'); return true; }
       $('selection-cancel-btn').addEventListener('click', () => { $('selection-confirm').classList.add('hidden'); selectionConfirmed=false; });
       $('selection-confirm-btn').addEventListener('click', () => { const checked=[...$('selection-confirm-list').querySelectorAll('input:checked')]; if(!checked.length){alert('请至少选择一个词汇');return;} selectionConfirmed=true; $('selection-confirm').classList.add('hidden'); $('selection-confirm').classList.remove('flex'); $('exercise-generate-btn').click(); });
