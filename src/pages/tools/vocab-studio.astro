@@ -406,6 +406,9 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
               <button class="studio-tab" data-tab="enrich">
                 ✨ 丰富笔记
               </button>
+              <button class="studio-tab" data-tab="library">
+                📚 词汇库
+              </button>
             </div>
 
             <!-- ─── Tab 1: Exercise Builder ─── -->
@@ -532,6 +535,16 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
               </div>
             </div>
 
+            <div id="tab-library" class="studio-card p-6 flex-col gap-5 hidden">
+              <div class="flex items-center justify-between gap-3 flex-wrap">
+                <div><h2 class="text-lg font-black text-text-main">📚 词汇库</h2><p id="library-stats" class="text-xs text-text-muted mt-1"></p></div>
+                <button id="library-add-btn" type="button" class="studio-action studio-action--primary">＋ 添加单词</button>
+              </div>
+              <div class="flex gap-3 flex-wrap"><input id="library-search" class="studio-input text-sm" placeholder="搜索单词或释义..." /><select id="library-mastery" class="studio-input text-sm"><option value="">全部等级</option><option value="1">1 初识</option><option value="2">2 认得</option><option value="3">3 能用</option><option value="4">4 熟练</option><option value="5">5 稳定</option></select></div>
+              <form id="library-form" class="studio-card--soft p-4 hidden flex-col gap-3"><input id="library-word" class="studio-input" placeholder="单词或短语" required /><input id="library-pos" class="studio-input" placeholder="词性" required /><input id="library-zh" class="studio-input" placeholder="中文释义" required /><input id="library-en" class="studio-input" placeholder="英文释义" required /><select id="library-level" class="studio-input"><option value="1">1 初识</option><option value="2">2 认得</option><option value="3">3 能用</option><option value="4">4 熟练</option><option value="5">5 稳定</option></select><div class="flex gap-2"><button type="submit" class="studio-action studio-action--primary">保存</button><button id="library-cancel-btn" type="button" class="studio-action">取消</button></div><p id="library-form-error" class="text-sm text-[--accent-spot] hidden"></p></form>
+              <div id="library-list" class="flex flex-col gap-2"><p class="text-sm text-text-muted">加载中...</p></div>
+            </div>
+
               <!-- ─── Preview Panel (shared) ─── -->
               <div id="preview-panel" class="studio-card p-6 flex-col gap-5 hidden">
               <div class="flex items-center justify-between">
@@ -591,6 +604,7 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
       let exerciseSource = 'note'; // 'note' | 'paste' (exercise tab only)
       let pasteWordCount = 0;
       let pasteAnalyzed = false; // true after a successful (connected) analyze
+      let libraryEntries = [], libraryRevision = '', libraryEditing = null;
 
       // ── DOM refs ──
       function $(id) { return document.getElementById(id); }
@@ -783,10 +797,20 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
           $('tab-exercise').classList.toggle('flex', currentMode === 'exercise');
           $('tab-enrich').classList.toggle('hidden', currentMode !== 'enrich');
           $('tab-enrich').classList.toggle('flex', currentMode === 'enrich');
+          $('tab-library').classList.toggle('hidden', currentMode !== 'library');
+          $('tab-library').classList.toggle('flex', currentMode === 'library');
+
+          if (currentMode === 'library') loadLibrary();
 
           updateUI();
         });
       });
+
+      async function loadLibrary() { try { const res = await fetch('/api/vocab/library'); if (!res.ok) throw new Error('加载失败'); const data = await res.json(); libraryEntries = data.entries || []; libraryRevision = data.revision || ''; renderLibrary(); } catch (e) { $('library-list').innerHTML = `<p class="text-sm text-[--accent-spot]">${e.message}</p>`; } }
+      function renderLibrary() { const q = ($('library-search').value || '').toLowerCase(); const level = $('library-mastery').value; const list = libraryEntries.filter(e => (!q || [e.word,e.meaningZh,e.meaningEn].some(v => v.toLowerCase().includes(q))) && (!level || String(e.mastery) === level)); $('library-stats').textContent = `共 ${libraryEntries.length} 词 · 当前显示 ${list.length} 词`; $('library-list').innerHTML = list.length ? list.map(e => `<div class="studio-note-item flex items-center justify-between gap-3"><div><strong>${e.word}</strong> <span class="studio-badge">${e.mastery}</span><div class="text-xs text-text-muted">${e.partOfSpeech} · ${e.meaningZh} · ${e.meaningEn}</div></div><div class="flex gap-2"><button type="button" class="studio-action" data-edit-word="${e.word}">编辑</button><button type="button" class="studio-action" data-delete-word="${e.word}">删除</button></div></div>`).join('') : '<p class="text-sm text-text-muted">暂无词汇</p>'; }
+      $('library-search').addEventListener('input', renderLibrary); $('library-mastery').addEventListener('change', renderLibrary); $('library-add-btn').addEventListener('click', () => { libraryEditing = null; $('library-form').classList.remove('hidden'); $('library-form').classList.add('flex'); ['word','pos','zh','en'].forEach(k => $('library-' + k).value = ''); $('library-level').value = '1'; }); $('library-cancel-btn').addEventListener('click', () => $('library-form').classList.add('hidden'));
+      $('library-list').addEventListener('click', async (event) => { const edit = event.target.closest('[data-edit-word]'); const del = event.target.closest('[data-delete-word]'); if (edit) { const e = libraryEntries.find(x => x.word === edit.dataset.editWord); if (!e) return; libraryEditing = e.word; $('library-form').classList.remove('hidden'); $('library-form').classList.add('flex'); $('library-word').value=e.word; $('library-pos').value=e.partOfSpeech; $('library-zh').value=e.meaningZh; $('library-en').value=e.meaningEn; $('library-level').value=e.mastery; } if (del && confirm(`确定删除 ${del.dataset.deleteWord}？`)) { const res = await fetch('/api/vocab/library',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({word:del.dataset.deleteWord,expectedRevision:libraryRevision})}); if (!res.ok) { alert('删除失败，请刷新后重试'); } await loadLibrary(); } });
+      $('library-form').addEventListener('submit', async (event) => { event.preventDefault(); const entry={word:$('library-word').value,partOfSpeech:$('library-pos').value,meaningZh:$('library-zh').value,meaningEn:$('library-en').value,mastery:Number($('library-level').value)}; const body=libraryEditing?{originalWord:libraryEditing,patch:entry,expectedRevision:libraryRevision}:{entry,expectedRevision:libraryRevision}; const res=await fetch('/api/vocab/library',{method:libraryEditing?'PATCH':'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}); if(!res.ok){$('library-form-error').textContent='保存失败，请检查字段或刷新后重试';$('library-form-error').classList.remove('hidden');return;} $('library-form').classList.add('hidden'); await loadLibrary(); });
 
       // ── Checkbox toggles ──
       document.addEventListener('click', (e) => {
