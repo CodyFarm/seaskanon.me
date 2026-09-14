@@ -1,5 +1,4 @@
 import { createHash } from "node:crypto";
-import fs from "node:fs";
 import { mkdir, readFile, rename, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { normalizeWordKey, validateEditable, type EditableEntry, type VocabEntry } from "./libraryRules";
@@ -34,7 +33,18 @@ export function createLibraryStore(directory: string, clock = () => new Date()):
   return {
     read,
     create: (input, expected) => enqueue(async () => { const current = await read(); ensureRevision(current, expected); const entry = validateEditable(input); if (current.entries.some((e) => normalizeWordKey(e.word) === normalizeWordKey(entry.word))) throw new Error("Word already exists"); return write([...current.entries, { ...entry, addedAt: clock().toISOString(), lastPracticedAt: null }]); }),
-    update: (original, patch, expected) => enqueue(async () => { const current = await read(); ensureRevision(current, expected); const index = current.entries.findIndex((e) => normalizeWordKey(e.word) === normalizeWordKey(original)); if (index < 0) throw new Error("Word not found"); const merged = validateEditable({ ...current.entries[index], ...patch }); const duplicate = current.entries.some((e, i) => i !== index && normalizeWordKey(e.word) === normalizeWordKey(merged.word)); if (duplicate) throw new Error("Word already exists"); const next = [...current.entries]; next[index] = { ...next[index], ...merged }; return write(next); }),
+    update: (original, patch, expected) => enqueue(async () => {
+      const current = await read();
+      ensureRevision(current, expected);
+      const index = current.entries.findIndex((e) => normalizeWordKey(e.word) === normalizeWordKey(original));
+      if (index < 0) throw new Error("Word not found");
+      const { addedAt, lastPracticedAt, ...editable } = current.entries[index];
+      const merged = validateEditable({ ...editable, ...patch });
+      if (current.entries.some((e, i) => i !== index && normalizeWordKey(e.word) === normalizeWordKey(merged.word))) throw new Error("Word already exists");
+      const next = [...current.entries];
+      next[index] = { ...merged, addedAt, lastPracticedAt };
+      return write(next);
+    }),
     remove: (word, expected) => enqueue(async () => { const current = await read(); ensureRevision(current, expected); const next = current.entries.filter((e) => normalizeWordKey(e.word) !== normalizeWordKey(word)); if (next.length === current.entries.length) throw new Error("Word not found"); return write(next); }),
     markPracticed: (words, practicedAt) => enqueue(async () => { const current = await read(); const keys = new Set(words.map(normalizeWordKey)); const updated: string[] = []; const skipped = [...keys]; const next = current.entries.map((entry) => { if (!keys.has(normalizeWordKey(entry.word))) return entry; updated.push(entry.word); skipped.splice(skipped.indexOf(normalizeWordKey(entry.word)), 1); const time = practicedAt.toISOString(); return { ...entry, lastPracticedAt: !entry.lastPracticedAt || entry.lastPracticedAt < time ? time : entry.lastPracticedAt }; }); if (updated.length) await write(next); return { updated, skipped }; }),
   };
