@@ -10,6 +10,7 @@ export interface LibraryStore {
   update(originalWord: string, patch: Partial<EditableEntry>, expectedRevision: string): Promise<LibrarySnapshot>;
   remove(word: string, expectedRevision: string): Promise<LibrarySnapshot>;
   markPracticed(words: string[], practicedAt: Date): Promise<{ updated: string[]; skipped: string[] }>;
+  importReviewed(items: Array<{ action: "create" | "updateMeanings"; entry: EditableEntry }>, expectedRevision: string): Promise<{ created: string[]; updated: string[]; revision: string }>;
 }
 
 export function createLibraryStore(directory: string, clock = () => new Date()): LibraryStore {
@@ -47,6 +48,7 @@ export function createLibraryStore(directory: string, clock = () => new Date()):
     }),
     remove: (word, expected) => enqueue(async () => { const current = await read(); ensureRevision(current, expected); const next = current.entries.filter((e) => normalizeWordKey(e.word) !== normalizeWordKey(word)); if (next.length === current.entries.length) throw new Error("Word not found"); return write(next); }),
     markPracticed: (words, practicedAt) => enqueue(async () => { const current = await read(); const keys = new Set(words.map(normalizeWordKey)); const updated: string[] = []; const skipped = [...keys]; const next = current.entries.map((entry) => { if (!keys.has(normalizeWordKey(entry.word))) return entry; updated.push(entry.word); skipped.splice(skipped.indexOf(normalizeWordKey(entry.word)), 1); const time = practicedAt.toISOString(); return { ...entry, lastPracticedAt: !entry.lastPracticedAt || entry.lastPracticedAt < time ? time : entry.lastPracticedAt }; }); if (updated.length) await write(next); return { updated, skipped }; }),
+    importReviewed: (items, expected) => enqueue(async () => { const current = await read(); ensureRevision(current, expected); if (!Array.isArray(items) || !items.length || items.length > 100) throw new Error("Invalid import items"); const next = current.entries.map((e) => ({ ...e })); const created: string[] = []; const updated: string[] = []; for (const item of items) { const entry = validateEditable(item.entry); const index = next.findIndex((e) => normalizeWordKey(e.word) === normalizeWordKey(entry.word)); if (item.action === "create") { if (index >= 0) throw new Error("Word already exists"); next.push({ ...entry, addedAt: clock().toISOString(), lastPracticedAt: null }); created.push(entry.word); } else { if (index < 0) throw new Error("Word not found"); next[index] = { ...next[index], partOfSpeech: entry.partOfSpeech, meaningZh: entry.meaningZh, meaningEn: entry.meaningEn }; updated.push(next[index].word); } } const result = await write(next); return { created, updated, revision: result.revision }; }),
   };
 }
 function snapshot(entries: VocabEntry[]): LibrarySnapshot { return { entries, revision: createHash("sha256").update(JSON.stringify(entries)).digest("hex") }; }

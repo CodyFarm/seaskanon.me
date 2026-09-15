@@ -440,6 +440,7 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
                 <button id="paste-analyze-btn" class="studio-action studio-action--primary self-start">
                   🔍 分析词汇
                 </button>
+                <button id="paste-import-btn" type="button" class="studio-action hidden">➕ 审核后加入词汇库</button>
                 <div id="paste-result" class="hidden flex-col gap-2">
                   <div class="flex items-center gap-2 flex-wrap">
                     <span id="paste-count" class="studio-badge"></span>
@@ -534,6 +535,7 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
                 <button id="enrich-generate-btn" class="studio-action studio-action--primary py-2.5 text-base mt-3">
                   🪄 生成丰富内容
                 </button>
+                <button id="enrich-import-btn" type="button" class="studio-action">➕ 从笔记提取并审核</button>
                 <p id="enrich-status" class="text-sm text-text-muted hidden"></p>
               </div>
             </div>
@@ -559,6 +561,12 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
               <div><h2 class="text-lg font-black text-text-main">✅ 确认本次使用的词汇</h2><p class="text-sm text-text-muted">生成内容前请检查词形、释义和掌握等级。这里的修改只影响本次生成，不会改动词汇库。</p></div>
               <div id="selection-confirm-list" class="flex flex-col gap-2"></div>
               <div class="flex gap-3"><button id="selection-confirm-btn" type="button" class="studio-action studio-action--primary">确认并生成</button><button id="selection-cancel-btn" type="button" class="studio-action">返回修改</button></div>
+            </div>
+
+            <div id="candidate-review" class="studio-card p-6 flex-col gap-4 hidden">
+              <div><h2 class="text-lg font-black text-text-main">🔎 审核候选词</h2><p class="text-sm text-text-muted">只有确认后才会写入词汇库。</p></div>
+              <div id="candidate-list" class="flex flex-col gap-2"></div>
+              <div class="flex gap-3"><button id="candidate-import-btn" type="button" class="studio-action studio-action--primary">确认加入</button><button id="candidate-cancel-btn" type="button" class="studio-action">取消</button></div>
             </div>
 
               <!-- ─── Preview Panel (shared) ─── -->
@@ -623,6 +631,7 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
       let libraryEntries = [], libraryRevision = '', libraryEditing = null;
       let selectionConfirmed = false;
       let writingTask = null;
+      let candidateBatch = null;
 
       // ── DOM refs ──
       function $(id) { return document.getElementById(id); }
@@ -836,6 +845,11 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
       $('writing-text').addEventListener('input', () => { $('writing-count').textContent = `${($('writing-text').value.match(/[A-Za-z]+(?:['-][A-Za-z]+)*/g)||[]).length} 词`; });
       $('writing-submit').addEventListener('click', async () => { const text=$('writing-text').value.trim(); if(!text){alert('请先写一段文字');return;} const res=await fetch('/api/vocab/writing/grade',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({task:writingTask,text})}); const data=await res.json(); if(!res.ok){alert(data.error||'批改失败');return;} $('writing-comment').textContent=data.feedback.overallComment; $('writing-feedback').innerHTML=data.feedback.targetWordUsage.map(u=>`<p><strong>${u.word}</strong>：${u.status === 'not_used' ? '未使用' : '已出现'} ${u.comment}</p>`).join(''); $('writing-task').classList.add('hidden'); $('writing-result').classList.remove('hidden'); $('writing-result').classList.add('flex'); });
       $('writing-again').addEventListener('click', () => { $('writing-text').value=''; $('writing-result').classList.add('hidden'); $('writing-task').classList.remove('hidden'); $('writing-task').classList.add('flex'); });
+      async function openCandidateReview(text) { const res=await fetch('/api/vocab/library/candidates',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text,scope:'entries'})}); const data=await res.json(); if(!res.ok){alert(data.error||'提取失败');return;} candidateBatch=data; $('candidate-list').innerHTML=data.candidates.map((c,i)=>`<label class="studio-checkbox ${c.existing?'':'checked'}"><input type="checkbox" ${c.existing?'':'checked'} data-candidate-index="${i}"><span class="check-mark"></span><span><strong>${c.entry.word}</strong> <span class="studio-badge">${c.existing?'已存在':'新词'}</span><div class="text-xs text-text-muted">${c.entry.partOfSpeech} · ${c.entry.meaningZh} · ${c.entry.meaningEn}</div></span></label>`).join(''); $('candidate-review').classList.remove('hidden'); $('candidate-review').classList.add('flex'); }
+      $('candidate-cancel-btn').addEventListener('click',()=>{$('candidate-review').classList.add('hidden');candidateBatch=null;});
+      $('candidate-import-btn').addEventListener('click',async()=>{if(!candidateBatch)return; const items=[...$('candidate-list').querySelectorAll('input:checked')].map(input=>{const c=candidateBatch.candidates[Number(input.dataset.candidateIndex)];return {action:c.existing?'updateMeanings':'create',entry:c.entry};}); if(!items.length){alert('请至少选择一个候选词');return;} const res=await fetch('/api/vocab/library/import',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items,expectedRevision:candidateBatch.revision})}); if(!res.ok){alert('导入失败，请刷新词库后重试');return;} alert('候选词已加入词汇库'); $('candidate-review').classList.add('hidden'); await loadLibrary(); });
+      $('enrich-import-btn').addEventListener('click',()=>{if(!selectedNote){alert('请先选择笔记');return;} fetch('/api/debug/file-content?slug='+encodeURIComponent(selectedNote.slug)).then(r=>r.json()).then(data=>openCandidateReview(data.content||''));});
+      $('paste-import-btn').addEventListener('click',()=>openCandidateReview($('paste-textarea').value.trim()));
       function openSelectionConfirm() { const words = libraryEntries.slice().sort((a,b)=>a.mastery-b.mastery).slice(0,5); if (!words.length) { alert('词汇库为空，请先添加词汇'); return false; } $('selection-confirm-list').innerHTML = words.map((e,i)=>`<label class="studio-checkbox checked"><input type="checkbox" checked data-selection-word="${e.word}"><span class="check-mark"></span><span><strong>${e.word}</strong> <span class="studio-badge">等级 ${e.mastery}</span><span class="text-xs text-text-muted"> · ${e.partOfSpeech} · ${e.meaningZh} · ${e.meaningEn}</span></span></label>`).join(''); $('selection-confirm').classList.remove('hidden'); $('selection-confirm').classList.add('flex'); return true; }
       $('selection-cancel-btn').addEventListener('click', () => { $('selection-confirm').classList.add('hidden'); selectionConfirmed=false; });
       $('selection-confirm-btn').addEventListener('click', () => { const checked=[...$('selection-confirm-list').querySelectorAll('input:checked')]; if(!checked.length){alert('请至少选择一个词汇');return;} selectionConfirmed=true; $('selection-confirm').classList.add('hidden'); $('selection-confirm').classList.remove('flex'); $('exercise-generate-btn').click(); });
