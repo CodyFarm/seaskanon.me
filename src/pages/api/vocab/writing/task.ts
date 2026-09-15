@@ -4,6 +4,7 @@ import { createLibraryStore } from "../../../../lib/vocab/libraryStore";
 import { selectWritingWords } from "../../../../lib/vocab/selectWritingWords";
 import path from "node:path";
 import { createLLMClient, getConfiguredLLM } from "../../../../lib/vocab/llmClient";
+import { validateEditable } from "../../../../lib/vocab/libraryRules";
 
 export const prerender = false;
 export const POST: APIRoute = async ({ request }) => {
@@ -13,7 +14,9 @@ export const POST: APIRoute = async ({ request }) => {
     const store = createLibraryStore(process.env.VOCAB_DATA_DIR || path.resolve(".local/vocab"));
     const { entries } = await store.read();
     const count = Math.max(3, Math.min(6, Number(body.targetCount) || 5));
-    const words = selectWritingWords(entries, { targetCount: count, mix: body.mix === "new" ? "new" : body.mix === "review" ? "review" : "balanced", now: new Date(), selectedWords: Array.isArray(body.selectedWords) ? body.selectedWords : undefined });
+    const words = Array.isArray(body.selectedEntries) && body.selectedEntries.length >= 3
+      ? body.selectedEntries.slice(0, count).map(validateEditable)
+      : selectWritingWords(entries, { targetCount: count, mix: body.mix === "new" ? "new" : body.mix === "review" ? "review" : "balanced", now: new Date(), selectedWords: Array.isArray(body.selectedWords) ? body.selectedWords : undefined });
     const type = ["opinion", "reason", "example", "concession"].includes(body.paragraphType) ? body.paragraphType : "opinion";
     const topic = typeof body.topic === "string" && body.topic.trim() ? body.topic.trim() : "the role of education in modern society";
     const fallback = { topic, paragraphType: type, instruction: `Write one paragraph about ${topic}.`, structureHints: ["State a clear main idea", "Explain the relationship", "Add a specific example or result"] };

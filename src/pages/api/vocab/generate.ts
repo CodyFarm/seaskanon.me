@@ -212,7 +212,7 @@ export async function POST({ request }: { request: Request }) {
 
   try {
     const body = await request.json();
-    const { mode, slug, types, customFormat, enrichOptions, text, title } = body;
+    const { mode, slug, types, customFormat, enrichOptions, text, title, selectedEntries } = body;
 
     if (!mode) {
       return json({ error: "Missing required field: mode" }, 400);
@@ -247,7 +247,14 @@ export async function POST({ request }: { request: Request }) {
     let responseTitle: string;
     let entryCount: number | null = null;
 
-    if (mode === "exercise" && text?.trim()) {
+    if (mode === "exercise" && Array.isArray(selectedEntries) && selectedEntries.length >= 1) {
+      const entries = selectedEntries.map((entry: any, index: number) => ({ index: index + 1, english: String(entry.word || ""), chinese: String(entry.meaningZh || ""), notes: entry.meaningEn ? String(entry.meaningEn) : undefined }));
+      const p = buildExercisePrompt(entries, types || ["en_to_cn", "fill_blank"], customFormat);
+      system = p.system;
+      user = p.user;
+      responseTitle = title || "词汇库筛选练习";
+      entryCount = entries.length;
+    } else if (mode === "exercise" && text?.trim()) {
       // Paste-text path: LLM extracts vocab + builds the workbook in one call.
       const p = buildExercisePromptFromText(
         text,
