@@ -10,9 +10,20 @@ interface Props {
 }
 
 const { seriesName, seriesPosts, currentPostId } = Astro.props;
+
+// Darker variants keep the small series titles readable on a pale card.
+const titleColorOverrides: Record<string, string> = {
+  "#96C7F2": "#2563A6", // blue
+  "#ADF296": "#39752F", // green
+  "#F2CF96": "#936115", // yellow
+  "#7FFFD4": "#16735A", // aquamarine
+  "#E6E6FA": "#6B5AA6", // lavender
+  "#F0E68C": "#756B20", // khaki
+  "#F5DEB3": "#8B622E", // wheat
+};
 ---
 
-<section class="rounded-3xl border-[3px] border-border-main bg-series-bg p-5 shadow-card">
+<section class="post-series-aside rounded-3xl border-[3px] border-border-main bg-series-bg p-5 shadow-card">
   <span
     class="inline-block rounded-lg border-2 border-border-main bg-series-header px-4 py-1.5 text-xl font-bold shadow-card1"
   >
@@ -26,6 +37,7 @@ const { seriesName, seriesPosts, currentPostId } = Astro.props;
       seriesPosts.map((p, i) => {
         const isCurrent = p.id === currentPostId;
         const isLast = i === seriesPosts.length - 1;
+        const titleColor = getFirstLetterColor(p.data.firstLetterColor).style;
 
         return (
           <div class="flex gap-3">
@@ -51,7 +63,7 @@ const { seriesName, seriesPosts, currentPostId } = Astro.props;
                 class:list={[
                   "text-sm font-semibold transition-colors duration-200 hover:text-ppink",
                 ]}
-                style={`color: ${getFirstLetterColor(p.data.firstLetterColor).style}`}
+                style={`color: ${titleColorOverrides[titleColor.toUpperCase()] ?? titleColor}`}
               >
                 {p.data.title}
               </a>
@@ -65,3 +77,10 @@ const { seriesName, seriesPosts, currentPostId } = Astro.props;
     }
   </div>
 </section>
+
+<style>
+  :global(:root:not([data-theme])) .post-series-aside,
+  :global([data-theme="default"]) .post-series-aside {
+    --color-series-bg: #FFFBEA;
+  }
+</style>

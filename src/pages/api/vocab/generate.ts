@@ -24,6 +24,7 @@ import {
 } from "../../../lib/vocab-prompts";
 import fs from "node:fs";
 import path from "node:path";
+import { getConfiguredLLM } from "../../../lib/vocab/llmClient";
 
 /** Count English word tokens in a string using a character-based regex. */
 function countEnglishWords(text: string): number {
@@ -46,47 +47,9 @@ interface LLMConfig {
 }
 
 function getLLMConfig(): LLMConfig {
-  const anthropicKey = import.meta.env.ANTHROPIC_API_KEY;
-  const openaiKey = import.meta.env.OPENAI_API_KEY;
-  const customKey = import.meta.env.CUSTOM_LLM_API_KEY;
-  const customEndpoint = import.meta.env.CUSTOM_LLM_ENDPOINT;
-  const customModel = import.meta.env.CUSTOM_LLM_MODEL;
-
-  if (anthropicKey) {
-    return {
-      provider: "anthropic",
-      apiKey: anthropicKey,
-      endpoint: "https://api.anthropic.com/v1/messages",
-      model: "claude-sonnet-4-5-20250929",
-    };
-  }
-
-  if (openaiKey) {
-    return {
-      provider: "openai",
-      apiKey: openaiKey,
-      endpoint: "https://api.openai.com/v1/chat/completions",
-      model: "gpt-4o",
-    };
-  }
-
-  if (customKey && customEndpoint) {
-    // Normalize: strip trailing slashes, then append /chat/completions
-    let endpoint = customEndpoint.replace(/\/+$/, "");
-    if (!endpoint.endsWith("/chat/completions")) {
-      endpoint += "/chat/completions";
-    }
-    return {
-      provider: "custom",
-      apiKey: customKey,
-      endpoint,
-      model: customModel || "kimi-k3",
-    };
-  }
-
-  throw new Error(
-    "No LLM provider configured. Set ANTHROPIC_API_KEY, OPENAI_API_KEY, or CUSTOM_LLM_API_KEY in .env",
-  );
+  // Delegate to the shared resolver so `.env` and `LLM_PROVIDER` behave the
+  // same everywhere: a stray machine-level OPENAI_API_KEY used to hijack this.
+  return getConfiguredLLM();
 }
 
 async function callLLM(

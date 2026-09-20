@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { tags, activeSlugs } = Astro.props;
+const currentTags = tags.filter((tag) => activeSlugs.includes(tag.slug));
 ---
 
 <section class="rounded-3xl border-[3px] border-border-main bg-tag-bg p-5 shadow-card">
@@ -16,15 +17,12 @@ const { tags, activeSlugs } = Astro.props;
     Tags
   </span>
 
-  {tags.length > 0 ? (
+  {currentTags.length > 0 ? (
     <div class="mt-4 flex flex-wrap gap-2">
-      {tags.map((tag) => (
+      {currentTags.map((tag) => (
         <a
           href={`/writing/tags/${tag.slug}/`}
-          class:list={[
-            "inline-flex items-center gap-1.5 rounded-full border-2 border-border-main px-3 py-1 text-sm font-semibold shadow-card1 transition hover:-translate-y-0.5 hover:shadow-card",
-            activeSlugs.includes(tag.slug) ? "bg-card" : "bg-card",
-          ]}
+          class="inline-flex items-center gap-1.5 rounded-full border-2 border-border-main bg-card px-3 py-1 text-sm font-semibold shadow-card1 transition hover:-translate-y-0.5 hover:shadow-card"
         >
           <span>#{tag.name}</span>
           <span class="text-xs text-pblack">{tag.count}</span>
@@ -32,6 +30,6 @@ const { tags, activeSlugs } = Astro.props;
       ))}
     </div>
   ) : (
-    <p class="mt-4 text-sm text-pblack">No tags yet.</p>
+    <p class="mt-4 text-sm text-pblack">No tags for this post.</p>
   )}
 </section>

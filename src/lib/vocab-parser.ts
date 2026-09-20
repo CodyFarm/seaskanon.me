@@ -67,7 +67,7 @@ export function parseVocabNote(markdown: string, slug: string): ParsedNote {
   // Uses CJK character boundary to split English from Chinese
   const ENTRY_RE = /^(\d+)\.\s+(.+?)\s+([一-鿿（　].+)$/;
   // Sub-entry: indented (2+ spaces) with English Chinese pattern
-  const SUB_RE = /^\s{2,}(.+?)\s+([一-鿿（].+)$/;
+  const SUB_RE = /^\s{2,}([A-Za-z].*?)\s+([一-鿿（].+)$/;
   // Notes in parentheses at end
   const NOTES_RE = /（(.+?)）$/;
 
@@ -77,7 +77,7 @@ export function parseVocabNote(markdown: string, slug: string): ParsedNote {
 
     if (entryMatch) {
       const index = parseInt(entryMatch[1], 10);
-      let english = entryMatch[2].trim();
+      let english = entryMatch[2].trim().replace(/\s+(?:—|–|-)\s*$/, "");
       let chinese = entryMatch[3].trim();
 
       // Extract notes like "（表示"溺爱" 后面直接加宾语）"
