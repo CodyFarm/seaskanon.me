@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { isAuthenticated, unauthorizedResponse } from "../../../../lib/vocab-auth";
 import { createLibraryStore } from "../../../../lib/vocab/libraryStore";
 import { selectWritingWords } from "../../../../lib/vocab/selectWritingWords";
-import path from "node:path";
+import { resolveVocabDataDir } from "../../../../lib/vocab/dataDir";
 import { createLLMClient, getConfiguredLLM } from "../../../../lib/vocab/llmClient";
 import { validateEditable } from "../../../../lib/vocab/libraryRules";
 
@@ -11,7 +11,7 @@ export const POST: APIRoute = async ({ request }) => {
   if (!isAuthenticated(request)) return unauthorizedResponse();
   try {
     const body = await request.json();
-    const store = createLibraryStore(process.env.VOCAB_DATA_DIR || path.resolve(".local/vocab"));
+    const store = createLibraryStore(resolveVocabDataDir());
     const { entries } = await store.read();
     const count = Math.max(3, Math.min(6, Number(body.targetCount) || 5));
     const words = Array.isArray(body.selectedEntries) && body.selectedEntries.length >= 3
