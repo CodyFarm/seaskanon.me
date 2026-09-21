@@ -919,7 +919,11 @@ import CapsulePlayer from "@/components/blog/CapsulePlayer.astro";
         status.textContent = '正在发送最小请求，不会消耗明显额度...';
         status.classList.remove('hidden');
         try {
-          const response = await fetch('/api/vocab/llm/test', { method: 'POST' });
+          const response = await fetch('/api/vocab/llm/test', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({}),
+          });
           const data = await readJsonResponse(response);
           if (response.status === 401) {
             workspace.classList.add('hidden');

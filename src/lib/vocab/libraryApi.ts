@@ -6,14 +6,19 @@ const json = (body: unknown, status = 200) => new Response(JSON.stringify(body),
 });
 const failure = (code: string, message: string, status: number) => json({ error: { code, message } }, status);
 
-export function createLibraryHandler(getStore: () => LibraryStore, authenticated: (request: Request) => boolean) {
+export function createLibraryHandler(
+  getStore: () => LibraryStore,
+  authenticated: (request: Request) => boolean,
+  publicOrigin?: string,
+) {
   return async (request: Request): Promise<Response> => {
     if (!authenticated(request)) return failure("unauthorized", "请重新登录", 401);
     const method = request.method;
     if (!["GET", "POST", "PATCH", "DELETE"].includes(method)) return failure("method", "不支持此操作", 405);
     let body: Record<string, unknown> = {};
     if (method !== "GET") {
-      if (request.headers.get("origin") !== new URL(request.url).origin) return failure("origin", "请求来源不匹配", 403);
+      const expectedOrigin = publicOrigin ?? new URL(request.url).origin;
+      if (request.headers.get("origin") !== expectedOrigin) return failure("origin", "请求来源不匹配", 403);
       if (request.headers.get("content-type")?.split(";")[0].trim() !== "application/json") return failure("type", "请使用 JSON 请求", 415);
       try {
         const reader = request.body?.getReader();

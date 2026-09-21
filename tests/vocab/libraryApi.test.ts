@@ -35,6 +35,17 @@ test("authenticated CRUD preserves dates and rejects stale or duplicate writes",
   assert.deepEqual((await store.read()).entries, []);
 });
 
+test("uses the configured public origin behind a TLS-terminating proxy", async () => {
+  const handler = createLibraryHandler(() => { throw new Error("storage unavailable"); }, () => true, "https://seaskanon.me");
+  const request = (origin: string) => handler(new Request("http://seaskanon.me/api/vocab/library", {
+    method: "POST",
+    headers: { origin, "content-type": "application/json" },
+    body: JSON.stringify({ entry, expectedRevision: "revision" }),
+  }));
+  assert.equal((await request("https://evil.example")).status, 403);
+  assert.equal((await request("https://seaskanon.me")).status, 503);
+});
+
 test("rejects malformed bodies and conceals storage failures", async () => {
   const handler = createLibraryHandler(() => { throw new Error("secret/server/path"); }, () => true);
   assert.equal((await handler(new Request("http://localhost/api/vocab/library", { method: "POST", headers: { origin: "http://localhost", "content-type": "application/json" }, body: "{" }))).status, 400);
